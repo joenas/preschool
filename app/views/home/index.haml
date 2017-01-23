@@ -1,0 +1,22 @@
+.row
+  .col
+    %h1.mt-3.mb-3.text-center
+      Öppna Förskolor Malmö
+    - @view.each do |preschool|
+
+      .card.mb-3.text-center{class: (preschool.is_open ? 'card-outline-success' : 'card-outline-danger')}
+        .card-block
+          %h4.card-title
+            = preschool.name
+          - if preschool.is_open
+            %p.card-text
+              Stänger om
+              = distance_of_time_in_words(Time.now, preschool.closes)
+          - preschool.hours.today.each do |hours|
+            %h6.card-subtitle.mb-2.text-muted{class: ('text-success' if hours.open?)}
+              = hours.opens_short
+              \-
+              = hours.closes_short
+              = hours.note
+          %p.card-text
+            = preschool.street_name

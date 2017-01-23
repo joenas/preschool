@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
 
-  def index; end
+  def index
+    @view = Preschool.includes(:hours).with_todays_hours
+  end
 end

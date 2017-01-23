@@ -1,0 +1,169 @@
+sv:
+  date:
+    formats:
+      # Use the strftime parameters for formats.
+      # When no format has been given, it uses default.
+      # You can provide other formats here if you like!
+      default: "%Y-%m-%d"
+      short: "%b %d"
+      long: "%B %d, %Y"
+      with_day: '%A %d %B %Y'
+
+    day_names: [Söndag, Måndag, Tisdag, Onsdag, Torsdag, Fredag, Lördag]
+    abbr_day_names: [Sön, Mån, Tis, Ons, Tor, Fre, Lör]
+
+    # Don't forget the nil at the beginning; there's no such thing as a 0th month
+    month_names: [~, Januari, Februari, Mars, April, Maj, Juni, Juli, Augusti, September, Oktober, November, December]
+    abbr_month_names: [~, Jan, Feb, Mar, Apr, Maj, Jun, Jul, Aug, Sep, Okt, Nov, Dec]
+    # Used in date_select and datetime_select.
+    order:
+      - year
+      - month
+      - day
+
+  time:
+    formats:
+      default: "%a, %d %b %Y %H:%M:%S %z"
+      short: "%H:%M"
+      long: "%B %d, %Y %H:%M"
+      short_date: "%Y-%m-%d"
+    am: "am"
+    pm: "pm"
+
+# Used in array.to_sentence.
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: " och "
+      last_word_connector: " och "
+  number:
+    # Used in NumberHelper.number_to_delimited()
+    # These are also the defaults for 'currency', 'percentage', 'precision', and 'human'
+    format:
+      # Sets the separator between the units, for more precision (e.g. 1.0 / 2.0 == 0.5)
+      separator: "."
+      # Delimits thousands (e.g. 1,000,000 is a million) (always in groups of three)
+      delimiter: ","
+      # Number of decimals, behind the separator (the number 1 with a precision of 2 gives: 1.00)
+      precision: 3
+      # If set to true, precision will mean the number of significant digits instead
+      # of the number of decimal digits (1234 with precision 2 becomes 1200, 1.23543 becomes 1.2)
+      significant: false
+      # If set, the zeros after the decimal separator will always be stripped (eg.: 1.200 will be 1.2)
+      strip_insignificant_zeros: false
+
+    # Used in NumberHelper.number_to_currency()
+    currency:
+      format:
+        # Where is the currency sign? %u is the currency unit, %n the number (default: $5.00)
+        format: "%n %u"
+        unit: "kr"
+        # These five are to override number.format and are optional
+        separator: ","
+        delimiter: " "
+        precision: 2
+        significant: false
+        strip_insignificant_zeros: false
+
+    # Used in NumberHelper.number_to_percentage()
+    percentage:
+      format:
+        # These five are to override number.format and are optional
+        # separator:
+        delimiter: ""
+        # precision:
+        # significant: false
+        # strip_insignificant_zeros: false
+        format: "%n%"
+
+    # Used in NumberHelper.number_to_rounded()
+    precision:
+      format:
+        # These five are to override number.format and are optional
+        # separator:
+        delimiter: ""
+        # precision:
+        # significant: false
+        # strip_insignificant_zeros: false
+
+    # Used in NumberHelper.number_to_human_size() and NumberHelper.number_to_human()
+    human:
+      format:
+        # These five are to override number.format and are optional
+        # separator:
+        delimiter: ""
+        precision: 3
+        significant: true
+        strip_insignificant_zeros: true
+      # Used in number_to_human_size()
+      storage_units:
+        # Storage units output formatting.
+        # %u is the storage unit, %n is the number (default: 2 MB)
+        format: "%n %u"
+        units:
+          byte:
+            one:   "Byte"
+            other: "Bytes"
+          kb: "KB"
+          mb: "MB"
+          gb: "GB"
+          tb: "TB"
+      # Used in NumberHelper.number_to_human()
+      decimal_units:
+        format: "%n %u"
+        # Decimal units output formatting
+        # By default we will only quantify some of the exponents
+        # but the commented ones might be defined or overridden
+        # by the user.
+        units:
+          # femto: Quadrillionth
+          # pico: Trillionth
+          # nano: Billionth
+          # micro: Millionth
+          # mili: Thousandth
+          # centi: Hundredth
+          # deci: Tenth
+          unit: ""
+          # ten:
+          #   one: Ten
+          #   other: Tens
+          # hundred: Hundred
+          thousand: Tusen
+          million: Miljoner
+          billion: Miljard
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: ungefär en timme
+        other: ungefär %{count} timmar
+      about_x_months:
+        one: ungefär en månad
+        other: ungefär %{count} månader
+      about_x_years:
+        one: ungefär ett år
+        other: ungefär %{count} år
+      almost_x_years:
+        one: nästan ett år
+        other: nästan %{count} år
+      half_a_minute: en halv minut
+      less_than_x_minutes:
+        one: mindre än en minut
+        other: mindre än %{count} minuter
+      less_than_x_seconds:
+        one: mindre än en sekund
+        other: mindre än %{count} sekunder
+      over_x_years:
+        one: mer än ett år
+        other: mer än %{count} år
+      x_days:
+        one: en dag
+        other: "%{count} dagar"
+      x_minutes:
+        one: en minut
+        other: "%{count} minuter"
+      x_months:
+        one: en månad
+        other: "%{count} månader"
+      x_seconds:
+        one: en sekund
+        other: "%{count} sekunder"
