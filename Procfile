@@ -1,3 +1,3 @@
 web: bundle exec rails s
-worker: bundle exec sidekiq -C config/sidekiq.yml
+#worker: bundle exec sidekiq -C config/sidekiq.yml
 clockwork: bundle exec clockwork config/clock.rb
