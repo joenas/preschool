@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 ruby '2.4.0'
 gem 'rails', '5.0.1'
+gem 'rails_12factor', group: :production
 
 gem 'pg', '~> 0.19.0'
 
