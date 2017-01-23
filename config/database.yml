@@ -31,11 +31,6 @@ staging:
   password: <%= ENV['DATABASE_PASSWORD'] %>
 
 production:
-  host: <%= ENV['DATABASE_HOST'] %>
+  url: <%= ENV['DATABASE_URL'] %>
   adapter: postgresql
   encoding: unicode
-  database: preschool_production
-  pool: <%= ENV['DATABASE_POOL'] %>
-  port: <%= ENV['DATABASE_PORT'] %>
-  username: <%= ENV['DATABASE_USERNAME'] %>
-  password: <%= ENV['DATABASE_PASSWORD'] %>
