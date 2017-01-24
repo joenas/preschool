@@ -20,8 +20,9 @@ class Hour < ActiveRecord::Base
     where.not(note: nil)
   }
 
+  # Goddamn this is annoying
   def open?
-    opens.hour <= Time.now.hour && closes.hour >= Time.now.hour
+    (opens..closes).include? Now.new
   end
 
   def opens_short
