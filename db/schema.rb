@@ -10,10 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170124103014) do
+ActiveRecord::Schema.define(version: 20170124161551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "cube"
+  enable_extension "earthdistance"
 
   create_table "hours", force: :cascade do |t|
     t.integer "preschool_id"
@@ -30,6 +32,8 @@ ActiveRecord::Schema.define(version: 20170124103014) do
     t.string "postal_code"
     t.string "city"
     t.string "note"
+    t.point  "position"
+    t.index ["position"], name: "index_preschools_on_position", using: :gist
   end
 
 end
