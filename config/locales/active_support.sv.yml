@@ -1,4 +1,14 @@
 sv:
+  distance:
+    centi:
+      one: "cm"
+      other: "cm"
+    unit:
+      one: "m"
+      other: "m"
+    thousand:
+      one: "km"
+      other: "km"
   date:
     formats:
       # Use the strftime parameters for formats.

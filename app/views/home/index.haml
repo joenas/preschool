@@ -2,12 +2,21 @@
   .col
     %h1.mt-3.mb-3.text-center
       Öppna Förskolor Malmö
+    .offset-md-4.mb-3
+      = link_to '#', id: 'toggle_position' do
+        = fa_icon :'map-marker', class: 'fa-lg'
+        Visa avstånd
+    .alert.alert-warning{role: :alert, style: "display: none;"}
+      Det gick inte att hämta din position.
+
     - @view.each do |preschool|
 
       .card.mb-3{class: (preschool.is_open ? 'card-outline-success' : 'card-outline-danger')}
         .card-block.offset-md-4
           %h4.card-title
             = preschool.name
+            - if @view.position?
+              %small= number_to_human(preschool.distance, units: :distance)
           - if preschool.is_open
             %h6.mb-3.font-weight-normal
               Stänger om
@@ -24,3 +33,5 @@
             = preschool.street_name
             %br/
             = link_to "Hemsida", preschool.url
+            %br/
+            = link_to "Karta", "https://www.google.com/maps/place/#{preschool.address_params}"

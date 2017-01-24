@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
 
   def index
-    @view = Preschool.includes(:hours).with_todays_hours
+    @view = Preschools::OpenToday.new(params: params, scope: Preschool.includes(:hours))
   end
 end
