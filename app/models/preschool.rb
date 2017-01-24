@@ -2,30 +2,15 @@ class Preschool < ActiveRecord::Base
 
   has_many :hours
 
-  validates_presence_of :preschool_type
   validates_presence_of :name
   validates_presence_of :url
   validates_presence_of :street_name
   validates_presence_of :postal_code
   validates_presence_of :city
 
-  # scope :with_todays_hours, ->{
-  #   joins(:hours)
-  #   .select("
-  #     preschools.*,
-  #     hours.opens,
-  #     hours.closes,
-  #     hours.note,
-  #     hours.opens <= current_time AND hours.closes >= current_time as is_open
-  #   ")
-  #   .where("hours.day_of_week = extract(dow from current_date)")
-  #   .order("hours.opens <= current_time AND hours.closes >= current_time DESC")
-  # }
-
   scope :with_todays_hours, ->{
     find_by_sql(with_todays_hours_query)
   }
-
 
   private
 
