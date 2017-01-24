@@ -34,8 +34,8 @@ class Preschool < ActiveRecord::Base
     WITH data AS (
       SELECT
         preschool_id,
-        make_timestamp(date_part('year', NOW())::int,date_part('month', NOW())::int,date_part('day', NOW())::int,date_part('hours', hours.closes)::int,date_part('minutes', hours.closes)::int,0) as closes,
-        hours.opens <= CURRENT_TIME::time AND hours.closes >= CURRENT_TIME::time AS is_open
+        make_timestamp(date_part('year', NOW())::int,date_part('month', NOW())::int,date_part('day', NOW())::int,date_part('hours', hours.closes)::int,date_part('minutes', hours.closes)::int,0) #{timezone_cast} as closes,
+        hours.opens <= (now() #{timezone_cast})::time AND hours.closes >= (now() #{timezone_cast})::time AS is_open
       FROM hours
       WHERE true
         AND hours.day_of_week = extract(dow from current_date)
@@ -48,7 +48,11 @@ class Preschool < ActiveRecord::Base
     LEFT JOIN data ON data.preschool_id = preschools.id AND data.is_open
     WHERE true
 
-    ORDER BY COALESCE(data.is_open, false) DESC
+    ORDER BY COALESCE(data.is_open, false) DESC, data.closes DESC
     EOF
+  end
+
+  def self.timezone_cast
+    "AT TIME ZONE '#{Time.zone.name}'"
   end
 end

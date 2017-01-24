@@ -11,7 +11,7 @@
           - if preschool.is_open
             %p.card-text
               Stänger om
-              = distance_of_time_in_words(Time.now, preschool.closes)
+              = distance_of_time_in_words(Time.current, preschool.closes)
           - preschool.hours.today.each do |hours|
             %h6.card-subtitle.mb-2.text-muted{class: ('text-success' if hours.open?)}
               = hours.opens_short
