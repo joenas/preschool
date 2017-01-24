@@ -41,6 +41,7 @@ GEM
     arel (7.1.4)
     autoprefixer-rails (6.7.0)
       execjs
+    awesome_print (1.7.0)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -81,7 +82,13 @@ GEM
       railties (>= 3.0.0)
     faker (1.7.2)
       i18n (~> 0.5)
+    faraday (0.11.0)
+      multipart-post (>= 1.2, < 3)
+    faraday_middleware (0.11.0.1)
+      faraday (>= 0.7.4, < 1.0)
     ffi (1.9.17)
+    font-awesome-rails (4.7.0.1)
+      railties (>= 3.2, < 5.1)
     formatador (0.2.5)
     given_core (3.8.0)
       sorcerer (>= 0.3.7)
@@ -142,6 +149,7 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.1.0)
     minitest (5.10.1)
+    multipart-post (2.0.0)
     mustermann (1.0.0.beta2)
     nenv (0.3.0)
     nio4r (1.2.1)
@@ -290,6 +298,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  awesome_print (~> 1.7)
   better_errors
   binding_of_caller
   bootstrap (~> 4.0.0.alpha3.1)
@@ -300,6 +309,9 @@ DEPENDENCIES
   dotenv-rails (~> 2.1, >= 2.1.2)
   factory_girl_rails
   faker
+  faraday (~> 0.11.0)
+  faraday_middleware (~> 0.11.0.1)
+  font-awesome-rails (~> 4.7, >= 4.7.0.1)
   guard (~> 2.11)
   guard-bundler
   guard-rails

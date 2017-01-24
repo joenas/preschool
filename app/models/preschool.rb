@@ -12,7 +12,12 @@ class Preschool < ActiveRecord::Base
     find_by_sql(with_todays_hours_query)
   }
 
+  def address_params
+    attributes.slice('street_name', 'postal_code', 'city').values.join(',') << ",Sweden"
+  end
+
   private
+
 
   def self.with_todays_hours_query
     <<-EOF

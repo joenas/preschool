@@ -9,7 +9,6 @@ gem 'puma', '~> 3.6', '>= 3.6.2'
 
 gem 'pg', '~> 0.19.0'
 
-# Use SCSS for stylesheets
 # Assets and whatnot
 gem 'haml-rails', '~> 0.9.0'
 gem 'bootstrap', '~> 4.0.0.alpha3.1'
@@ -19,6 +18,7 @@ gem 'coffee-rails', '~> 4.2', '>= 4.2.1'
 gem 'therubyracer', '~> 0.12.1', platforms: :ruby
 gem 'jquery-rails'
 gem 'turbolinks'
+gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.1'
 
 # App configuration
 gem 'dotenv-rails', '~> 2.1', '>= 2.1.2'
@@ -27,6 +27,10 @@ gem 'dotenv-rails', '~> 2.1', '>= 2.1.2'
 gem 'sinatra', '~> 2.0.0.beta2'
 gem 'sidekiq', '~> 4.2', '>= 4.2.9'
 gem 'clockwork', '~> 2.0'
+
+# Http
+gem 'faraday', '~> 0.11.0'
+gem 'faraday_middleware', '~> 0.11.0.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -61,6 +65,7 @@ group :development, :test do
   gem 'faker'
   gem 'pry-rails'
   gem 'pry-rescue'
+  gem 'awesome_print', '~> 1.7'
 end
 
 group :test do
