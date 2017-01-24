@@ -5,6 +5,7 @@ source 'https://rubygems.org'
 ruby '2.4.0'
 gem 'rails', '5.0.1'
 gem 'rails_12factor', group: :production
+gem 'puma', '~> 3.6', '>= 3.6.2'
 
 gem 'pg', '~> 0.19.0'
 
