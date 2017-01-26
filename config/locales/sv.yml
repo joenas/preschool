@@ -1,1 +1,36 @@
 sv:
+  errors:
+    messages:
+      record_invalid: ! 'Ett fel uppstod: %{errors}'
+      invalid: 'är inte giltigt'
+      invalid_format: 'har fel format'
+      invalid_email: 'Ogiltig epostadress'
+      probably_invalid_email: 'ser inte ut att vara giltig'
+      blank: 'måste anges'
+      email_format: 'har fel format'
+      exists: 'finns redan'
+      does_not_exist: 'finns ej'
+      field_absence: 'Får ej anges'
+      field_presence: 'Minst %{count} av %{list} måste anges'
+      wrong_length: 'har fel längd'
+      too_short: 'är för kort, minst %{count} tecken'
+      too_long: 'är för långt, max %{count} tecken'
+      confirmation: 'matchar inte.'
+      charge_billed: 'Debiteringen är billad'
+      not_a_number: 'är inte ett tal'
+      greater_than: 'måste vara högre än %{count}'
+      greater_than_or_equal_to: 'måste vara större än eller lika med %{count}'
+      less_than: 'måste vara lägre än %{count}'
+      less_than_or_equal_to: 'måste vara lägre än eller lika med %{count}'
+      later_than_start_date: 'måste vara senare än startdatum'
+      equal_to: 'måste vara %{count}'
+      later_than_or_equal_to_date: 'måste vara lika med eller senare än %{date}'
+      invalid_date: "är inte ett giltigt datum"
+      invalid_time: "är inte en giltig tid"
+      invalid_datetime: "är inte ett giltigt datum"
+      is_at: "måste vara %{restriction}"
+      before: "måste vara tidigare än %{restriction}"
+      on_or_before: "måste vara på eller tidigare än %{restriction}"
+      after: "måste vara senare än %{restriction}"
+      on_or_after: "måste vara på eller senare än %{restriction}"
+      identical: 'är identiska'
