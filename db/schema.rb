@@ -10,29 +10,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170124161551) do
+ActiveRecord::Schema.define(version: 20170126111802) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "cube"
   enable_extension "earthdistance"
+  enable_extension "hstore"
+
+  create_table "changes", force: :cascade do |t|
+    t.integer  "preschool_id"
+    t.string   "state"
+    t.hstore   "data"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
 
   create_table "hours", force: :cascade do |t|
-    t.integer "preschool_id"
-    t.integer "day_of_week"
-    t.time    "opens"
-    t.time    "closes"
-    t.string  "note"
+    t.integer  "preschool_id"
+    t.integer  "day_of_week"
+    t.time     "opens"
+    t.time     "closes"
+    t.string   "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "preschools", force: :cascade do |t|
-    t.string "name"
-    t.string "url"
-    t.string "street_name"
-    t.string "postal_code"
-    t.string "city"
-    t.string "note"
-    t.point  "position"
+    t.string   "name"
+    t.string   "url"
+    t.string   "street_name"
+    t.string   "postal_code"
+    t.string   "city"
+    t.string   "note"
+    t.point    "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["position"], name: "index_preschools_on_position", using: :gist
   end
 
