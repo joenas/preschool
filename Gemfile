@@ -8,6 +8,7 @@ gem 'rails_12factor', group: :production
 gem 'puma', '~> 3.6', '>= 3.6.2'
 
 gem 'pg', '~> 0.19.0'
+gem 'enumerize', '~> 2.0', '>= 2.0.1'
 
 # Assets and whatnot
 gem 'haml-rails', '~> 0.9.0'
@@ -31,11 +32,6 @@ gem 'clockwork', '~> 2.0'
 # Http
 gem 'faraday', '~> 0.11.0'
 gem 'faraday_middleware', '~> 0.11.0.1'
-
-group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
-end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
@@ -70,9 +66,9 @@ end
 
 group :test do
   gem 'database_cleaner', '~> 1.5.3'
-  gem 'rspec-rails', '~> 3.5.0'
+  gem 'rspec-rails', '~> 3.5', '>= 3.5.2'
   gem 'rspec-collection_matchers', '~> 1.1.2' # may be removed with a few spec fixes
-  gem 'rspec-given', '~> 3.8.0'
+  gem 'rspec-given', '~> 3.8'
   gem 'rspec-mocks', '~> 3.5.0'
   gem 'shoulda-matchers', '~> 3.1.1'
 end

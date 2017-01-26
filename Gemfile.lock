@@ -52,7 +52,6 @@ GEM
       autoprefixer-rails (>= 6.0.3)
       sass (>= 3.4.19)
     builder (3.2.3)
-    byebug (9.0.6)
     clockwork (2.0.0)
       activesupport
       tzinfo
@@ -73,6 +72,8 @@ GEM
     dotenv-rails (2.1.2)
       dotenv (= 2.1.2)
       railties (>= 3.2, < 5.1)
+    enumerize (2.0.1)
+      activesupport (>= 3.2)
     erubis (2.7.0)
     execjs (2.7.0)
     factory_girl (4.8.0)
@@ -302,11 +303,11 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap (~> 4.0.0.alpha3.1)
-  byebug
   clockwork (~> 2.0)
   coffee-rails (~> 4.2, >= 4.2.1)
   database_cleaner (~> 1.5.3)
   dotenv-rails (~> 2.1, >= 2.1.2)
+  enumerize (~> 2.0, >= 2.0.1)
   factory_girl_rails
   faker
   faraday (~> 0.11.0)
@@ -330,9 +331,9 @@ DEPENDENCIES
   rb-fsevent
   rb-inotify
   rspec-collection_matchers (~> 1.1.2)
-  rspec-given (~> 3.8.0)
+  rspec-given (~> 3.8)
   rspec-mocks (~> 3.5.0)
-  rspec-rails (~> 3.5.0)
+  rspec-rails (~> 3.5, >= 3.5.2)
   sass-rails (~> 5.0)
   shoulda-matchers (~> 3.1.1)
   sidekiq (~> 4.2, >= 4.2.9)
