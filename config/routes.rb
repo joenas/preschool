@@ -5,5 +5,7 @@ Rails.application.routes.draw do
     resources :preschools
   end
 
+  get 'position/:latitude,:longitude', to: 'home#index', latitude: /\d+\.\d+/, longitude: /\d+\.\d+/
+
   root to: 'home#index'
 end

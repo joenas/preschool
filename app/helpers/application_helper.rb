@@ -1,5 +1,21 @@
 module ApplicationHelper
 
+  # I'm lovin' it
+  def link_to_if_else_span(predicate, options)
+    url = options.delete(:href)
+    if predicate
+      link_to url, options do
+        yield if block_given?
+      end
+    else
+      content_tag(:span, class: options[:class]) do
+        content_tag(:strong) do
+          yield if block_given?
+        end
+      end
+    end
+  end
+
   # God help me
   def preschool_closes_class(preschool)
     return 'default' unless preschool.is_open

@@ -3,9 +3,20 @@
     %h1.mt-3.mb-3.text-center
       Öppna Förskolor Malmö
     .offset-md-4.mb-3
-      = link_to '#', id: 'toggle_position' do
-        = fa_icon :'map-marker', class: 'fa-lg'
-        Visa avstånd
+
+    %nav.nav
+      %span.nav-link.active
+        Sortering:
+
+      = link_to_if_else_span !@view.position?, href: '#', id: 'toggle_position', class: 'nav-link' do
+        = fa_icon :'map-marker'
+        Avstånd
+
+      = link_to_if_else_span @view.position?, href: root_path, class: 'nav-link' do
+        = fa_icon :'clock-o'
+        Öppettider
+
+
     .alert.alert-warning{role: :alert, style: "display: none;"}
       Det gick inte att hämta din position.
     .row
@@ -31,11 +42,8 @@
                   %small.ml-2= hours.note
 
               %p.card-text
-                = fa_icon :home, class: 'fa-fw'
                 = preschool.street_name
                 %br/
-                = fa_icon :globe, class: 'fa-fw'
                 = link_to "Hemsida", preschool.url
                 %br/
-                = fa_icon :'map-marker', class: 'fa-fw'
                 = link_to "Karta", "https://www.google.com/maps/place/#{preschool.address_params}"
