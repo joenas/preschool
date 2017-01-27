@@ -1,14 +1,17 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 ruby '2.4.0'
 gem 'rails', '5.0.1'
 gem 'rails_12factor', group: :production
 gem 'puma', '~> 3.6', '>= 3.6.2'
 
+# Database
 gem 'pg', '~> 0.19.0'
 gem 'enumerize', '~> 2.0', '>= 2.0.1'
+
+# Errors
+gem 'rollbar', '~> 2.14'
 
 # Assets and whatnot
 gem 'haml-rails', '~> 0.9.0'
@@ -34,9 +37,6 @@ gem 'faraday', '~> 0.11.0'
 gem 'faraday_middleware', '~> 0.11.0.1'
 
 group :development do
-  # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
-
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
