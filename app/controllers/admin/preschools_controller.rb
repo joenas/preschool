@@ -3,6 +3,8 @@ class Admin::PreschoolsController < AdminController
 
   def index; end
 
-  def show; end
+  def show
+    @view = Preschool.find(params[:id])
+  end
 
 end

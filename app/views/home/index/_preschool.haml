@@ -10,14 +10,13 @@
         %h6.mb-3.font-weight-normal
           Stänger om
           = distance_of_time_in_words(Time.current, preschool.closes)
-      - preschool.hours.today.each do |hours|
+      - preschool.hours.today.each do |hour|
         %h6.mb-2
-          %var{class: ('text-success' if hours.open?)}
-            = hours.opens_short
+          %var{class: ('text-success' if hour.open?)}
+            = hour.opens_short
             \-
-            = hours.closes_short
-          %small.ml-2= hours.note
-
+            = hour.closes_short
+          %small.ml-2= hour.note
       %p.card-text
         = preschool.street_name
         %br/

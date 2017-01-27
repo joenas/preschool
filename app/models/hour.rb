@@ -25,6 +25,10 @@ class Hour < ActiveRecord::Base
     (opens..closes).include? Now.new
   end
 
+  def day_name
+    I18n.t('date.day_names')[day_of_week]
+  end
+
   def opens_short
     I18n.l(opens, format: :short)
   end

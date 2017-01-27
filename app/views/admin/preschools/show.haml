@@ -1,2 +1,33 @@
-%main.col-md-9.pt-3.offset-md-2.mt-5
-  %h1 Is
+.row
+  .col-md-6
+    .card.mb-3
+      %h4.card-header
+        = @view.name
+      .card-block
+        - if @view.note
+          %blockquote.blockquote
+            %small= @view.note
+
+        %p.card-text
+          = @view.street_name
+          \,
+          = @view.postal_code
+          = @view.city
+          %br/
+          = link_to "Hemsida", @view.url
+          %br/
+          = link_to "Karta", "https://www.google.com/maps/place/#{@view.address_params}"
+
+  .col-md-6
+    .card.mb-3
+      %h4.card-header
+        Öppettider
+      .card-block
+        - @view.hours.each do |hour|
+          %h6.mb-2
+            = hour.day_name
+            %var
+              = hour.opens_short
+              \-
+              = hour.closes_short
+            %small.ml-2= hour.note
