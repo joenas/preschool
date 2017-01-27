@@ -8,30 +8,32 @@
         Visa avstånd
     .alert.alert-warning{role: :alert, style: "display: none;"}
       Det gick inte att hämta din position.
+    .row
+      - @view.each do |preschool|
+        .col-md-3
+          .card.mb-3{class: "card-outline-#{preschool_closes_class(preschool)}"}
+            %h4.card-header{class: "bg-#{preschool_closes_class(preschool)}"}
+              = preschool.name
+              - if @view.position?
+                %small= number_to_human(preschool.distance, units: :distance)
 
-    - @view.each do |preschool|
+            .card-block
+              //= (preschool.closes - Time.current).to_f/3600
+              - if preschool.is_open
+                %h6.mb-3.font-weight-normal
+                  Stänger om
+                  = distance_of_time_in_words(Time.current, preschool.closes)
+              - preschool.hours.today.each do |hours|
+                %h6.mb-2
+                  %var{class: ('text-success' if hours.open?)}
+                    = hours.opens_short
+                    \-
+                    = hours.closes_short
+                  %small.ml-2= hours.note
 
-      .card.mb-3{class: (preschool.is_open ? 'card-outline-success' : 'card-outline-danger')}
-        .card-block.offset-md-4
-          %h4.card-title
-            = preschool.name
-            - if @view.position?
-              %small= number_to_human(preschool.distance, units: :distance)
-          - if preschool.is_open
-            %h6.mb-3.font-weight-normal
-              Stänger om
-              = distance_of_time_in_words(Time.current, preschool.closes)
-          - preschool.hours.today.each do |hours|
-            %h6.mb-2
-              %var{class: ('text-success' if hours.open?)}
-                = hours.opens_short
-                \-
-                = hours.closes_short
-              %small.ml-2= hours.note
-
-          %p.card-text
-            = preschool.street_name
-            %br/
-            = link_to "Hemsida", preschool.url
-            %br/
-            = link_to "Karta", "https://www.google.com/maps/place/#{preschool.address_params}"
+              %p.card-text
+                = preschool.street_name
+                %br/
+                = link_to "Hemsida", preschool.url
+                %br/
+                = link_to "Karta", "https://www.google.com/maps/place/#{preschool.address_params}"

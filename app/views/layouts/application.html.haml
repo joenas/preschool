@@ -11,8 +11,17 @@
     %meta{content: "width=device-width, initial-scale=1, user-scalable=no", name:  :viewport}/
 
   %body
-    .container
-      = yield
+    = content_for :nav
+    %div{class: (controller_path.include?('admin') ? 'container-fluid' : 'container')}
+      = content_for?(:content) ? yield(:content) : yield
+
+    %footer.text-muted
+      .container
+        %ul.list-inline.mb-0
+          %li.list-inline-item
+            © 2017 Jon Neverland
+          %li.list-inline-item
+            %a{:href => "https://jonnev.se"} jonnev.se
 
 
 - if Rails.env.production?

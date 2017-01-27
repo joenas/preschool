@@ -2,9 +2,26 @@
 @import 'bootstrap'
 @import 'font-awesome'
 
+
+h4.card-header
+  color: #fff
+
+h4.card-header.bg-default
+  color: #000
+
+footer
+  padding: 1rem 0
+  margin-top: 2rem
+  font-size: 85%
+  text-align: center
+  background-color: #f7f7f7
+
 @include media-breakpoint-down(md)
   h1
     font-size: 24px
   h4
     font-size: 20px
 
+@include media-breakpoint-up(sm)
+  footer
+    text-align: left
