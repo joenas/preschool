@@ -18,7 +18,6 @@
                 %small= number_to_human(preschool.distance, units: :distance)
 
             .card-block
-              //= (preschool.closes - Time.current).to_f/3600
               - if preschool.is_open
                 %h6.mb-3.font-weight-normal
                   Stänger om
@@ -32,8 +31,11 @@
                   %small.ml-2= hours.note
 
               %p.card-text
+                = fa_icon :home, class: 'fa-fw'
                 = preschool.street_name
                 %br/
+                = fa_icon :globe, class: 'fa-fw'
                 = link_to "Hemsida", preschool.url
                 %br/
+                = fa_icon :'map-marker', class: 'fa-fw'
                 = link_to "Karta", "https://www.google.com/maps/place/#{preschool.address_params}"
