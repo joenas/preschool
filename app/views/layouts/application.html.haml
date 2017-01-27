@@ -12,8 +12,8 @@
 
   %body
     = content_for :nav
-    %div{class: (controller_path.include?('admin') ? 'container-fluid' : 'container')}
-      = content_for?(:content) ? yield(:content) : yield
+    %div.container
+      = yield
 
     %footer.text-muted
       .container
@@ -22,6 +22,7 @@
             © 2017 Jon Neverland
           %li.list-inline-item
             %a{:href => "https://jonnev.se"} jonnev.se
+
 
 
 - if Rails.env.production?

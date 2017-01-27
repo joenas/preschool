@@ -1,0 +1,8 @@
+%nav.col-md-2.bg-faded.sidebar
+  %ul.nav.nav-pills.flex-column
+    %li.nav-item
+      %h4.ml-3
+        Förskolor
+    - Preschool.order(:name).each do |preschool|
+      %li.nav-item
+        = link_to preschool.name, admin_preschool_path(preschool), class: 'nav-link'

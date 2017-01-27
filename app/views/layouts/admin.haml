@@ -1,0 +1,21 @@
+!!!
+%html
+  %head
+    %title
+      = "[#{Rails.env}]"
+      Admin
+    = stylesheet_link_tag    'admin', media: 'all'
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+
+    %meta{content: "width=device-width, initial-scale=1, user-scalable=no", name:  :viewport}/
+
+  %body
+    = content_for :nav
+    %nav.navbar.navbar-inverse.fixed-top.bg-inverse
+      %a.navbar-brand{href: admin_preschools_path} Admin
+
+    %div.container-fluid
+      .row
+        = render 'admin/sidebar'
+        = yield
