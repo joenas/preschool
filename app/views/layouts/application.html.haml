@@ -7,8 +7,7 @@
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
     = csrf_meta_tags
-
-    %meta{content: "width=device-width, initial-scale=1, user-scalable=no", name:  :viewport}/
+    = render partial: 'layouts/meta'
 
   %body
     = content_for :nav
@@ -22,7 +21,6 @@
             © 2017 Jon Neverland
           %li.list-inline-item
             %a{:href => "https://jonnev.se"} jonnev.se
-
 
 
 - if Rails.env.production?
