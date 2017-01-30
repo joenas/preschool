@@ -18,16 +18,18 @@
           %br/
           = link_to "Karta", "https://www.google.com/maps/place/#{@view.address_params}"
 
-  .col-md-6
     .card.mb-3
       %h4.card-header
         Öppettider
-      .card-block
-        - @view.hours.each do |hour|
-          %h6.mb-2
-            = hour.day_name
-            %var
-              = hour.opens_short
-              \-
-              = hour.closes_short
-            %small.ml-2= hour.note
+      %table.table.table-sm
+        %tbody
+          - @view.hours.each do |hour|
+            %tr.row.m-0{class: ('table-info' if hour.today?)}
+              %th.pl-3.col{scope: :row}
+                = hour.day_name
+              %td.col
+                = hour.opens_short
+                \-
+                = hour.closes_short
+              %td.col
+                %small= hour.note

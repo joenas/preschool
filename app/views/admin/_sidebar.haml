@@ -5,4 +5,5 @@
         Förskolor
     - Preschool.order(:name).each do |preschool|
       %li.nav-item
-        = link_to preschool.name, admin_preschool_path(preschool), class: 'nav-link'
+        %a.nav-link{href: admin_preschool_path(preschool), class: ('active' if params[:id].to_i == preschool.id)}
+          = preschool.name

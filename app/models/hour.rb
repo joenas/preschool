@@ -7,6 +7,8 @@ class Hour < ActiveRecord::Base
   validates_presence_of :opens
   validates_presence_of :closes
 
+  default_scope { order(day_of_week: :asc) }
+
   scope :today, -> {
     where("day_of_week = extract(dow from current_date)")
     .order(opens: :asc, closes: :asc)
@@ -23,6 +25,10 @@ class Hour < ActiveRecord::Base
   # Goddamn this is annoying
   def open?
     (opens..closes).include? Now.new
+  end
+
+  def today?
+    day_of_week == Time.now.wday
   end
 
   def day_name
