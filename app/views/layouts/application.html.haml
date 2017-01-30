@@ -14,13 +14,24 @@
     %div.container
       = yield
 
-    %footer.text-muted
+    %footer
       .container
+        %p
+          Kul att du har hittat hit! Jag byggde den här sidan för att enkelt kunna hitta dagens öppettider
+          för öppna förskolor i Malmö.
+          %br/
+          Framöver så kommer det även att visas en notis om en förskola har publicerat
+          avvikande öppettider eller annan information på sin hemsida.
+          %br/
+          Om du har några önskemål eller synpunkter, tveka inte att
+          = succeed '.' do
+            = link_to "höra av dig", "mailto:jon@jonnev.se"
         %ul.list-inline.mb-0
           %li.list-inline-item
             2017 Jon Neverland
           %li.list-inline-item
-            %a{:href => "https://jonnev.se"} jonnev.se
+            %a{href: "https://jonnev.se"} jonnev.se
+
 
 
 - if Rails.env.production?

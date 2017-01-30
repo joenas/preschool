@@ -13,9 +13,6 @@ body
 .container
   flex: 1
 
-.card
-  border-width: 2px
-
 h4.card-header
   color: #fff
 
@@ -30,7 +27,15 @@ footer
   margin-top: 2rem
   font-size: 85%
   text-align: center
-  background-color: #f7f7f7
+  background-color: #31708f
+  color: white
+  padding: 4rem 0
+  margin-top: 4rem
+  a
+    color: #DBD640
+    &:hover, &:active
+      color: #DBD640
+      text-decoration: underline
 
 @include media-breakpoint-down(md)
   h1
@@ -39,6 +44,9 @@ footer
     font-size: 20px
   .nav-link i
     display: none
+
+  footer p
+    text-align: left
 
 @include media-breakpoint-up(sm)
   footer
