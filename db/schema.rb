@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170130140423) do
+ActiveRecord::Schema.define(version: 20170130143857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,16 @@ ActiveRecord::Schema.define(version: 20170130140423) do
     t.datetime "updated_at"
     t.index ["day_of_week"], name: "index_hours_on_day_of_week", using: :btree
     t.index ["preschool_id"], name: "index_hours_on_preschool_id", using: :btree
+  end
+
+  create_table "preschool_urls", force: :cascade do |t|
+    t.integer  "preschool_id"
+    t.string   "url"
+    t.string   "hours_element"
+    t.string   "extras_element"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["preschool_id"], name: "index_preschool_urls_on_preschool_id", using: :btree
   end
 
   create_table "preschools", force: :cascade do |t|
