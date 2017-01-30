@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170126111802) do
+ActiveRecord::Schema.define(version: 20170130140423) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20170126111802) do
     t.hstore   "data"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.index ["preschool_id"], name: "index_changes_on_preschool_id", using: :btree
   end
 
   create_table "hours", force: :cascade do |t|
@@ -34,6 +35,8 @@ ActiveRecord::Schema.define(version: 20170126111802) do
     t.string   "note"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["day_of_week"], name: "index_hours_on_day_of_week", using: :btree
+    t.index ["preschool_id"], name: "index_hours_on_preschool_id", using: :btree
   end
 
   create_table "preschools", force: :cascade do |t|
