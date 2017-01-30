@@ -8,16 +8,17 @@
       %span.nav-link.active
         Sortering:
 
-      = link_to_if_else_span !@view.position?, href: '#', id: 'toggle_position', class: 'nav-link' do
-        = fa_icon :'map-marker'
-        Avstånd
-
       = link_to_if_else_span @view.position?, href: root_path, class: 'nav-link' do
         = fa_icon :'clock-o'
         Öppettider
 
+      = link_to_if_else_span !@view.position?, href: '#', id: 'toggle_position', class: 'nav-link' do
+        = fa_icon :'map-marker'
+        Avstånd
+
     .alert.alert-warning{role: :alert, style: "display: none;"}
       Det gick inte att hämta din position.
+      Prova igen!
 
     .row
       = render partial: 'home/index/preschool', collection: @view
