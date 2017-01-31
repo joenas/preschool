@@ -156,14 +156,14 @@ kompassen = Preschool.create!(
 PreschoolUrl.create!({
   url: "http://malmo.se/Forskola--utbildning/Forskola/Forskola-och-pedagogisk-omsorg/Oppna-forskolor/Oppna-forskolor/Kompassens-oppna-forskola.html",
   hours_element: ".sv-decoration-Huvudbild + .sv-text-portlet",
-  extras_element: "#derp",
+  extras_element: "#breadcrumbs",
   preschool: kompassen
 })
 
 PreschoolUrl.create!({
   url: "http://kompassensoppnaforskola.blogspot.se/",
   hours_element: ".blog-posts",
-  extras_element: "#derp",
+  extras_element: "#header-inner",
   preschool: kompassen
 })
 
@@ -266,7 +266,7 @@ solstral = Preschool.create!(
 PreschoolUrl.create!({
   url: "http://malmo.se/Forskola--utbildning/Forskola/Forskola-och-pedagogisk-omsorg/Oppna-forskolor/Oppna-forskolor/Oppen-forskola---Familjecentralen-Solstralen.html",
   hours_element: "#h-Oppettider + p",
-  extras_element: "#derp",
+  extras_element: "#breadcrumbs",
   preschool: solstral
 })
 
@@ -303,7 +303,7 @@ hera = Preschool.create!(
 PreschoolUrl.create!({
   url: "http://malmo.se/Forskola--utbildning/Forskola/Forskola-och-pedagogisk-omsorg/Oppna-forskolor/Oppna-forskolor/Oppna-forskolan-Hera.html",
   hours_element: "#h-Oppettider + p",
-  extras_element: "#derp",
+  extras_element: "#breadcrumbs",
   preschool: hera
 })
 
