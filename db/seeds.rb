@@ -162,7 +162,7 @@ PreschoolUrl.create!({
 
 PreschoolUrl.create!({
   url: "http://kompassensoppnaforskola.blogspot.se/",
-  hours_element: ".blog-posts",
+  hours_element: ".date-outer:first-child'",
   extras_element: "#header-inner",
   preschool: kompassen
 })
