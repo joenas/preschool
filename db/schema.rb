@@ -10,22 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170130143857) do
+ActiveRecord::Schema.define(version: 20170131155352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "cube"
   enable_extension "earthdistance"
   enable_extension "hstore"
-
-  create_table "changes", force: :cascade do |t|
-    t.integer  "preschool_id"
-    t.string   "state"
-    t.hstore   "data"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.index ["preschool_id"], name: "index_changes_on_preschool_id", using: :btree
-  end
 
   create_table "hours", force: :cascade do |t|
     t.integer  "preschool_id"
@@ -60,6 +51,15 @@ ActiveRecord::Schema.define(version: 20170130143857) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["position"], name: "index_preschools_on_position", using: :gist
+  end
+
+  create_table "site_changes", force: :cascade do |t|
+    t.integer  "preschool_id"
+    t.string   "state"
+    t.hstore   "data"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["preschool_id"], name: "index_site_changes_on_preschool_id", using: :btree
   end
 
 end

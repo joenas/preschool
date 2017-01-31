@@ -1,4 +1,4 @@
-class Change < ActiveRecord::Base
+class SiteChange < ActiveRecord::Base
   extend Enumerize
 
   belongs_to :preschool
@@ -6,6 +6,6 @@ class Change < ActiveRecord::Base
   validates_presence_of :preschool
   validates_presence_of :data
 
-  enumerize :state, in: [:active, :handled], default: :active
+  enumerize :state, in: [:new, :active, :done], default: :new
 
 end

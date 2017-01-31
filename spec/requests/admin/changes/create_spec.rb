@@ -1,20 +1,20 @@
 require 'rails_helper'
 
-# POST /admin/changes
-describe "Creating changes", type: :request do
+# POST /admin/site_changes
+describe "Creating site_changes", type: :request do
 
   Given(:username){ ENV['HTTP_USERNAME'] }
   Given(:password){ ENV['HTTP_PASSWORD'] }
   Given(:credentials) {{'HTTP_AUTHORIZATION' => ActionController::HttpAuthentication::Basic.encode_credentials(username, password)}}
   Given(:options){ credentials.merge(format: 'json') }
 
-  When{post admin_changes_path, params: params, headers: options}
+  When{post admin_site_changes_path, params: params, headers: options}
 
   context "with a properly formatted request" do
     Given(:params){{preschool_id: preschool.id, data: {hours: 'something', extra: 'extrastuff'}}}
     Given(:parsed_response){JSON.parse response.body}
     Given(:preschool){create :preschool}
-    Given(:change){Change.last}
+    Given(:change){SiteChange.last}
 
     Then{expect(response.status).to eq 200}
     And{expect(change.preschool).to eq preschool}

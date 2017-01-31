@@ -4,8 +4,7 @@ class Preschool < ActiveRecord::Base
   attribute :position, :legacy_point
 
   has_many :hours
-  # TODO rename...
-  has_many :possible_changes, class_name: 'Change'
+  has_many :site_changes
 
   validates_presence_of :name
   validates_presence_of :url

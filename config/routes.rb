@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   namespace :admin do
-    resources :changes
+    resources :site_changes
     resources :preschools
     root to: 'preschools#index'
   end
