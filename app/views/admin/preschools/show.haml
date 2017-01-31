@@ -33,3 +33,20 @@
                 = hour.closes_short
               %td.col
                 %small= hour.note
+
+  .col-md-6
+    .card.mb-3
+      %h4.card-header
+        Förändringar
+      %ul.list-group.list-group-flush
+        - @view.possible_changes.order(created_at: :asc).each do |change|
+          %li.list-group-item.list-group-item-action.flex-column.align-items-start
+            .d-flex.w-100.justify-content-between
+              %h5.mb-1
+                %span.badge.badge-info
+                  = change.state
+              %small= time_ago_in_words(change.created_at)
+            - change.data.each do |key, value|
+              %p.mb-1
+                %strong= key
+              %pre= value

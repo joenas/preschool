@@ -11,7 +11,7 @@ describe "Creating changes", type: :request do
   When{post admin_changes_path, params: params, headers: options}
 
   context "with a properly formatted request" do
-    Given(:params){{preschool_id: preschool.id, data: {text: 'something'}}}
+    Given(:params){{preschool_id: preschool.id, data: {hours: 'something', extra: 'extrastuff'}}}
     Given(:parsed_response){JSON.parse response.body}
     Given(:preschool){create :preschool}
     Given(:change){Change.last}
@@ -19,7 +19,7 @@ describe "Creating changes", type: :request do
     Then{expect(response.status).to eq 200}
     And{expect(change.preschool).to eq preschool}
     And{expect(change.state).to eq 'active'}
-    And{expect(change.data).to eq({'text' => 'something'})}
+    And{expect(change.data).to eq({'hours' => 'something', 'extra' => 'extrastuff'})}
   end
 
   context "with a malformatted request" do
