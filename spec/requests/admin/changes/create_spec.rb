@@ -18,7 +18,7 @@ describe "Creating site_changes", type: :request do
 
     Then{expect(response.status).to eq 200}
     And{expect(change.preschool).to eq preschool}
-    And{expect(change.state).to eq 'active'}
+    And{expect(change.state).to eq 'new'}
     And{expect(change.data).to eq({'hours' => 'something', 'extra' => 'extrastuff'})}
   end
 
