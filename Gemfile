@@ -44,7 +44,8 @@ end
 
 group :development do
   gem 'better_errors'
-  gem 'binding_of_caller', :platforms=>[:ruby_24], :require=>false
+  # https://github.com/heroku/heroku-buildpack-ruby/pull/531
+  #gem 'binding_of_caller', :platforms=>[:mri_24]
   gem 'guard-bundler'
   gem 'guard-rails'
   gem 'html2haml'
