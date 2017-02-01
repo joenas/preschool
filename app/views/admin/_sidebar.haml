@@ -7,3 +7,6 @@
       %li.nav-item
         %a.nav-link{href: admin_preschool_path(preschool), class: ('active' if params[:id].to_i == preschool.id)}
           = preschool.name
+          - if preschool.site_changes.recent.any?
+            %span.badge.badge-info.pull-right
+              = preschool.site_changes.recent.count

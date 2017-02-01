@@ -8,6 +8,8 @@ class SiteChange < ActiveRecord::Base
 
   enumerize :state, in: [:new, :active, :done], default: :new
 
+  scope :recent, -> {where(state: :new)}
+
   def new_or_active?
     state.to_sym.in?([:new, :active])
   end
