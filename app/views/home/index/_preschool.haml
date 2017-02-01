@@ -23,3 +23,7 @@
         = link_to "Hemsida", preschool.url
         %br/
         = link_to "Karta", "https://www.google.com/maps/place/#{preschool.address_params}"
+      - if preschool.active_site_changes
+        .site_changes
+          = fa_icon :warning, class: 'float-left mr-1 mt-1'
+          = sanitize(preschool.active_site_change.data['extra'], tags: %w(p br), attributes: %w(href))

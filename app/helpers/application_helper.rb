@@ -33,7 +33,6 @@ module ApplicationHelper
   end
 
   def preschool_closes_class_debug(preschool)
-    #return ['warning', 'info', 'danger', 'success'].sample
     debug_time_now = Time.new(2017,01,27,13,45,00)
     last = preschool.hours.today.last.closes
     debug_time = Time.new(2017,01,27,last.hour,last.min,00)
@@ -47,6 +46,8 @@ module ApplicationHelper
       'warning'
     when (0.0)..(0.5)
       'danger'
+    else
+      'default'
     end
   end
 

@@ -29,14 +29,24 @@ module Preschools
         FROM hours
         WHERE true
           AND hours.day_of_week = extract(dow from current_date)
+      ),
+      active_site_changes AS
+      (
+        SELECT preschool_id
+        FROM site_changes
+        WHERE true
+        AND state = 'active'
+        GROUP BY preschool_id
       )
       SELECT
       preschools.*,
       #{position_query_select}
       data.closes,
-      COALESCE(data.is_open, false) as is_open
+      COALESCE(data.is_open, false) as is_open,
+      active_site_changes.preschool_id IS NOT NULL as active_site_changes
       FROM preschools
       LEFT JOIN data ON data.preschool_id = preschools.id AND data.is_open
+      LEFT JOIN active_site_changes ON active_site_changes.preschool_id = preschools.id
       WHERE true
 
       ORDER BY #{position_query_order_by} COALESCE(data.is_open, false) DESC, data.closes DESC

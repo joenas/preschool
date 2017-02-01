@@ -16,4 +16,8 @@ class Preschool < ActiveRecord::Base
     attributes.slice('street_name', 'postal_code', 'city').values.join(',') << ",Sweden"
   end
 
+  def active_site_change
+    site_changes.where(state: :active).first
+  end
+
 end
