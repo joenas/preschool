@@ -1,0 +1,15 @@
+%li.list-group-item.list-group-item-action.flex-column.align-items-start
+  .d-flex.w-100.justify-content-between
+    %h5.mb-1
+      %span.badge{class: "badge-#{site_change.state}"}
+        = site_change.state
+      - if site_change.state.new?
+        = link_to 'Publicera', admin_site_change_path(site_change, state: :active), method: :put, class: 'btn btn-sm btn-success'
+      - if site_change.new_or_active?
+        = link_to 'Stäng', admin_site_change_path(site_change, state: :done), method: :put, class: 'btn btn-sm btn-secondary'
+    %small= time_ago_in_words(site_change.created_at)
+  - if site_change.new_or_active?
+    - site_change.data.each do |key, value|
+      %p.mb-1
+        %strong= key
+      = highlight(sanitize(value, tags: %w(p ul li br), attributes: %w(href)), 'Öppettider')

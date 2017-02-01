@@ -1,4 +1,9 @@
 .row
+  .col
+    - flash.each do |type,message|
+      .alert.alert-danger=message
+
+.row
   .col-md-6
     .card.mb-3
       %h4.card-header
@@ -39,14 +44,4 @@
       %h4.card-header
         Förändringar
       %ul.list-group.list-group-flush
-        - @view.site_changes.order(created_at: :desc).each do |change|
-          %li.list-group-item.list-group-item-action.flex-column.align-items-start
-            .d-flex.w-100.justify-content-between
-              %h5.mb-1
-                %span.badge.badge-info
-                  = change.state
-              %small= time_ago_in_words(change.created_at)
-            - change.data.each do |key, value|
-              %p.mb-1
-                %strong= key
-              = highlight(sanitize(simple_format(value), tags: %w(p ul li a), attributes: %w(href)).gsub(/&nbsp;/i,""), 'Öppettider')
+        = render partial: 'admin/preschools/show/site_change', collection: @view.site_changes.order(created_at: :desc)

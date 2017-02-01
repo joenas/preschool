@@ -34,3 +34,4 @@ sv:
       after: "måste vara senare än %{restriction}"
       on_or_after: "måste vara på eller senare än %{restriction}"
       identical: 'är identiska'
+      inclusion: "'%{value}' ingår inte i de tillåtna värdena"
