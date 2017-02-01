@@ -39,7 +39,7 @@
       %h4.card-header
         Förändringar
       %ul.list-group.list-group-flush
-        - @view.site_changes.order(created_at: :asc).each do |change|
+        - @view.site_changes.order(created_at: :desc).each do |change|
           %li.list-group-item.list-group-item-action.flex-column.align-items-start
             .d-flex.w-100.justify-content-between
               %h5.mb-1
@@ -49,4 +49,4 @@
             - change.data.each do |key, value|
               %p.mb-1
                 %strong= key
-              = highlight(simple_format(value), 'Öppettider')
+              = highlight(sanitize(simple_format(value), tags: %w(p ul li a), attributes: %w(href)).gsub(/&nbsp;/i,""), 'Öppettider')
