@@ -7,19 +7,10 @@ class Hour < ActiveRecord::Base
   validates_presence_of :opens
   validates_presence_of :closes
 
-  default_scope { order(day_of_week: :asc) }
+  default_scope { order(day_of_week: :asc, opens: :asc, closes: :asc) }
 
   scope :today, -> {
     where("day_of_week = extract(dow from current_date)")
-    .order(opens: :asc, closes: :asc)
-  }
-
-  scope :regular, -> {
-    where(note: nil)
-  }
-
-  scope :non_regular, -> {
-    where.not(note: nil)
   }
 
   # Goddamn this is annoying
