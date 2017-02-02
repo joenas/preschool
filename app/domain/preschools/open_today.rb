@@ -49,7 +49,7 @@ module Preschools
       LEFT JOIN active_site_changes ON active_site_changes.preschool_id = preschools.id
       WHERE true
 
-      ORDER BY #{position_query_order_by} COALESCE(data.is_open, false) DESC, data.closes DESC
+      ORDER BY #{position_query_order_by} COALESCE(data.is_open, false) DESC, data.closes DESC, preschools.name ASC
       EOF
     end
 

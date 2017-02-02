@@ -120,7 +120,7 @@ nydala = Preschool.create!(
 PreschoolUrl.create!({
   url: "http://malmo.se/Forskola--utbildning/Forskola/Forskola-och-pedagogisk-omsorg/Oppna-forskolor/Oppna-forskolor/Familjehuset-Nydala-oppna-forskolan.html",
   hours_element: "#Text1 + .sv-text-portlet-content",
-  extras_element: "p.preamble",
+  extras_element: "#Text + .in-focus",
   preschool: nydala
 })
 
