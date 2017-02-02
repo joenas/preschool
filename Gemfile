@@ -36,6 +36,9 @@ gem 'clockwork', '~> 2.0'
 gem 'faraday', '~> 0.11.0'
 gem 'faraday_middleware', '~> 0.11.0.1'
 
+# Forms
+gem 'simple_form', '~> 3.4'
+
 group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
