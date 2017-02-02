@@ -14,4 +14,8 @@ class SiteChange < ActiveRecord::Base
     state.to_sym.in?([:new, :active])
   end
 
+  def note_html
+    note.gsub("\n", "<br>").html_safe
+  end
+
 end

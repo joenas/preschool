@@ -1,0 +1,18 @@
+%button.btn.btn-primary.btn-sm{data: {target: "#modal-change-#{site_change.id}", toggle: "modal"}} Publicera
+
+.modal{id: "modal-change-#{site_change.id}", :tabindex => "-1"}
+  .modal-dialog.modal-lg
+    .modal-content
+      = simple_form_for [:admin, site_change], method: :put do |form|
+        .modal-header
+          %h5.modal-title Publicera avvikelse
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+            %span{"aria-hidden" => "true"} &#215;
+        .modal-body
+          = form.input_field :id, as: :hidden, value: site_change.id
+          = form.input_field :state, as: :hidden, value: :active
+          = form.input :note, as: :text, input_html: {value: remove_ws(strip_tags(site_change.data.fetch('extra'))), rows: 6}
+
+        .modal-footer
+          %button.btn.btn-secondary{"data-dismiss" => "modal", type: :button} Avbryt
+          = form.submit 'Spara', class: 'btn btn-success'

@@ -9,11 +9,14 @@
         sedan
     .buttons
       - if site_change.state.new?
-        = link_to 'Publicera', admin_site_change_path(site_change, state: :active), method: :put, class: 'btn btn-sm btn-success'
+        = render partial: 'admin/preschools/show/site_change_modal', locals: {site_change: site_change}
       - if site_change.new_or_active?
-        = link_to 'Stäng', admin_site_change_path(site_change, state: :done), method: :put, class: 'btn btn-sm btn-secondary'
-  - if site_change.new_or_active?
+        = link_to 'Stäng', admin_site_change_path(site_change, site_change: {state: :done}), method: :put, class: 'btn btn-sm btn-secondary'
+  - if site_change.state.new?
     - site_change.data.each do |key, value|
       %p.mb-1
         %strong= key
       = highlight(sanitize(value, tags: %w(p ul li br), attributes: %w(href)), 'Öppettider')
+  - elsif site_change.state.active?
+    %p.mb-1
+      = site_change.note_html

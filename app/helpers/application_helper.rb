@@ -1,5 +1,9 @@
 module ApplicationHelper
 
+  def remove_ws(str)
+    str.gsub(/[[:space:]]{2,}/, '').strip
+  end
+
   # I'm lovin' it
   def link_to_if_else_span(predicate, options)
     url = options.delete(:href)
