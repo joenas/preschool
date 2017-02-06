@@ -9,7 +9,7 @@
       - if preschool.closed_for_day
         %h6.mb-3
           Stängd, morgondagens tider:
-        = render partial: 'home/index/hour', collection: preschool.hours.tomorrow
+        = render partial: 'home/index/hour', collection: @view.hours_tomorrow[preschool.id]
 
       - else
         %h6.mb-3.font-weight-normal
@@ -27,7 +27,7 @@
         = link_to "Hemsida", preschool.url
         %br/
         = link_to "Karta", "https://www.google.com/maps/place/#{preschool.address_params}"
-      - if preschool.active_site_changes
+      - if preschool.active_site_changes_note
         .site_changes
           = fa_icon :warning, class: 'float-left mr-1 mt-1'
-          = preschool.active_site_change.note_html
+          = note_html(preschool.active_site_changes_note)

@@ -4,6 +4,10 @@ module ApplicationHelper
     str.gsub(/[[:space:]]{2,}/, '').strip
   end
 
+  def note_html(note)
+    note.gsub("\n", "<br>").html_safe
+  end
+
   # I'm lovin' it
   def link_to_if_else_span(predicate, options)
     url = options.delete(:href)

@@ -21,6 +21,10 @@ module Preschools
       @hours_today ||= Hour.today.group_by(&:preschool_id)
     end
 
+    def hours_tomorrow
+      @hours_tomorrow ||= Hour.tomorrow.group_by(&:preschool_id)
+    end
+
     private
 
     def with_todays_hours
@@ -39,11 +43,13 @@ module Preschools
           AND hours.day_of_week = extract(dow from current_date)
       ),
       active_site_changes AS (
-        SELECT preschool_id
+        SELECT
+          preschool_id,
+          note
         FROM site_changes
         WHERE true
           AND state = 'active'
-        GROUP BY preschool_id
+        ORDER BY created_at DESC
       ),
       todays_hours AS (
         SELECT
@@ -60,9 +66,9 @@ module Preschools
         #{position_query_select}
         data.closes,
         COALESCE(data.is_open, false) as is_open,
-        active_site_changes.preschool_id IS NOT NULL as active_site_changes,
         COALESCE(todays_hours.closed_for_day, true) AS closed_for_day,
-        todays_hours.opens_again
+        todays_hours.opens_again,
+        active_site_changes.note AS active_site_changes_note
       FROM preschools
       LEFT JOIN data ON data.preschool_id = preschools.id AND data.is_open
       LEFT JOIN active_site_changes ON active_site_changes.preschool_id = preschools.id
