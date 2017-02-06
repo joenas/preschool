@@ -1,4 +1,5 @@
-$ ->
+window.onload = ->
+
   if ("geolocation" of navigator)
     options =
       timeout: 2500
@@ -11,12 +12,15 @@ $ ->
 
     error = (err) ->
       console.warn('Couldnt get position')
-      $('.alert').show()
+      document.getElementById('alert').style.display = 'block'
+      #$('alert').show()
 
-    $('#toggle_position').on 'click', ->
-      navigator.geolocation.getCurrentPosition success, error, options
+    toggle = document.getElementById('toggle_position')
+    if toggle
+      toggle.onclick = ->
+        navigator.geolocation.getCurrentPosition success, error, options
 
   else
     console.log('no geolocation')
-    $('.alert').show()
+    document.getElementById('alert').style.display = 'none'
 
