@@ -13,7 +13,7 @@ class Preschool < ActiveRecord::Base
   validates_presence_of :city
 
   def address_params
-    attributes.slice('street_name', 'postal_code', 'city').values.join(',') << ",Sweden"
+    URI.escape(attributes.slice('street_name', 'postal_code', 'city').values.join(', ') << ",Sweden")
   end
 
   def active_site_change
