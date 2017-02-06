@@ -38,7 +38,7 @@ module Preschools
         SELECT preschool_id
         FROM site_changes
         WHERE true
-        AND state = 'active'
+          AND state = 'active'
         GROUP BY preschool_id
       ),
       todays_hours AS (
@@ -53,18 +53,17 @@ module Preschools
       )
       SELECT
       preschools.*,
-      #{position_query_select}
-      data.closes,
-      COALESCE(data.is_open, false) as is_open,
-      active_site_changes.preschool_id IS NOT NULL as active_site_changes,
-      COALESCE(todays_hours.closed_for_day, true) AS closed_for_day,
-      todays_hours.opens_again
+        #{position_query_select}
+        data.closes,
+        COALESCE(data.is_open, false) as is_open,
+        active_site_changes.preschool_id IS NOT NULL as active_site_changes,
+        COALESCE(todays_hours.closed_for_day, true) AS closed_for_day,
+        todays_hours.opens_again
       FROM preschools
       LEFT JOIN data ON data.preschool_id = preschools.id AND data.is_open
       LEFT JOIN active_site_changes ON active_site_changes.preschool_id = preschools.id
       LEFT JOIN todays_hours ON todays_hours.preschool_id = preschools.id
       WHERE true
-
       ORDER BY #{position_query_order_by} COALESCE(data.is_open, false) DESC, data.closes DESC, preschools.name ASC
       EOF
     end
