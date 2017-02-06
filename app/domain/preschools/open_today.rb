@@ -17,6 +17,10 @@ module Preschools
       @current_time ||= Now.new
     end
 
+    def hours_today
+      @hours_today ||= Hour.today.group_by(&:preschool_id)
+    end
+
     private
 
     def with_todays_hours

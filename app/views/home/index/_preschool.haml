@@ -19,7 +19,7 @@
           - else # not open or closed for day => opens soon again
             Öppnar om
             = distance_of_time_in_words(preschool.opens_again, @view.current_time)
-        = render partial: 'home/index/hour', collection: preschool.hours.today
+        = render partial: 'home/index/hour', collection: @view.hours_today[preschool.id]
 
       %p.card-text
         = preschool.street_name
