@@ -6,17 +6,21 @@
         %small= number_to_human(preschool.distance, units: :distance)
 
     .card-block
-      - if preschool.is_open
+      - if preschool.closed_for_day
+        %h6.mb-3
+          Stängd, morgondagens tider:
+        = render partial: 'home/index/hour', collection: preschool.hours.tomorrow
+
+      - else
         %h6.mb-3.font-weight-normal
-          Stänger om
-          = distance_of_time_in_words(Time.current, preschool.closes)
-      - preschool.hours.today.each do |hour|
-        %h6.mb-2
-          %var{class: ('text-success' if hour.open?)}
-            = hour.opens_short
-            \-
-            = hour.closes_short
-          %small.ml-2= hour.note
+          - if preschool.is_open
+            Stänger om
+            = distance_of_time_in_words(@view.current_time, preschool.closes)
+          - else # not open or closed for day => opens soon again
+            Öppnar om
+            = distance_of_time_in_words(preschool.opens_again, @view.current_time)
+        = render partial: 'home/index/hour', collection: preschool.hours.today
+
       %p.card-text
         = preschool.street_name
         %br/

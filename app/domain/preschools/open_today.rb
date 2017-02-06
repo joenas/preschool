@@ -13,6 +13,10 @@ module Preschools
       latitude && longitude
     end
 
+    def current_time
+      @current_time ||= Now.new
+    end
+
     private
 
     def with_todays_hours
@@ -24,18 +28,27 @@ module Preschools
       WITH data AS (
         SELECT
           preschool_id,
-          make_timestamp(date_part('year', NOW())::int,date_part('month', NOW())::int,date_part('day', NOW())::int,date_part('hours', hours.closes)::int,date_part('minutes', hours.closes)::int,0) #{timezone_cast} as closes,
+          hours.closes,
           hours.opens <= (now() #{timezone_cast})::time AND hours.closes >= (now() #{timezone_cast})::time AS is_open
         FROM hours
         WHERE true
           AND hours.day_of_week = extract(dow from current_date)
       ),
-      active_site_changes AS
-      (
+      active_site_changes AS (
         SELECT preschool_id
         FROM site_changes
         WHERE true
         AND state = 'active'
+        GROUP BY preschool_id
+      ),
+      todays_hours AS (
+        SELECT
+          preschool_id,
+          MAX(opens) as opens_again,
+          MAX(closes) < (now() #{timezone_cast})::time AS closed_for_day
+        FROM hours
+        WHERE true
+          AND hours.day_of_week = extract(dow from current_date)
         GROUP BY preschool_id
       )
       SELECT
@@ -43,10 +56,13 @@ module Preschools
       #{position_query_select}
       data.closes,
       COALESCE(data.is_open, false) as is_open,
-      active_site_changes.preschool_id IS NOT NULL as active_site_changes
+      active_site_changes.preschool_id IS NOT NULL as active_site_changes,
+      COALESCE(todays_hours.closed_for_day, true) AS closed_for_day,
+      todays_hours.opens_again
       FROM preschools
       LEFT JOIN data ON data.preschool_id = preschools.id AND data.is_open
       LEFT JOIN active_site_changes ON active_site_changes.preschool_id = preschools.id
+      LEFT JOIN todays_hours ON todays_hours.preschool_id = preschools.id
       WHERE true
 
       ORDER BY #{position_query_order_by} COALESCE(data.is_open, false) DESC, data.closes DESC, preschools.name ASC

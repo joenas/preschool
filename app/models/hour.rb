@@ -13,9 +13,13 @@ class Hour < ActiveRecord::Base
     where("day_of_week = extract(dow from current_date)")
   }
 
+  scope :tomorrow, -> {
+    where("day_of_week = extract(dow from current_date)+1")
+  }
+
   # Goddamn this is annoying
   def open?
-    (opens..closes).include? Now.new
+    (opens..closes).include?(Now.new) && today?
   end
 
   def today?

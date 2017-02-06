@@ -1,0 +1,6 @@
+%h6.mb-2
+  %var{class: ('text-success' if hour.open?)}
+    = hour.opens_short
+    \-
+    = hour.closes_short
+  %small.ml-2= hour.note

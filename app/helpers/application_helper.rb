@@ -23,7 +23,7 @@ module ApplicationHelper
   # God help me
   def preschool_closes_class(preschool)
     return 'default' unless preschool.is_open
-    diff = (preschool.closes - Time.current).to_f/3600
+    diff = (preschool.closes - @view.current_time.to_i).to_f/3600
     case diff
     when (2.0)..(12.0)
       'success'
