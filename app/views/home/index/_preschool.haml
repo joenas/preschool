@@ -29,5 +29,5 @@
         = link_to "Karta", "https://www.google.com/maps/place/#{preschool.address_params}"
       - if preschool.active_site_changes_note
         .site_changes
-          = fa_icon :warning, class: 'float-left mr-1 mt-1'
+          %span.fa.fa-warning.float-left.mr-1.mt-1
           = note_html(preschool.active_site_changes_note)
