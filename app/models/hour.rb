@@ -38,4 +38,25 @@ class Hour < ActiveRecord::Base
     I18n.l(closes, format: :short)
   end
 
+  def closes_json_ld
+    I18n.l(closes, format: :json_ld)
+  end
+
+  def opens_json_ld
+    I18n.l(opens, format: :json_ld)
+  end
+
+  def dow_json_ld
+    I18n.t('date.day_names', locale: :en)[day_of_week]
+  end
+
+  def to_json_ld
+    {
+      "@type" => "OpeningHoursSpecification",
+      "closes" => closes_json_ld,
+      "dayOfWeek" => "http://schema.org/#{dow_json_ld}",
+      "opens" => opens_json_ld
+    }
+  end
+
 end

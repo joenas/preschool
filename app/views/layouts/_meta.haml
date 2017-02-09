@@ -10,8 +10,10 @@
 %meta{content: "https://oppenforskola.se/", :property => "og:url"}/
 %meta{content: "Öppna förskolor i Malmö. Hitta öppettider och avstånd.", :property => "og:description"}/
 %meta{content: "website", :property => "og:type"}/
-//%meta{content: "https://jonnev.se/assets/img/og-image-sm.png", :property => "og:image"}/
 
 %meta{content: "summary", name: "twitter:card"}/
 %meta{content: "Öppna förskolor Malmö", name: "twitter:title"}/
 %meta{content: "Öppna förskolor i Malmö. Hitta öppettider och avstånd.", name: "twitter:description"}/
+
+%script{type: "application/ld+json"}
+  = raw @view.map(&:to_json_ld).to_json

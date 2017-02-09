@@ -35,6 +35,7 @@ sv:
     formats:
       default: "%a, %d %b %Y %H:%M:%S %z"
       short: "%H:%M"
+      json_ld: "%H:%M:%S"
       long: "%B %d, %Y %H:%M"
       short_date: "%Y-%m-%d"
     am: "am"

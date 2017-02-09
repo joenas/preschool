@@ -20,4 +20,21 @@ class Preschool < ActiveRecord::Base
     site_changes.where(state: :active).first
   end
 
+  def to_json_ld
+    {
+
+      "@context" => "http://schema.org",
+      "@type" => "Preschool",
+      "url" => url,
+      "name" => name,
+      "address" => {
+        "@type" => "PostalAddress",
+        "addressLocality" => city,
+        "postalCode" => postal_code,
+        "streetAddress" => street_name
+      },
+      #"openingHoursSpecification" => hours.map(&:to_json_ld)
+    }
+  end
+
 end
