@@ -23,7 +23,7 @@ gem 'coffee-rails', '~> 4.2', '>= 4.2.1'
 gem 'therubyracer', '~> 0.12.1', platforms: :ruby
 #gem 'jquery-rails'
 #gem 'turbolinks'
-#gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.1'
+gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.1'
 
 # App configuration
 gem 'dotenv-rails', '~> 2.1', '>= 2.1.2'
