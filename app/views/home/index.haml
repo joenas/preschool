@@ -4,16 +4,17 @@
       Öppna Förskolor Malmö
 
     %nav.nav
-      %span.nav-link.active
-        Sortering:
+      .nav-link.active
+        %span
+          Sortering:
 
       = link_to_if_else_span @view.position?, href: root_path, class: 'nav-link' do
-        %span.fa.fa-clock-o
-        Öppettider
+        = image_tag "clock.svg", class: 'icon'
+        %span Öppettider
 
       = link_to_if_else_span !@view.position?, href: '#', id: 'toggle_position', class: 'nav-link' do
-        %span.fa.fa-map-marker
-        Avstånd
+        = image_tag "map-marker.svg", class: 'icon'
+        %span Avstånd
 
     #alert.alert.alert-warning{role: :alert, style: "display: none;"}
       Det gick inte att hämta din position.
