@@ -21,7 +21,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2', '>= 4.2.1'
 gem 'therubyracer', '~> 0.12.1', platforms: :ruby
-#gem 'jquery-rails'
+gem 'jquery-rails'
 #gem 'turbolinks'
 gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.1'
 
