@@ -12,8 +12,13 @@
 
   %body
     = content_for :nav
-    %nav.navbar.navbar-inverse.fixed-top.bg-inverse
+    %nav.navbar.navbar-inverse.fixed-top.bg-inverse.navbar-toggleable-md
       %a.navbar-brand{href: admin_preschools_path} Admin
+
+      %ul.navbar-nav
+        %li.nav-item.active
+          %a.nav-link{href: root_path, target: :_blank}
+            Hemsida
 
     %div.container-fluid
       .row
