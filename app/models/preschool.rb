@@ -5,6 +5,7 @@ class Preschool < ActiveRecord::Base
 
   has_many :hours
   has_many :site_changes
+  has_many :urls, class_name: 'PreschoolUrl'
 
   validates_presence_of :name
   validates_presence_of :url

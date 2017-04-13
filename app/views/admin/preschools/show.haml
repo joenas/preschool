@@ -39,6 +39,25 @@
               %td.col
                 %small= hour.note
 
+    .card.mb-3
+      %h4.card-header
+        URLer
+      %ul.list-group.list-group-flush
+        - @view.urls.each do |url|
+          %li.list-group-item
+            %ul.list-unstyled
+              %li
+                %a{href: url.url}
+                  %samp
+                    = url.url.truncate(70)
+              %li
+                %strong Extra
+                %code= url.extras_element
+              %li
+                %strong Hours
+                %code= url.hours_element
+
+
   .col-md-6
     .card.mb-3
       %h4.card-header
