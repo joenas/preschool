@@ -40,6 +40,10 @@ gem 'faraday_middleware', '~> 0.11.0.1'
 # Forms
 gem 'simple_form', '~> 3.4'
 
+# NLP
+#gem 'classifier-reborn', '~> 2.1'
+gem 'classifier-reborn', git: 'https://github.com/jekyll/classifier-reborn'
+
 group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'

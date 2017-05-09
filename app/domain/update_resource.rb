@@ -1,3 +1,4 @@
+# TODO multiple listeners!
 class UpdateResource
   attr_reader :params, :klass, :listener
   def initialize(klass:, params: {}, listener:)

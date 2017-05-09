@@ -16,6 +16,7 @@ class Admin::SiteChangesController < AdminController
     respond_with_failure(resource.errors)
   end
 
+  # TODO train classifier on update
   def update
     UpdateResource.new(klass: SiteChange, params: update_params, listener: self).perform
   end

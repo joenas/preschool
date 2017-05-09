@@ -10,4 +10,19 @@ namespace :preschools do
       preschool.save!
     end
   end
+
+  desc "Train the classifier"
+  task :train_classifier, [] => :environment do ||
+    texts = SiteChange.pluck("data -> 'extra'");
+    sanitized = texts.flat_map {|text| Rails::Html::FullSanitizer.new.sanitize(text).gsub(/\s{2,}/,"\n").strip.lines};
+
+    notes = SiteChange.where.not(note: nil).pluck(:note);
+    good = notes.flat_map {|note| note.gsub(/\s{2,}/,"\n").strip.lines};
+
+    regex = good.join("|");
+    bad = sanitized.reject{|str| str.match(/#{regex}/)};
+
+    bad.each {|str| ServiceRegistry.classifier.train 'BadSiteChange', str.strip}
+    good.each {|gd| ServiceRegistry.classifier.train 'GoodSiteChange', gd.strip}
+  end
 end
