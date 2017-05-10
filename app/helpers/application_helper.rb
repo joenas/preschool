@@ -42,7 +42,7 @@ module ApplicationHelper
 
   def preschool_closes_class_debug(preschool)
     debug_time_now = Time.new(2017,01,27,13,45,00)
-    last = preschool.hours.today.last.closes
+    last = preschool.hours.today.last.try(:closes) || debug_time_now+1.hours
     debug_time = Time.new(2017,01,27,last.hour,last.min,00)
     diff = (debug_time - debug_time_now).to_f/3600
     case diff

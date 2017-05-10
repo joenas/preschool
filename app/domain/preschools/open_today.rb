@@ -45,11 +45,11 @@ module Preschools
       active_site_changes AS (
         SELECT
           preschool_id,
-          note
+          string_agg(note, '\n\n') as note
         FROM site_changes
         WHERE true
           AND state = 'active'
-        ORDER BY created_at DESC
+        GROUP BY preschool_id
       ),
       todays_hours AS (
         SELECT
