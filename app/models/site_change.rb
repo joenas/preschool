@@ -19,11 +19,13 @@ class SiteChange < ActiveRecord::Base
   end
 
   def extra_sanitized
-    Rails::Html::FullSanitizer.new.sanitize(data['extra'].to_s).gsub(/\s{2,}/,"\n").strip
+    Rails::Html::FullSanitizer.new.sanitize(data['extra'].to_s).gsub(/\s{2,}/,"\n").gsub("\u00A0", "").strip
   end
 
   def note_prediction
-    @note_prediction ||= extra_sanitized.lines.map(&:strip).select {|s| ServiceRegistry.classifier.classify(s) == 'Goodsitechange'}.join("\n").presence
+    @note_prediction ||= extra_sanitized.lines.map(&:strip)
+                          .select {|s| !s.empty? && ServiceRegistry.classifier.classify(s) == 'Goodsitechange'}
+                          .join("\n").presence
   end
 
 end

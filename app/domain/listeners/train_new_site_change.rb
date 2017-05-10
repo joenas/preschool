@@ -2,6 +2,7 @@ module Listeners
   class TrainNewSiteChange
 
     def update_success(site_change, params)
+      return if site_change.state.done?
       original_text = site_change.extra_sanitized
       # TODO make command or whatever
       good = site_change.note.lines.map(&:strip)
