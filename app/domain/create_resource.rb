@@ -1,6 +1,6 @@
 class CreateResource
-  def initialize(klass:, params: {}, listener:)
-    @klass, @params, @listener = klass, params, listener
+  def initialize(klass:, params: {}, listeners: [])
+    @klass, @params, @listeners = klass, params, listeners
   end
 
   def perform
@@ -8,6 +8,6 @@ class CreateResource
       yield res if block_given?
     end
     result = resource.save ? :create_success : :create_failure
-    @listener.send(result, resource, @params)
+    Array(@listeners).each{|listener| listener.public_send(result, resource, @params)}
   end
 end

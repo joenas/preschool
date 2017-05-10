@@ -1,8 +1,7 @@
-# TODO multiple listeners!
 class UpdateResource
-  attr_reader :params, :klass, :listener
-  def initialize(klass:, params: {}, listener:)
-    @klass, @params, @listener = klass, params, listener
+  attr_reader :params, :klass, :listeners
+  def initialize(klass:, params: {}, listeners: [])
+    @klass, @params, @listeners = klass, params, listeners
   end
 
   def perform
@@ -10,6 +9,6 @@ class UpdateResource
     resource.attributes = params.except('id')
     yield resource if block_given?
     result = resource.save ? :update_success : :update_failure
-    listener.send(result, resource, params)
+    Array(listeners).each{|listener| listener.public_send(result, resource, params)}
   end
 end
