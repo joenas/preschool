@@ -20,7 +20,7 @@ class Admin::SiteChangesController < AdminController
   end
 
   def update
-    UpdateResource.new(klass: SiteChange, params: update_params, listeners: [self, TrainClassifier.new]).perform
+    UpdateResource.new(klass: SiteChange, params: update_params, listeners: [self, TrainNewSiteChange.new]).perform
   end
 
   def update_success(resource, _params)

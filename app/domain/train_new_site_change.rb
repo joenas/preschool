@@ -1,4 +1,4 @@
-class TrainClassifier
+class TrainNewSiteChange
 
   def update_success(site_change, params)
     original_text = site_change.extra_sanitized
