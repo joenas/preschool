@@ -1,4 +1,4 @@
-%button.btn.btn-primary.btn-sm{data: {target: "#modal-change-#{site_change.id}", toggle: "modal"}} Publicera
+%button.btn.btn-primary.btn-sm{data: {target: "#modal-change-#{site_change.id}", toggle: "modal"}} Redigera
 
 .modal{id: "modal-change-#{site_change.id}", :tabindex => "-1"}
   .modal-dialog.modal-lg
@@ -15,4 +15,4 @@
 
         .modal-footer
           %button.btn.btn-secondary{"data-dismiss" => "modal", type: :button} Avbryt
-          = form.submit 'Spara', class: 'btn btn-success'
+          = form.submit 'Publicera', class: 'btn btn-success'

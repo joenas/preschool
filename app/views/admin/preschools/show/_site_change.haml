@@ -9,10 +9,15 @@
         sedan
     .buttons
       - if site_change.state.new?
+        = render partial: 'admin/preschools/show/fast_publish', locals: {site_change: site_change}
         = render partial: 'admin/preschools/show/site_change_modal', locals: {site_change: site_change}
       - if site_change.new_or_active?
         = link_to 'Stäng', admin_site_change_path(site_change, site_change: {state: :done}), method: :put, class: 'btn btn-sm btn-secondary'
   - if site_change.state.new?
+    - if site_change.note_prediction
+      %h4 Förslag
+      %p.lead
+        = note_html(site_change.note_prediction)
     - site_change.data.each do |key, value|
       %p.mb-1
         %strong= key

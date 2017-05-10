@@ -1,0 +1,6 @@
+- if site_change.note_prediction
+  = simple_form_for [:admin, site_change], method: :put, html: {class: 'd-inline'} do |form|
+    = form.input_field :id, as: :hidden, value: site_change.id
+    = form.input_field :state, as: :hidden, value: :active
+    = form.input :note, as: :hidden, input_html: {value: site_change.note_prediction}
+    = form.submit 'Publicera', class: 'btn btn-sm btn-success'
