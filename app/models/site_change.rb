@@ -19,7 +19,7 @@ class SiteChange < ActiveRecord::Base
   end
 
   def extra_sanitized
-    Rails::Html::FullSanitizer.new.sanitize(data['extra']).gsub(/\s{2,}/,"\n").strip
+    Rails::Html::FullSanitizer.new.sanitize(data['extra'].to_s).gsub(/\s{2,}/,"\n").strip
   end
 
   def note_prediction

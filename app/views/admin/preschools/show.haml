@@ -63,4 +63,4 @@
       %h4.card-header
         Förändringar
       %ul.list-group.list-group-flush
-        = render partial: 'admin/preschools/show/site_change', collection: @view.site_changes.order("state IN ('active', 'new') DESC, created_at DESC")
+        = render partial: 'admin/preschools/show/site_change', collection: @view.site_changes.order("state = 'active' DESC, state ='new' DESC, created_at DESC")

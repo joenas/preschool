@@ -3,8 +3,11 @@ class Admin::SiteChangesController < AdminController
   def index; end
 
   def create
-    CreateResource.new(klass: SiteChange, params: create_params, listener: self).perform do |change|
+    CreateResource.new(klass: SiteChange, params: create_params, listeners: [self]).perform do |change|
       change.preschool = Preschool.find_by_id(params[:preschool_id])
+      if change.note_prediction
+        change.attributes = {note: change.note_prediction, state: :active}
+      end
     end
   end
 
@@ -16,9 +19,8 @@ class Admin::SiteChangesController < AdminController
     respond_with_failure(resource.errors)
   end
 
-  # TODO train classifier on update
   def update
-    UpdateResource.new(klass: SiteChange, params: update_params, listener: self).perform
+    UpdateResource.new(klass: SiteChange, params: update_params, listeners: [self, TrainClassifier.new]).perform
   end
 
   def update_success(resource, _params)

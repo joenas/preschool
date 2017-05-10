@@ -10,8 +10,16 @@ describe "Creating site_changes", type: :request do
 
   When{post admin_site_changes_path, params: params, headers: options}
 
+  Given(:new_note){'stängt'}
+
+  before :each do
+    #Redis.new.flushall
+    #ServiceRegistry.reset
+  end
+
   context "with a properly formatted request" do
-    Given(:params){{preschool_id: preschool.id, data: {hours: 'something', extra: 'extrastuff'}}}
+    Given(:params){{preschool_id: preschool.id, data: {hours: 'something', extra: 'notimportant'}}}
+    Given{ServiceRegistry.classifier.train 'Badsitechange', params[:data][:extra]}
     Given(:parsed_response){JSON.parse response.body}
     Given(:preschool){create :preschool}
     Given(:change){SiteChange.last}
@@ -19,7 +27,37 @@ describe "Creating site_changes", type: :request do
     Then{expect(response.status).to eq 200}
     And{expect(change.preschool).to eq preschool}
     And{expect(change.state).to eq 'new'}
-    And{expect(change.data).to eq({'hours' => 'something', 'extra' => 'extrastuff'})}
+    And{expect(change.data).to eq({'hours' => 'something', 'extra' => 'notimportant'})}
+    And{expect(change.note).to be_nil}
+  end
+
+  context "with a properly formatted request and prediction found" do
+    Given do
+      File.read('spec/fixtures/good_site_changes.txt').lines.each {|line| ServiceRegistry.classifier.train 'Goodsitechange', line}
+    end
+    Given(:params){{preschool_id: preschool.id, data: {hours: 'something', extra: new_note}}}
+    Given(:parsed_response){JSON.parse response.body}
+    Given(:preschool){create :preschool}
+    Given(:change){SiteChange.last}
+
+    Then{expect(response.status).to eq 200}
+    And{expect(change.preschool).to eq preschool}
+    And{expect(change.state).to eq 'active'}
+    And{expect(change.data).to eq({'hours' => 'something', 'extra' => new_note})}
+    And{expect(change.note).to eq new_note}
+  end
+
+  context "with empty 'extra'" do
+    Given(:params){{preschool_id: preschool.id, data: {hours: 'something', extra: ''}}}
+    Given(:parsed_response){JSON.parse response.body}
+    Given(:preschool){create :preschool}
+    Given(:change){SiteChange.last}
+
+    Then{expect(response.status).to eq 200}
+    And{expect(change.preschool).to eq preschool}
+    And{expect(change.state).to eq 'new'}
+    And{expect(change.data).to eq({'hours' => 'something', 'extra' => ''})}
+    And{expect(change.note).to be_nil}
   end
 
   context "with a malformatted request" do
