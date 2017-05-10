@@ -11,17 +11,28 @@
     %meta{content: "width=device-width, initial-scale=1, user-scalable=no", name:  :viewport}/
 
   %body
-    = content_for :nav
-    %nav.navbar.navbar-inverse.fixed-top.bg-inverse.navbar-toggleable-md
-      %a.navbar-brand{href: admin_preschools_path} Admin
-
-      %ul.navbar-nav
-        %li.nav-item.active
-          %a.nav-link{href: root_path, target: :_blank}
-            Hemsida
-
-    %div.container-fluid
-      .row
+    #wrapper
+      #sidebar-wrapper.bg-faded
         = render 'admin/sidebar'
-        %main.col-md-10.pt-3.offset-md-2.mt-5
-          = yield
+      #page-content-wrapper
+        = content_for :nav
+        %nav.navbar.navbar-inverse.bg-inverse.fixed-top
+          .d-flex.flex-row
+            %button#menu-toggle.navbar-toggler.hidden-lg-up{type: "button"}
+              %span.navbar-toggler-icon
+            %ul.navbar-nav
+              %li.nav-item.active
+                %a.navbar-brand.ml-2{href: admin_preschools_path} Admin
+              %li.nav-item.active
+                %a.nav-link{href: root_path, target: :_blank}
+                  Hemsida
+        .container-fluid
+          .row
+            .col-lg-12
+              = yield
+
+    :javascript
+      $("#menu-toggle").click(function(e) {
+          e.preventDefault();
+          $("#wrapper").toggleClass("toggled");
+      });

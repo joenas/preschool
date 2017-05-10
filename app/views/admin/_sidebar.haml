@@ -1,14 +1,13 @@
-%nav.col-md-2.bg-faded.sidebar
-  %ul.nav.nav-pills.flex-column
+%ul.nav-pills.sidebar-nav
+  %li.nav-item
+    %h4.ml-3.mt-3
+      Förskolor
+  - Preschool.order(:name).each do |preschool|
     %li.nav-item
-      %h4.ml-3
-        Förskolor
-    - Preschool.order(:name).each do |preschool|
-      %li.nav-item
-        %a.nav-link{href: admin_preschool_path(preschool), class: ('active' if params[:id].to_i == preschool.id)}
-          = preschool.name
-          - preschool.site_changes.active_or_recent.grouped_by_state.count.each do |state, count|
+      %a.nav-link{href: admin_preschool_path(preschool), class: ('active' if params[:id].to_i == preschool.id)}
+        = preschool.name
+        - preschool.site_changes.active_or_recent.grouped_by_state.count.each do |state, count|
 
-            %span.badge.pull-right.ml-1{class: "badge-#{state}"}
-              = count
+          %span.badge.pull-right.ml-1{class: "badge-#{state}"}
+            = count
 

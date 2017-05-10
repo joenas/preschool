@@ -1,31 +1,70 @@
 @import 'bootstrap'
 @import 'font-awesome'
 
-.sidebar
-  position: fixed
-  top: 51px
-  bottom: 0
-  left: 0
-  z-index: 1000
-  padding: 20px
+
+// Modified from https://startbootstrap.com/template-overviews/simple-sidebar/
+body
   overflow-x: hidden
-  overflow-y: auto
-  border-right: 1px solid #eee
 
-.sidebar
+#wrapper
   padding-left: 0
-  padding-right: 0
+  -webkit-transition: all 0.5s ease
+  -moz-transition: all 0.5s ease
+  -o-transition: all 0.5s ease
+  transition: all 0.5s ease
+  &.toggled
+    padding-left: 250px
 
-.sidebar .nav
-  margin-bottom: 20px
+#sidebar-wrapper
+  z-index: 1000
+  position: fixed
+  left: 250px
+  width: 0
+  height: 100%
+  margin-left: -250px
+  overflow-y: auto
+  -webkit-transition: all 0.5s ease
+  -moz-transition: all 0.5s ease
+  -o-transition: all 0.5s ease
+  transition: all 0.5s ease
 
-.sidebar .nav-item
+#wrapper.toggled #sidebar-wrapper
+  width: 250px
+
+#page-content-wrapper
   width: 100%
+  position: absolute
+  padding-top: 60px
 
-.sidebar .nav-item + .nav-item
-  margin-left: 0
 
-.sidebar .nav-link
+#wrapper.toggled #page-content-wrapper
+  position: absolute
+  margin-right: -250px
+
+.sidebar-nav
+  position: absolute
+  top: 0
+  width: 250px
+  margin: 0
+  padding: 0
+  list-style: none
+  padding-top: 60px
+
+@media (min-width: 768px)
+  #wrapper
+    padding-left: 250px
+  #sidebar-wrapper
+    width: 250px
+  #page-content-wrapper
+
+    position: relative
+    margin-right: -250px
+  #wrapper.toggled #page-content-wrapper
+
+.navbar-nav
+  flex-direction: row
+
+.sidebar-nav .nav-link
   border-radius: 0
 
 .badge-new
