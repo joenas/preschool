@@ -3,7 +3,7 @@ class Admin::SiteChangesController < AdminController
   def index; end
 
   def create
-    CreateResource.new(klass: SiteChange, params: create_params, listeners: [self]).perform do |change|
+    CreateResource.new(klass: SiteChange, params: create_params, listeners: [self, Listeners::PostNewSiteChangeToSlack.new]).perform do |change|
       change.preschool = Preschool.find_by_id(params[:preschool_id])
       if change.note_prediction
         change.attributes = {note: change.note_prediction, state: :active}
@@ -20,7 +20,7 @@ class Admin::SiteChangesController < AdminController
   end
 
   def update
-    UpdateResource.new(klass: SiteChange, params: update_params, listeners: [self, TrainNewSiteChange.new]).perform
+    UpdateResource.new(klass: SiteChange, params: update_params, listeners: [self, Listeners::TrainNewSiteChange.new]).perform
   end
 
   def update_success(resource, _params)
