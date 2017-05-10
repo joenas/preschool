@@ -23,24 +23,23 @@
           %br/
           = link_to "Karta", "https://www.google.com/maps/place/#{@view.address_params}"
 
-    .card.mb-3
-      %h4.card-header
-        Öppettider
       %table.table.table-sm
+        %col.td-col-sm
+        %col.td-col-xl
+
         %tbody
           - @view.hours.each do |hour|
-            %tr.row.m-0{class: ('table-info' if hour.today?)}
-              %th.pl-3.col{scope: :row}
+            %tr.m-0{class: ('table-info' if hour.today?)}
+              %th.pl-3.pr-3
                 = hour.day_name
-              %td.col
+              %td
                 = hour.opens_short
                 \-
                 = hour.closes_short
-              %td.col
-                %small= hour.note
+                %small.pl-1= hour.note
 
-    .card.mb-3
-      %h4.card-header
+    .card.mb-3.hidden-sm-down
+      %h5.card-header
         URLer
       %ul.list-group.list-group-flush
         - @view.urls.each do |url|
@@ -49,7 +48,7 @@
               %li
                 %a{href: url.url}
                   %samp
-                    = url.url.truncate(70)
+                    = url.url.truncate(50)
               %li
                 %strong Extra
                 %code= url.extras_element
@@ -60,7 +59,7 @@
 
   .col-md-6
     .card.mb-3
-      %h4.card-header
+      %h5.card-header
         Förändringar
       %ul.list-group.list-group-flush
         = render partial: 'admin/preschools/show/site_change', collection: @view.site_changes.order("state = 'active' DESC, state ='new' DESC, created_at DESC")
