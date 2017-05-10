@@ -2,10 +2,9 @@ module Listeners
   class TrainNewSiteChange
 
     def update_success(site_change, params)
-      return if site_change.state.done?
       original_text = site_change.extra_sanitized
       # TODO make command or whatever
-      good = site_change.note.lines.map(&:strip)
+      good = site_change.note.to_s.lines.map(&:strip)
       regex = good.join("|");
       bad = original_text.lines.reject{|str| str.match(/#{regex}/)};
       bad.each {|str| ServiceRegistry.classifier.train 'BadSiteChange', str.strip}

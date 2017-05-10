@@ -9,6 +9,9 @@ class SiteChange < ActiveRecord::Base
   enumerize :state, in: [:new, :active, :done], default: :new
 
   scope :recent, -> {where(state: :new)}
+  scope :active, -> {where(state: :active)}
+  scope :active_or_recent, -> {active.or(recent)}
+  scope :grouped_by_state, -> {group(:state)}
 
   def new_or_active?
     state.to_sym.in?([:new, :active])
