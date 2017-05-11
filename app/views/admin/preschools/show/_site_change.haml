@@ -8,10 +8,9 @@
         = time_ago_in_words(site_change.created_at).sub('ungefär', '')
         sedan
     .buttons
-      - if site_change.state.new?
+      - if site_change.new_or_active?
         = render partial: 'admin/preschools/show/fast_publish', locals: {site_change: site_change}
         = render partial: 'admin/preschools/show/site_change_modal', locals: {site_change: site_change}
-      - if site_change.new_or_active?
         = link_to 'Stäng', admin_site_change_path(site_change, site_change: {state: :done}), method: :put, class: 'btn btn-sm btn-secondary'
   - if site_change.state.new?
     - if site_change.note_prediction
