@@ -48,7 +48,7 @@ module Preschools
           string_agg(note, '\n\n') as note
         FROM site_changes
         WHERE true
-          AND state = 'active'
+          AND state IN ('active', 'predicted')
         GROUP BY preschool_id
       ),
       todays_hours AS (

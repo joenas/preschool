@@ -6,15 +6,19 @@ class SiteChange < ActiveRecord::Base
   validates_presence_of :preschool
   validates_presence_of :data
 
-  enumerize :state, in: [:new, :active, :done], default: :new
+  enumerize :state, in: [:new, :predicted, :active, :done], default: :new
 
   scope :recent, -> {where(state: :new)}
   scope :active, -> {where(state: :active)}
-  scope :active_or_recent, -> {active.or(recent)}
+  scope :not_done, ->{where(state: [:new, :predicted, :active])}
   scope :grouped_by_state, -> {group(:state)}
 
   def new_or_active?
-    state.to_sym.in?([:new, :active])
+    state.to_sym.in?([:new, :active, :predicted])
+  end
+
+  def new_or_predicted?
+    state.to_sym.in?([:new, :predicted])
   end
 
   def note_html

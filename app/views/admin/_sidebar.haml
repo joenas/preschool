@@ -6,7 +6,7 @@
     %li.nav-item
       %a.nav-link{href: admin_preschool_path(preschool), class: ('active' if params[:id].to_i == preschool.id)}
         = preschool.name
-        - preschool.site_changes.active_or_recent.grouped_by_state.count.each do |state, count|
+        - preschool.site_changes.not_done.grouped_by_state.count.each do |state, count|
 
           %span.badge.pull-right.ml-1{class: "badge-#{state}"}
             = count
