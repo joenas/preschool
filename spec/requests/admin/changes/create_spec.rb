@@ -39,12 +39,14 @@ describe "Creating site_changes", type: :request do
     Given(:parsed_response){JSON.parse response.body}
     Given(:preschool){create :preschool}
     Given(:change){SiteChange.last}
+    Given!(:stubbed_request){stub_request(:post, ENV['SLACK_URL'])}
 
     Then{expect(response.status).to eq 200}
     And{expect(change.preschool).to eq preschool}
     And{expect(change.state).to eq 'predicted'}
     And{expect(change.data).to eq({'hours' => 'something', 'extra' => new_note})}
     And{expect(change.note).to eq new_note}
+    And{expect(stubbed_request).to have_been_requested}
   end
 
   context "with empty 'extra'" do

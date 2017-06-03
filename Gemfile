@@ -81,5 +81,6 @@ group :test do
   gem 'rspec-given', '~> 3.8'
   gem 'rspec-mocks', '~> 3.5.0'
   gem 'shoulda-matchers', '~> 3.1.1'
+  gem 'webmock', '~> 3.0', '>= 3.0.1'
 end
 
