@@ -16,7 +16,7 @@ module Listeners
             "text": site_change.note
           }
         ]
-      }) if site_change.state.active?
+      }) if site_change.note.present?
     end
 
     def create_failure(*)
