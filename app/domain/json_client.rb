@@ -7,10 +7,10 @@ class JsonClient < SimpleDelegator
 
   def client
     Faraday.new @url do |connection|
+      yield connection if block_given?
       connection.request :json
       connection.response :json, content_type: 'application/json'
       connection.adapter Faraday.default_adapter
-      yield connection if block_given?
     end
   end
 end
