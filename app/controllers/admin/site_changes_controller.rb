@@ -3,7 +3,7 @@ class Admin::SiteChangesController < AdminController
   def index; end
 
   def create
-    Resources::Create.new(klass: SiteChange, params: create_params, listeners: [self, Listeners::PostNewSiteChangeToSlack.new]).perform do |change|
+    Resources::Create.new(klass: SiteChange, params: create_params, listeners: [self, Listeners::PostNewSiteChangeToPushover.new]).perform do |change|
       change.preschool = Preschool.find_by_id(params[:preschool_id])
       if change.note_prediction
         change.attributes = {note: change.note_prediction, state: :predicted}
