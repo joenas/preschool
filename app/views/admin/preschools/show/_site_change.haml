@@ -10,7 +10,7 @@
     .buttons
       - if site_change.new_or_predicted?
         = render partial: 'admin/preschools/show/fast_publish', locals: {site_change: site_change}
-      - if site_change.new_or_active?
+      - if site_change.not_done?
         = render partial: 'admin/preschools/show/site_change_modal', locals: {site_change: site_change}
         = link_to 'Stäng', admin_site_change_path(site_change, site_change: {state: :done}), method: :put, class: 'btn btn-sm btn-secondary'
   - if site_change.new_or_predicted?

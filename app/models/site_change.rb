@@ -13,8 +13,8 @@ class SiteChange < ActiveRecord::Base
   scope :not_done, ->{where(state: [:new, :predicted, :active])}
   scope :grouped_by_state, -> {group(:state)}
 
-  def new_or_active?
-    state.to_sym.in?([:new, :active, :predicted])
+  def not_done?
+    state.to_sym != :done
   end
 
   def new_or_predicted?
