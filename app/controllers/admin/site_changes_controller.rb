@@ -33,7 +33,8 @@ class Admin::SiteChangesController < AdminController
   end
 
   def publish
-    Resources::Update.new(klass: SiteChange, params: update_params, listeners: [self, Listeners::TrainNewSiteChange.new, Listeners::PostNewSiteChangeToMatrix.new]).perform
+    publish_params = update_params.merge(state: :active)
+    Resources::Update.new(klass: SiteChange, params: publish_params, listeners: [self, Listeners::TrainNewSiteChange.new, Listeners::PostNewSiteChangeToMatrix.new]).perform
   end
 
   private

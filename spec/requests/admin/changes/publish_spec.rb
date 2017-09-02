@@ -15,8 +15,8 @@ describe "Updating site_changes", type: :request do
 
   When{put publish_admin_site_change_path(site_change), params: params, headers: options; site_change.reload}
 
-  context "with a properly formatted request" do
-    Given(:params){{id: site_change.id, site_change: {state: :active, note: 'new note'}}}
+  context "with a properly formatted request, with :state override" do
+    Given(:params){{id: site_change.id, site_change: {state: :close, note: 'new note'}}}
 
     Then{expect(response.status).to eq 302}
     And{expect(site_change.preschool).to eq preschool}
@@ -24,12 +24,4 @@ describe "Updating site_changes", type: :request do
     And{expect(site_change.note).to eq 'new note'}
     And{expect(stubbed_request).to have_been_requested}
   end
-
-  context "with a malformatted request" do
-    Given(:params){{id: site_change.id, site_change: {state: :wrooong}}}
-    Then{expect(response.status).to eq 302}
-    And{expect(flash[:error]).to_not be_empty}
-    And{expect(stubbed_request).to_not have_been_requested}
-  end
-
 end
