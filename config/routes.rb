@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
 
   namespace :admin do
-    resources :site_changes, only: [:create, :update]
+    resources :site_changes, only: [:create, :update] do
+      member do
+        put :publish
+      end
+    end
     resources :preschools, only: [:index, :show]
     root to: 'preschools#index'
   end

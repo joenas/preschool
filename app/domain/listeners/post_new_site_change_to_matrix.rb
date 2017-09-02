@@ -9,7 +9,7 @@ module Listeners
     def create_success(site_change, params)
       room = ENV['MATRIX_ROOM']
       note = (site_change.note || '<i>Ny uppdatering</i>')
-      url = admin_preschool_url(site_change.preschool)
+      url = site_change.preschool.url
       title = site_change.preschool.name
       @client.post("_matrix/client/r0/rooms/#{room}/send/m.room.message?access_token=#{ENV['MATRIX_ACCESS_TOKEN']}", {
         "msgtype": "m.text",
@@ -19,7 +19,11 @@ module Listeners
       })
     end
 
+    alias :update_success :create_success
+
     def create_failure(*)
     end
+
+    alias :update_failure :create_failure
   end
 end

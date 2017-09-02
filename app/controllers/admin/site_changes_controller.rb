@@ -3,7 +3,7 @@ class Admin::SiteChangesController < AdminController
   def index; end
 
   def create
-    Resources::Create.new(klass: SiteChange, params: create_params, listeners: [self, Listeners::PostNewSiteChangeToMatrix.new]).perform do |change|
+    Resources::Create.new(klass: SiteChange, params: create_params, listeners: [self, Listeners::PostNewSiteChangeToPushover.new]).perform do |change|
       change.preschool = Preschool.find_by_id(params[:preschool_id])
       if change.note_prediction
         change.attributes = {note: change.note_prediction, state: :predicted}
@@ -30,6 +30,10 @@ class Admin::SiteChangesController < AdminController
   def update_failure(resource, _params)
     flash[:error] = resource.errors.full_messages
     redirect_to admin_preschool_path(resource.preschool)
+  end
+
+  def publish
+    Resources::Update.new(klass: SiteChange, params: update_params, listeners: [self, Listeners::TrainNewSiteChange.new, Listeners::PostNewSiteChangeToMatrix.new]).perform
   end
 
   private

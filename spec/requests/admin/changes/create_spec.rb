@@ -13,7 +13,7 @@ describe "Creating site_changes", type: :request do
   Given(:change){SiteChange.last}
 
   Given(:parsed_response){JSON.parse response.body}
-  Given!(:stubbed_request){stub_request(:post, /#{ENV['MATRIX_URL']}\/*/)}
+  Given!(:stubbed_request){stub_request(:post, /#{ENV['PUSHOVER_API_URL']}\/*/)}
 
   When{post admin_site_changes_path, params: params, headers: options}
 
