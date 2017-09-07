@@ -12,8 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require tether
 //= require bootstrap
-//= require admin_stuff
+//= require best_in_place
 //= require jquery.purr
 //= require best_in_place.purr
-
+//= require admin_stuff
