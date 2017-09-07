@@ -33,9 +33,9 @@
               %th.pl-3.pr-3
                 = hour.day_name
               %td
-                = hour.opens_short
+                = best_in_place hour, :opens, as: :input, url: admin_hour_path(hour), value: hour.opens_short, display_as: :opens_short, html_attrs: {'length' => 5, 'maxlength'=>  5}
                 \-
-                = hour.closes_short
+                = best_in_place hour, :closes, as: :input, url: admin_hour_path(hour), value: hour.closes_short, display_as: :closes_short, html_attrs: {length: 5, maxlength: 5}
                 %small.pl-1= hour.note
 
     .card.mb-3.hidden-sm-down

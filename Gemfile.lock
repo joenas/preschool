@@ -51,6 +51,9 @@ GEM
     autoprefixer-rails (6.7.0)
       execjs
     awesome_print (1.7.0)
+    best_in_place (3.0.3)
+      actionpack (>= 3.2)
+      railties (>= 3.2)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -320,6 +323,7 @@ PLATFORMS
 
 DEPENDENCIES
   awesome_print (~> 1.7)
+  best_in_place (~> 3.0.1)
   better_errors
   bootstrap (~> 4.0.0.alpha3.1)
   classifier-reborn!
@@ -372,4 +376,4 @@ RUBY VERSION
    ruby 2.4.0p0
 
 BUNDLED WITH
-   1.14.2
+   1.15.1

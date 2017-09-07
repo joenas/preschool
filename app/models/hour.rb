@@ -7,6 +7,9 @@ class Hour < ActiveRecord::Base
   validates_presence_of :opens
   validates_presence_of :closes
 
+  #validates :opens, format: { with: /\A\d{2}:\d{2}\z/, message: "Format hh:mm" }
+  #validates :closes, format: { with: /\A\d{2}:\d{2}\z/, message: "Format hh:mm" }
+
   default_scope { order(day_of_week: :asc, opens: :asc, closes: :asc) }
 
   scope :today, -> {
