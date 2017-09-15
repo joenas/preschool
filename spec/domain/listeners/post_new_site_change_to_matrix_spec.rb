@@ -8,13 +8,14 @@ describe Listeners::PostNewSiteChangeToMatrix do
   Given(:params){{}}
   Given(:url){site_change.preschool.url}
   Given(:title){site_change.preschool.name}
-  Given(:note){'some text'}
+  Given(:note){"some text\n more text"}
+  Given(:html_message){"some text<br> more text"}
 
   Given(:expected_body) do
     {
       "msgtype": "m.text",
       "body": "%s\n%s\n%s" % [url, title, message],
-      "formatted_body": "<b><a href='%s'>%s</a></b><br>%s" % [url, title, message],
+      "formatted_body": "<b><a href='%s'>%s</a></b><br>%s" % [url, title, html_message],
       "format": "org.matrix.custom.html"
     }
   end
@@ -33,6 +34,7 @@ describe Listeners::PostNewSiteChangeToMatrix do
     context "without a note" do
       Given(:note){nil}
       Given(:message){'<i>Ny uppdatering</i>'}
+      Given(:html_message){message}
       Then{expect(stubbed_request).to have_been_requested}
     end
   end
@@ -57,6 +59,7 @@ describe Listeners::PostNewSiteChangeToMatrix do
     context "without a note" do
       Given(:note){nil}
       Given(:message){'<i>Ny uppdatering</i>'}
+      Given(:html_message){message}
       Then{expect(stubbed_request).to have_been_requested}
     end
   end

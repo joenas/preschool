@@ -11,10 +11,11 @@ module Listeners
       note = (site_change.note || '<i>Ny uppdatering</i>')
       url = site_change.preschool.url
       title = site_change.preschool.name
+      html_note = note.gsub("\n", "<br>")
       @client.post("_matrix/client/r0/rooms/#{room}/send/m.room.message?access_token=#{ENV['MATRIX_ACCESS_TOKEN']}", {
         "msgtype": "m.text",
         "body": "%s\n%s\n%s" % [url, title, note],
-        "formatted_body": "<b><a href='%s'>%s</a></b><br>%s" % [url, title, note],
+        "formatted_body": "<b><a href='%s'>%s</a></b><br>%s" % [url, title, html_note],
         "format": "org.matrix.custom.html"
       })
     end
