@@ -36,7 +36,9 @@
                 = best_in_place hour, :opens, as: :input, url: admin_hour_path(hour), value: hour.opens_short, display_as: :opens_short, html_attrs: {'length' => 5, 'maxlength'=>  5}
                 \-
                 = best_in_place hour, :closes, as: :input, url: admin_hour_path(hour), value: hour.closes_short, display_as: :closes_short, html_attrs: {length: 5, maxlength: 5}
-                %small.pl-1= hour.note
+                %small.pl-1
+                  //= hour.note
+                  = best_in_place hour, :note, as: :input, url: admin_hour_path(hour), value: hour.note, place_holder: '...'
 
     .card.mb-3.hidden-sm-down
       %h5.card-header

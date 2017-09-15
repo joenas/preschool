@@ -19,7 +19,7 @@ class Admin::HoursController < AdminController
   private
 
   def update_params
-    permitted = params.permit(:id, hour: [:opens, :closes])
+    permitted = params.permit(:id, hour: [:opens, :closes, :note])
     permitted[:hour].merge(id: params[:id])
   end
 
