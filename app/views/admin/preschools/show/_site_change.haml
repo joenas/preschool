@@ -15,13 +15,19 @@
         = link_to 'Stäng', admin_site_change_path(site_change, site_change: {state: :done}), method: :put, class: 'btn btn-sm btn-secondary'
   - if site_change.new_or_predicted?
     - if site_change.note_prediction
-      %h4 Förslag
+      %h5.mt-2 Förslag
       %p.lead
         = note_html(site_change.note_prediction)
+  - elsif site_change.state.active?
+    %h5.mt-2 Notis (publicerad)
+    %p.mb-1
+      = site_change.note_html
+
+  %p
+    %a{href: "#site-change-#{site_change.id}", "aria-expanded": "#{site_change.new_or_predicted?}", data: {toggle: :collapse}}
+      Visa data
+  %div{id: "site-change-#{site_change.id}", class: (site_change.new_or_predicted? ? 'collapse show' : 'collapse')}
     - site_change.data.each do |key, value|
       %p.mb-1
         %strong= key
       = highlight(sanitize(value, tags: %w(p ul li br), attributes: %w(href)), 'Öppettider')
-  - elsif site_change.state.active?
-    %p.mb-1
-      = site_change.note_html

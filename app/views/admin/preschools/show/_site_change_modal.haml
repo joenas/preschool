@@ -11,7 +11,14 @@
         .modal-body
           = form.input_field :id, as: :hidden, value: site_change.id
           = form.input_field :state, as: :hidden, value: :active
-          = form.input :note, as: :text, input_html: {value: remove_ws(strip_tags(site_change.data.fetch('extra'))), rows: 6}
+          = form.input :note, as: :text, input_html: {value: (site_change.note ||site_change.note_prediction), rows: 6}
+
+        .modal-body
+          %h5
+            Data
+          .card.card-block
+            //= remove_ws(strip_tags(site_change.data.fetch('extra')))
+            = highlight(sanitize(site_change.data.fetch('extra'), tags: %w(p ul li br), attributes: %w(href)), 'Öppettider')
 
         .modal-footer
           %button.btn.btn-secondary{"data-dismiss" => "modal", type: :button} Avbryt
