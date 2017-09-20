@@ -35,3 +35,16 @@ sv:
       on_or_after: "måste vara på eller senare än %{restriction}"
       identical: 'är identiska'
       inclusion: "'%{value}' ingår inte i de tillåtna värdena"
+  activerecord:
+    models:
+      site_change:
+        zero: Inga uppdateringar
+        one: Uppdatering
+        other: Uppdateringar
+
+    attributes:
+      hour:
+        day_of_week: Veckodag
+        opens: Öppnar
+        closes: Stänger
+

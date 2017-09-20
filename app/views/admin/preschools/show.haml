@@ -28,17 +28,28 @@
         %col.td-col-xl
 
         %tbody
+          %tr.m-0
+            %td{colspan: 3}
+              = simple_form_for [:admin, @view, Hour.new()], defaults: {label: false}, html: {class: 'form-inline'} do |form|
+                = form.input_field :day_of_week, as: :select, collection: (1..5).map {|i| [I18n.t('date.day_names')[i], i]}, class: 'form-control form-control-sm mr-2', include_blank: 'Veckodag'
+                = form.input_field :opens, class: 'form-control form-control-sm mr-2', placeholder: '08:00', as: :string
+                = form.input_field :closes, class: 'form-control form-control-sm mr-2', placeholder: '15:00', as: :string
+                = form.input_field :note, class: 'form-control form-control-sm mr-2', placeholder: 'Notis'
+                = form.submit 'Spara', class: 'btn btn-sm btn-success'
           - @view.hours.each do |hour|
             %tr.m-0{class: ('table-info' if hour.today?)}
               %th.pl-3.pr-3
                 = hour.day_name
               %td
-                = best_in_place hour, :opens, as: :input, url: admin_hour_path(hour), value: hour.opens_short, display_as: :opens_short, html_attrs: {'length' => 5, 'maxlength'=>  5}
+                = best_in_place hour, :opens, as: :input, url: admin_preschool_hour_path(@view, hour), value: hour.opens_short, display_as: :opens_short, html_attrs: {'length' => 5, 'maxlength'=>  5}
                 \-
-                = best_in_place hour, :closes, as: :input, url: admin_hour_path(hour), value: hour.closes_short, display_as: :closes_short, html_attrs: {length: 5, maxlength: 5}
+                = best_in_place hour, :closes, as: :input, url: admin_preschool_hour_path(@view, hour), value: hour.closes_short, display_as: :closes_short, html_attrs: {length: 5, maxlength: 5}
                 %small.pl-1
                   //= hour.note
-                  = best_in_place hour, :note, as: :input, url: admin_hour_path(hour), value: hour.note, place_holder: '...'
+                  = best_in_place hour, :note, as: :input, url: admin_preschool_hour_path(@view, hour), value: hour.note, place_holder: '...'
+              %td
+                = link_to admin_preschool_hour_path(@view, hour), method: :delete, data: {confirm: 'Äru säker?'} do
+                  = fa_icon :trash
 
     .card.mb-3.hidden-sm-down
       %h5.card-header
