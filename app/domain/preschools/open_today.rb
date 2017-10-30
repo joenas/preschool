@@ -44,12 +44,19 @@ module Preschools
       ),
       active_site_changes AS (
         SELECT
-          preschool_id,
-          string_agg(note, '\n\n') as note
+          site_changes.*,
+          rank() over (partition by site_changes.preschool_id order by updated_at DESC) AS rank
         FROM site_changes
         WHERE true
-          AND state IN ('active', 'predicted')
-        GROUP BY preschool_id
+          AND state = 'active'
+      ),
+      predicted_site_changes AS (
+        SELECT
+          site_changes.*,
+          rank() over (partition by site_changes.preschool_id order by updated_at DESC) AS rank
+        FROM site_changes
+        WHERE true
+          AND state = 'predicted'
       ),
       todays_hours AS (
         SELECT
@@ -77,10 +84,15 @@ module Preschools
         COALESCE(data.is_open, false) as is_open,
         COALESCE(todays_hours.closed_for_day, true) AS closed_for_day,
         multiple_hours.opens_again,
-        active_site_changes.note AS active_site_changes_note
+        active_site_changes.note AS active_change_note,
+        active_site_changes.updated_at AS active_change_updated_at,
+        predicted_site_changes.note AS predicted_change_note,
+        predicted_site_changes.updated_at AS predicted_change_updated_at,
+        (CASE WHEN active_site_changes.note IS NOT NULL OR predicted_site_changes.updated_at IS NOT NULL THEN TRUE ELSE FALSE END) as has_changes
       FROM preschools
       LEFT JOIN data ON data.preschool_id = preschools.id AND data.is_open
-      LEFT JOIN active_site_changes ON active_site_changes.preschool_id = preschools.id
+      LEFT JOIN active_site_changes ON active_site_changes.preschool_id = preschools.id AND active_site_changes.rank = 1
+      LEFT JOIN predicted_site_changes ON predicted_site_changes.preschool_id = preschools.id AND predicted_site_changes.rank = 1
       LEFT JOIN todays_hours ON todays_hours.preschool_id = preschools.id
       LEFT JOIN multiple_hours ON multiple_hours.preschool_id = preschools.id
       WHERE true
