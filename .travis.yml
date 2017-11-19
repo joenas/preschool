@@ -1,0 +1,14 @@
+dist: trusty
+sudo: required
+language: ruby
+before_script:
+  - psql -c 'create database preschool_test;' -U postgres
+services:
+  - docker
+  - postgresql
+rvm:
+- 2.2
+- 2.3.4
+- 2.4.1
+cache: bundler
+bundler_args: --without development production
