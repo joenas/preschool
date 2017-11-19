@@ -4,11 +4,17 @@ language: ruby
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
+  - cp .env.development .env
 services:
   - docker
   - postgresql
 rvm:
 - 2.4.0
+env:
+  - PUSHOVER_API_TOKEN=asdf
+  - PUSHOVER_API_USER=asdf
+  - PUSHOVER_API_URL=http://example.com
+
 cache: bundler
 notifications:
   pushover:
