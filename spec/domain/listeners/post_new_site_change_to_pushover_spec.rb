@@ -19,7 +19,7 @@ describe Listeners::PostNewSiteChangeToPushover do
         "html": "1"
       }
     end
-    Given!(:stubbed_request){stub_request(:post, "https://api.pushover.net/1/messages.json").with(body: expected_body)}
+    Given!(:stubbed_request){stub_request(:post, ENV['PUSHOVER_API_URL']).with(body: expected_body)}
 
     When{subject.create_success(site_change, params)}
 
