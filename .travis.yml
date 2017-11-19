@@ -11,9 +11,9 @@ rvm:
 - 2.4.0
 env:
   global:
-  - PUSHOVER_API_TOKEN=asdf
-  - PUSHOVER_API_USER=asdf
-  - PUSHOVER_API_URL=http://example.com
+    - PUSHOVER_API_TOKEN=asdf
+    - PUSHOVER_API_USER=asdf
+    - PUSHOVER_API_URL=http://example.com
 cache: bundler
 notifications:
   email: false
