@@ -2,7 +2,8 @@ dist: trusty
 sudo: required
 language: ruby
 before_script:
-  - psql -c 'create database preschool_test;' -U postgres
+  - psql -c 'create database travis_ci_test;' -U postgres
+  - cp config/database.yml.travis config/database.yml
 services:
   - docker
   - postgresql
