@@ -7,7 +7,7 @@ before_script:
 - cp .env.development .env
 services:
 - postgresql
-- redis
+- redis-server
 rvm:
 - 2.4.0
 env:
