@@ -62,7 +62,7 @@ GEM
       autoprefixer-rails (>= 6.0.3)
       sass (>= 3.4.19)
     builder (3.2.3)
-    clockwork (2.0.0)
+    clockwork (2.0.2)
       activesupport
       tzinfo
     coderay (1.1.2)
