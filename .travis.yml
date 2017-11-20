@@ -12,9 +12,9 @@ rvm:
 - 2.4.0
 env:
   global:
-    - PUSHOVER_API_TOKEN=asdf
-    - PUSHOVER_API_USER=asdf
-    - PUSHOVER_API_URL=http://example.com
+    - REDIS_PROVIDER=redis://localhost:6379
+    - REDIS_URL=redis://localhost:6379
+    - REDIS_SESSION_URL=redis://localhost:6379/0/session
 cache: bundler
 notifications:
   email: false
