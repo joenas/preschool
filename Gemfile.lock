@@ -84,7 +84,7 @@ GEM
     dotenv-rails (2.1.2)
       dotenv (= 2.1.2)
       railties (>= 3.2, < 5.1)
-    enumerize (2.0.1)
+    enumerize (2.1.2)
       activesupport (>= 3.2)
     erubis (2.7.0)
     execjs (2.7.0)
