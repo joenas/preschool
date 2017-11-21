@@ -56,23 +56,20 @@ group :development do
   gem 'better_errors'
   # https://github.com/heroku/heroku-buildpack-ruby/pull/531
   #gem 'binding_of_caller', :platforms=>[:mri_24]
+  gem 'guard', '~> 2.11'
+  gem 'guard-rspec', '~> 4.7', '>= 4.7.2'
+  gem 'listen', '3.0.5'
   gem 'guard-bundler'
   gem 'guard-rails'
-  gem 'html2haml'
   gem 'rb-fchange', :require=>false
   gem 'rb-fsevent', :require=>false
   gem 'rb-inotify', :require=>false
   gem 'spring-commands-rspec'
-  gem 'guard', '~> 2.11'
-  gem 'listen', '3.0.5'
-  gem 'guard-rspec', '~> 4.7', '>= 4.7.2'
 end
 
 group :development, :test do
   gem 'factory_bot_rails'
-  gem 'faker'
   gem 'pry-rails'
-  gem 'pry-rescue'
   gem 'awesome_print', '~> 1.7'
 end
 
