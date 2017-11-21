@@ -18,8 +18,9 @@ env:
 cache: bundler
 notifications:
   email: false
-  pushover:
-    api_key:
-      secure: a/2sUE5aKdbYvlM9M6DTHpoTSRhJqwSYuqAwIS5y3cQALSSMbA7bPUtQvHW0Grp60xixFV4MB3o8It6bqsgkmWi/ROpxDqLEt+Lldsei9BpzixWv0vA7bK2Kclst2jux5+IAbjSBvExJ/nMQm9jUCCWClB6pW5y3lnVoRSUmX0cvNC0KIPgsuacHtToLDdP9VyKBZf0NqSBFPfUtTOxVZ3S6m0XrJ/p48CNySvMjsym3D+4TljhFjQ6Ksg4CvUDZvGDlPvjoRRE77NsmiE/SQGzaDXblrNqsrm5SNrdvecdI53Xc5fjdql5SCKUL661mp44nGClhAf5X7vL0QlwDhdv7kU5vfaHKLQzsSat48vs3FaRte3RpBpg7m+T1gi1pOOe4N6GZWrCHXf2ZuiKtay0o5dQoBPgyGwD504B4GDRcamdN6ChAsbbEeTXypxuuXVXIBECSE2fHerONnrvtyr0Gj6VfLJlTGrIo+NxnNm7S8Wj0JxwV7k3bAjcNtywMJZmK85i7o0aR6vNCduP9YYfDZf2/dTCY2YCTzpK7GkUkJ8q4mPRm5/97PbxDXr49kx08sjoEIF+VJlf3h5sscyv5dyFfn9J796FlxDNUBmwJCxNHLOB7iBHkfXTkcptDdyB94YNlPJxF/RUGl76ruZdBB1HyGMt11JY8Io84Mw8=
-    users:
-      secure: q0T1zt3EUCG8bPlTYZLaavGwet4jQ7aTaUewTdUZF64nXGoo18V4n4Iy3Cbzj1j2lNZt2/Y5P7H7AEWvGqBH2UAAettxHj4dvus+HkJas/uVYb0hiGgA9JlU6yPb+NSR8Ke5RQ37w04NXW0jb+CCFRHF1G84sbo3fP/mU85AhY2aZDel6abIzfDLsvmIEJumrj19EXaJpCYaSB/HqBlULsPzHZHGVIHloe6YKBBfzk+eO27mHPHQxOw/5o+8Fg5k/Cc5oDpL8DYELOZGe+ZFAPd91ODT7a6BVE7SAQlT3fGT+XTBbcky1p7R2JSenf2susQO1GgW24LPdqe9QrKUjUMSduYdiF7q3DbSj44z+MwwX753kZXMFAGjl7bL4BgPu7q3hOR1c0T1yf/mQuNlUkRaUsFsviXCVCvpb4+j77V8a6FWwnoRPDS47B+SGN1fXG0aubPhq02E6iNiw2cOXU4O80tMnV3NmyqMShlOzCkXPy4+jfQQuMMloAitKaauxWzVYTHl897KnShU872HPuiohstGTyf4yVJhuRAp/7Vs+BUH96mQ7xmh9dr6XUAswx2vXXUcSDsk84s2rCEA7qffJ+5X7OGzr46z/9P4ERDz6HMmuxTszv/Tj6xqp+ciyTArmdlsZUtM+ZQ1wzg6W6F3LWFI+93foiGHNOcajO4=
+  webhooks:
+    urls:
+      - "https://devbot.gottsnack.net/services/hooks/dHJhdmlzY2k"
+    on_success: change  # always|never|change
+    on_failure: always
+    on_start: never
