@@ -50,7 +50,7 @@ GEM
     arel (7.1.4)
     autoprefixer-rails (6.7.0)
       execjs
-    awesome_print (1.7.0)
+    awesome_print (1.8.0)
     best_in_place (3.0.3)
       actionpack (>= 3.2)
       railties (>= 3.2)
