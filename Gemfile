@@ -16,7 +16,7 @@ gem 'rollbar', '~> 2.14'
 
 # Assets and whatnot
 gem 'haml-rails', '~> 0.9.0'
-gem 'bootstrap', '~> 4.0.0.alpha3.1'
+gem 'bootstrap', '4.0.0.alpha6' # upgrading to beta breaks
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2', '>= 4.2.1'
