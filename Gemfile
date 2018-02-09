@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-ruby '2.4.0'
+ruby '2.4.3'
 gem 'rails', '5.0.1'
 gem 'rails_12factor', group: :production
 gem 'puma', '~> 3.6', '>= 3.6.2'
