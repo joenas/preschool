@@ -18,4 +18,12 @@ module Clockwork
       sleep 60
     end
   end
+
+  every(1.day, 'Remove old SiteChanges', at: '06:00') do
+    SiteChange.where("created_at::date < ?", 1.week.ago).where.not(state: :done).find_each do |site_change|
+      params = {id: site_change.id, state: :done}
+      Resources::Update.new(klass: SiteChange, params: params, listeners: [Listeners::TrainNewSiteChange.new]).perform
+    end
+  end
+
 end
