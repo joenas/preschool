@@ -1,4 +1,4 @@
-workers 4 #Change this to match the number of cores in your sever. Our cheap (but nice) 512M droplet gives us only 1 core
+workers Integer(ENV['WORKERS'] || 4) #Change this to match the number of cores in your sever. Our cheap (but nice) 512M droplet gives us only 1 core
 threads_count = Integer(ENV['MAX_THREADS'] || 5)
 threads threads_count, threads_count
 
