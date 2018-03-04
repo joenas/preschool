@@ -151,7 +151,7 @@ GEM
     listen (3.0.5)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
-    lol_dba (2.1.4)
+    lol_dba (2.1.5)
       actionpack (>= 3.0)
       activerecord (>= 3.0)
       railties (>= 3.0)
