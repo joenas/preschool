@@ -24,9 +24,9 @@
       = site_change.note_html
 
   %p
-    %a{href: "#site-change-#{site_change.id}", "aria-expanded": "#{site_change.new_or_predicted?}", data: {toggle: :collapse}}
+    %a{href: "#site-change-#{site_change.id}", "aria-expanded": "false", data: {toggle: :collapse}}
       Visa data
-  %div{id: "site-change-#{site_change.id}", class: (site_change.new_or_predicted? ? 'collapse show' : 'collapse')}
+  %div.collapse{id: "site-change-#{site_change.id}"}
     - site_change.data.each do |key, value|
       %p.mb-1
         %strong= key
