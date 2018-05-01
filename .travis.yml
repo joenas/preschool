@@ -9,7 +9,7 @@ services:
 - postgresql
 - redis-server
 rvm:
-- 2.4.0
+- 2.4.3
 env:
   global:
     - REDIS_PROVIDER=redis://localhost:6379
