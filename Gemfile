@@ -12,7 +12,7 @@ gem 'pg', '~> 0.19.0'
 gem 'enumerize', '~> 2.0', '>= 2.0.1'
 
 # Errors
-gem 'rollbar', '~> 2.14'
+gem "sentry-raven"
 
 # Assets and whatnot
 gem 'haml-rails', '~> 0.9.0'

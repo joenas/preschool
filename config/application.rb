@@ -21,5 +21,9 @@ module PreschoolApp
     config.i18n.default_locale = :sv
 
     config.active_record.time_zone_aware_types = [:datetime]
+
+    Raven.configure do |config|
+      config.dsn = ENV['RAVEN_DSN']
+    end
   end
 end
