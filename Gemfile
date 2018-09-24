@@ -16,11 +16,11 @@ gem "sentry-raven"
 
 # Assets and whatnot
 gem 'haml-rails', '~> 0.9.0'
-gem 'bootstrap', '4.0.0.alpha6' # upgrading to beta breaks
+gem 'bootstrap', '~> 4.1', '>= 4.1.3'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2', '>= 4.2.1'
-gem 'therubyracer', '~> 0.12.1', platforms: :ruby
+gem 'mini_racer', '~> 0.2.0'
 gem 'jquery-rails'
 #gem 'turbolinks'
 gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.1'
