@@ -225,8 +225,8 @@ GEM
     rb-fchange (0.0.6)
       ffi
     rb-fsevent (0.10.3)
-    rb-inotify (0.9.10)
-      ffi (>= 0.5.0, < 2)
+    rb-inotify (0.10.0)
+      ffi (~> 1.0)
     redis (3.3.5)
     rspec (3.5.0)
       rspec-core (~> 3.5.0)
