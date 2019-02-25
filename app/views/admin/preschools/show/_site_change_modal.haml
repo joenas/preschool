@@ -16,7 +16,7 @@
         .modal-body
           %h5
             Data
-          .card.card-block
+          .card.card-body
             //= remove_ws(strip_tags(site_change.data.fetch('extra')))
             = highlight(sanitize(site_change.data.fetch('extra'), tags: %w(p ul li br), attributes: %w(href)), 'Öppettider')
 

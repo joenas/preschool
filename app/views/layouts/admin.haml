@@ -12,20 +12,21 @@
 
   %body
     #wrapper
-      #sidebar-wrapper.bg-faded
+      #sidebar-wrapper.bg-light
         = render 'admin/sidebar'
       #page-content-wrapper
         = content_for :nav
-        %nav.navbar.navbar-inverse.bg-inverse.fixed-top
-          .d-flex.flex-row
-            %button#menu-toggle.navbar-toggler.hidden-lg-up{type: "button"}
-              %span.navbar-toggler-icon
-            %ul.navbar-nav
-              %li.nav-item.active
-                %a.navbar-brand.ml-2{href: admin_preschools_path} Admin
-              %li.nav-item.active
+        %nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
+          %a.navbar-brand.ml-2{href: admin_preschools_path} Admin
+          %button.navbar-toggler{data: {target: "#navbarSupportedContent", toggle: :collapse, type: :button}}
+            %span.navbar-toggler-icon
+          #navbarSupportedContent.collapse.navbar-collapse
+            %ul.navbar-nav.mr-auto
+              %li.nav-item
                 %a.nav-link{href: root_path, target: :_blank}
                   Hemsida
+
+
         .container-fluid
           .row
             .col-lg-12
