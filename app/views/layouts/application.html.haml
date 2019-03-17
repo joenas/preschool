@@ -4,7 +4,8 @@
     %title
       = "[#{Rails.env}]" unless Rails.env.production?
       Öppna förskolor Malmö
-    = stylesheet_link_tag    'application', media: 'all'
+    -# = stylesheet_link_tag    'application', media: 'all'
+    = render partial: 'layouts/styles'
     = csrf_meta_tags
     = render partial: 'layouts/meta'
     - if Rails.env.production?
