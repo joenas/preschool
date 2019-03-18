@@ -1,24 +1,26 @@
 .row
   .col
-    %h1.mt-3.mb-3.text-center
+    %h1.mt3.mb3.text-center
       Öppna Förskolor Malmö
 
+
     %nav.nav
-      .nav-link.active
-        %span
+      %ul.list-inline.mb-0
+        %li.list-inline-item
           Sortering:
 
-      = link_to_if_else_span @view.position?, href: root_path, class: 'nav-link' do
-        = image_tag "clock.svg", class: 'icon'
-        %span Öppettider
-
-      = link_to_if_else_span !@view.position?, href: '#', id: 'toggle_position', class: 'nav-link' do
-        = image_tag "map-marker.svg", class: 'icon'
-        %span Avstånd
+        %li.list-inline-item
+          = link_to_if_else_span @view.position?, href: root_path, class: 'nav-link' do
+            = image_tag "clock.svg", class: 'icon'
+            %span Öppettider
+        %li.list-inline-item
+          = link_to_if_else_span !@view.position?, href: '#', id: 'toggle_position', class: 'nav-link' do
+            = image_tag "map-marker.svg", class: 'icon'
+            %span Avstånd
 
     #alert.alert.alert-warning{role: :alert, style: "display: none;"}
       Det gick inte att hämta din position.
       Prova igen!
 
-    .row
+    .md-flex.flex-wrap
       = render partial: 'home/index/preschool', collection: @view

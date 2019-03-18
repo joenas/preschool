@@ -1,4 +1,4 @@
-.col-md-4
+.md-col.md-col-4
   .card.mb-3{class: "border-#{preschool_closes_class(preschool)}"}
     %h2.card-header{class: "bg-#{preschool_closes_class(preschool)}"}
       = preschool.name
@@ -8,7 +8,9 @@
     .card-body
       - if preschool.closed_for_day
         %h6.mb-3
-          Stängd, morgondagens tider:
+          Stängd.
+
+        Morgondagens tider:
         = render partial: 'home/index/hour', collection: @view.hours_tomorrow[preschool.id]
 
       - else
