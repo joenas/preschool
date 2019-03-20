@@ -2,7 +2,7 @@
   .p2.border.rounded{class: "border-#{preschool_closes_class(preschool)}"}
     .flex.flex-column
       .md-flex
-        %div.sm-col.sm-col-12.md-col-6.lg-col-6
+        %div.sm-col.sm-col-12.md-col-8.lg-col-8
           %h2.mt0{class: "text-#{preschool_closes_class(preschool)}"}
             = preschool.name
             = link_to preschool.url do
@@ -14,10 +14,10 @@
             →
             %span.bold= number_to_human(preschool.distance, units: :distance)
 
-        %div.sm-col.sm-col-12.md-col-6.lg-col-6
+        %div.sm-col.sm-col-12.md-col-4.lg-col-4
           - if preschool.closed_for_day
             %span.bold
-              Stängd
+              Stängt
             .flex-column.mt1
               -# = icon :clock
               Morgondagens tider
@@ -38,11 +38,11 @@
               = render partial: 'home/index/hour', collection: @view.hours_today[preschool.id]
 
       - if preschool.has_changes
-        .site_changes
-          %p.mb0.pt2
-            = icon :warning
-            %strong Info
-        - if preschool.active_change_note
-          = render partial: 'home/index/change_note', locals: {updated_at: preschool.active_change_updated_at, note: preschool.active_change_note}
-        - if preschool.predicted_change_note
-          = render partial: 'home/index/change_note', locals: {updated_at: preschool.predicted_change_updated_at, note: preschool.predicted_change_note}
+        %div.sm-col.sm-col-11.md-col-8.lg-col-8
+          -#   = icon :warning
+          -#   %strong Info
+          -# %span —
+          - if preschool.active_change_note
+            = render partial: 'home/index/change_note', locals: {updated_at: preschool.active_change_updated_at, note: preschool.active_change_note}
+          - if preschool.predicted_change_note
+            = render partial: 'home/index/change_note', locals: {updated_at: preschool.predicted_change_updated_at, note: preschool.predicted_change_note}
