@@ -21,14 +21,9 @@ test:
   password:
 
 staging:
-  host: <%= ENV['DATABASE_HOST'] %>
+  url: <%= ENV['DATABASE_URL'] %>
   adapter: postgresql
   encoding: unicode
-  database: preschool_staging
-  pool: <%= ENV['DATABASE_POOL'] %>
-  port: <%= ENV['DATABASE_PORT'] %>
-  username: <%= ENV['DATABASE_USERNAME'] %>
-  password: <%= ENV['DATABASE_PASSWORD'] %>
 
 production:
   url: <%= ENV['DATABASE_URL'] %>
