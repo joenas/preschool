@@ -1,7 +1,6 @@
 .flex
-  .col-9.mb2
-    = note_html(note)
-  .col-3.right-align
-    %small.italic
+  .col.mt1
+    %small.italic.underline
       = time_ago_in_words(updated_at)
       sedan
+    %p.mb0= note_html(note)

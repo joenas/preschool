@@ -37,11 +37,11 @@
               Öppettider
               = render partial: 'home/index/hour', collection: @view.hours_today[preschool.id]
 
-      - if false#preschool.has_changes
+      - if preschool.has_changes
         .flex-auto
           .site_changes
-            %p.mb1.pt2
-              = image_tag "flag.svg", class: "icon float-left mr-1 mt-1"
+            %p.mb0.pt2
+              = icon :warning
               %strong Info
           - if preschool.active_change_note
             = render partial: 'home/index/change_note', locals: {updated_at: preschool.active_change_updated_at, note: preschool.active_change_note}

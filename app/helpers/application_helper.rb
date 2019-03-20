@@ -2,7 +2,7 @@ module ApplicationHelper
 
   def icon(name, id = name)
     content_tag :svg, viewBox: "0 0 8 8 ", class: :icon do
-      content_tag :use, "", "xlink:href" => "/assets/open-iconic.min.svg##{name}", id: id
+      content_tag :use, "", "xlink:href" => asset_path("open-iconic.min.svg##{name}"), id: id
     end
   end
 
