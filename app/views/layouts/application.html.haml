@@ -7,47 +7,7 @@
     = stylesheet_link_tag    'application', media: 'all'
     = csrf_meta_tags
     = render partial: 'layouts/meta'
-    - if Rails.env.production?
-      :plain
-        <!-- Fathom - simple website analytics - https://github.com/usefathom/fathom -->
-        <script>
-        (function(f, a, t, h, o, m){
-          a[h]=a[h]||function(){
-            (a[h].q=a[h].q||[]).push(arguments)
-          };
-          o=f.createElement('script'),
-          m=f.getElementsByTagName('script')[0];
-          o.async=1; o.src=t; o.id='fathom-script';
-          m.parentNode.insertBefore(o,m)
-        })(document, window, '//analytics.oppenforskola.se/tracker.js', 'fathom');
-        fathom('set', 'siteId', 'UQDNX');
-        fathom('trackPageview');
-        </script>
-        <!-- / Fathom -->
-    :plain
-      <!-- Get geolocation -->
-      <script>
-      (function() {
-        window.onload = function() {
-          var o,
-            n,
-            t,
-            e;
-          return "geolocation" in navigator ? (n = {
-            timeout: 2500,
-            maximumAge: 0
-          }, t = function(o) {
-            var n;
-            return n = o.coords, console.log(n.latitude, n.longitude), window.location = "/position/" + n.latitude + "," + n.longitude
-          }, o = function() {
-            return console.warn("Couldnt get position"), document.getElementById("alert").style.display = "block"
-          }, (e = document.getElementById("toggle_position")) ? e.onclick = function() {
-            return navigator.geolocation.getCurrentPosition(t, o, n)
-          } : void 0) : (console.log("no geolocation"), document.getElementById("alert").style.display = "none")
-        }
-      }).call(this);
-      </script>
-
+    = render partial: 'layouts/scripts'
   %body
     = content_for :nav
     %div.container
