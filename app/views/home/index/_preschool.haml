@@ -16,12 +16,11 @@
 
         %div
           - if preschool.closed_for_day
-            Stängd.
-
-            Morgondagens tider:
+            %span.bold
+              Stängd
             .flex-column.mt1
               -# = icon :clock
-              Öppettider
+              Morgondagens tider
               = render partial: 'home/index/hour', collection: @view.hours_tomorrow[preschool.id]
 
           - else
