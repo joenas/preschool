@@ -1,49 +1,50 @@
-.md-col.md-col-4
-  .card.mb-3{class: "border-#{preschool_closes_class(preschool)}"}
-    %h2.card-header{class: "bg-#{preschool_closes_class(preschool)}"}
-      = preschool.name
-      - if @view.position?
-        %small= number_to_human(preschool.distance, units: :distance)
+.col-8.mb3.mx-auto
+  .p2.bg-white.border.rounded{class: "border-#{preschool_closes_class(preschool)}"}
+    .flex.flex-column
+      .md-flex.justify-between
+        %div
+          %h2.mt0
+            = preschool.name
+            = link_to preschool.url do
+              = icon :"external-link"
+          = preschool.street_name
+          = link_to "https://www.google.com/maps/place/#{preschool.address_params}" do
+            = icon :"map-marker"
+          - if @view.position?
+            →
+            %span.bold= number_to_human(preschool.distance, units: :distance)
 
-    .card-body
-      - if preschool.closed_for_day
-        %h6.mb-3
-          Stängd.
+        %div
+          - if preschool.closed_for_day
+            Stängd.
 
-        Morgondagens tider:
-        = render partial: 'home/index/hour', collection: @view.hours_tomorrow[preschool.id]
+            Morgondagens tider:
+            .flex-column.mt1
+              -# = icon :clock
+              Öppettider
+              = render partial: 'home/index/hour', collection: @view.hours_tomorrow[preschool.id]
 
-      - else
-        %h6.mb-3.font-weight-normal
-          - if preschool.is_open
-            Stänger om
-            = distance_of_time_in_words(@view.current_time, preschool.closes)
-          - else # not open or closed for day => opens soon again
-            Öppnar om
-            = distance_of_time_in_words(preschool.opens_again, @view.current_time)
-        = render partial: 'home/index/hour', collection: @view.hours_today[preschool.id]
+          - else
+            - if preschool.is_open
+              Stänger om
+              %span.bold
+                = distance_of_time_in_words(@view.current_time, preschool.closes)
+            - else # not open or closed for day => opens soon again
+              Öppnar om
+              %span.bold
+                = distance_of_time_in_words(preschool.opens_again, @view.current_time)
+            .flex-column.mt1
+              -# = icon :clock
+              Öppettider
+              = render partial: 'home/index/hour', collection: @view.hours_today[preschool.id]
 
-      %p.card-text
-        = preschool.street_name
-        %br/
-        = link_to "Hemsida", preschool.url
-        %br/
-        = link_to "Karta", "https://www.google.com/maps/place/#{preschool.address_params}"
-
-      - if preschool.has_changes
-        .site_changes
-          %p.mb-1
-            = image_tag "flag.svg", class: "icon float-left mr-1 mt-1"
-            %strong Info
-        - if preschool.active_change_note
-          %p.card-text
-            %small.d-block
-              = time_ago_in_words(preschool.active_change_updated_at)
-              sedan
-            = note_html(preschool.active_change_note)
-        - if preschool.predicted_change_note
-          %p.card-text
-            %small.d-block
-              = time_ago_in_words(preschool.predicted_change_updated_at)
-              sedan
-            = note_html(preschool.predicted_change_note)
+      - if false#preschool.has_changes
+        .flex-auto
+          .site_changes
+            %p.mb1.pt2
+              = image_tag "flag.svg", class: "icon float-left mr-1 mt-1"
+              %strong Info
+          - if preschool.active_change_note
+            = render partial: 'home/index/change_note', locals: {updated_at: preschool.active_change_updated_at, note: preschool.active_change_note}
+          - if preschool.predicted_change_note
+            = render partial: 'home/index/change_note', locals: {updated_at: preschool.predicted_change_updated_at, note: preschool.predicted_change_note}

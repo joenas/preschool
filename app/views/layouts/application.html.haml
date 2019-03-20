@@ -4,8 +4,8 @@
     %title
       = "[#{Rails.env}]" unless Rails.env.production?
       Öppna förskolor Malmö
-    = render partial: 'layouts/styles'
     = render partial: 'layouts/bass'
+    = render partial: 'layouts/styles'
     = render partial: 'layouts/meta'
     - if Rails.env.production?
       :plain
@@ -49,6 +49,7 @@
       </script>
 
   %body
+    = image_tag "open-iconic.min.svg", id: "icon-map"
     = content_for :nav
     %div.container
       = yield
