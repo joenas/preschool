@@ -19,7 +19,6 @@
             %span.bold
               Stängt
             .flex-column.mt1
-              -# = icon :clock
               Morgondagens tider
               = render partial: 'home/index/hour', collection: @view.hours_tomorrow[preschool.id]
 
@@ -33,16 +32,12 @@
               %span.bold
                 = distance_of_time_in_words(preschool.opens_again, @view.current_time)
             .flex-column.mt1
-              -# = icon :clock
               Öppettider
               = render partial: 'home/index/hour', collection: @view.hours_today[preschool.id]
 
       - if preschool.has_changes
-        %div.sm-col.sm-col-11.md-col-8.lg-col-8
-          -#   = icon :warning
-          -#   %strong Info
-          -# %span —
+        %div.sm-col.sm-col-11.md-col-12.lg-col-12
           - if preschool.active_change_note
-            = render partial: 'home/index/change_note', locals: {updated_at: preschool.active_change_updated_at, note: preschool.active_change_note}
+            = render partial: 'home/index/change_note', locals: {note: preschool.active_change_note}
           - if preschool.predicted_change_note
-            = render partial: 'home/index/change_note', locals: {updated_at: preschool.predicted_change_updated_at, note: preschool.predicted_change_note}
+            = render partial: 'home/index/change_note', locals: {note: preschool.predicted_change_note}
