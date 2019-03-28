@@ -46,7 +46,12 @@ module ApplicationHelper
     end
   end
 
+  $pg_colors = {}
+
   def preschool_closes_class_debug(preschool)
+    # Better?
+    # $pg_colors[preschool.id] ||= %i{success info warning danger default}.sample
+    # return $pg_colors[preschool.id]
     debug_time_now = Time.new(2017,01,27,13,45,00)
     last = preschool.hours.today.last.try(:closes) || debug_time_now+1.hours
     debug_time = Time.new(2017,01,27,last.hour,last.min,00)
