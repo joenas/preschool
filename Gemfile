@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-ruby '2.4.3'
-gem 'rails', '5.0.7.2'
+ruby '2.6.2'
+gem 'rails', '5.2.3'
 gem 'rails_12factor', group: :production
 gem 'puma', '~> 3.6', '>= 3.6.2'
 gem 'rack-cache', '~> 1.7'
@@ -15,9 +15,9 @@ gem 'enumerize', '~> 2.0', '>= 2.0.1'
 gem "sentry-raven"
 
 # Assets and whatnot
-gem 'haml-rails', '~> 0.9.0'
+gem 'haml-rails', '~> 2.0'
 gem 'bootstrap', '~> 4.1', '>= 4.1.3'
-gem 'sass-rails', '~> 5.0'
+gem 'sassc-rails', '~> 2.1'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2', '>= 4.2.1'
 gem 'mini_racer', '~> 0.2.0'
@@ -40,7 +40,7 @@ gem 'faraday', '~> 0.11.0'
 gem 'faraday_middleware', '~> 0.11.0.1'
 
 # Forms
-gem 'simple_form', '~> 3.4'
+gem 'simple_form', '~> 4.1'
 
 # NLP
 #gem 'classifier-reborn', '~> 2.1'
