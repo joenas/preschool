@@ -4,8 +4,8 @@
     %title
       = "[#{Rails.env}]" unless Rails.env.production?
       Öppna förskolor Malmö
-    = stylesheet_link_tag    'application', media: 'all'
-    = csrf_meta_tags
+    = render partial: 'layouts/bass'
+    = render partial: 'layouts/styles'
     = render partial: 'layouts/meta'
     = render partial: 'layouts/scripts'
   %body
@@ -13,25 +13,28 @@
     %div.container
       = yield
 
-    %footer
+    %footer.pr2.pl2
       .container
-        %p
-          Kul att du har hittat hit! Jag byggde den här sidan för att enkelt kunna hitta dagens öppettider
-          för öppna förskolor i Malmö.
-          %br/
-          När en förskola publicerar avvikande öppettider eller annan information på sin hemsida så visas en notis.
-          %br/
-          Om du har några önskemål eller synpunkter, tveka inte att
-          = succeed '.' do
-            = link_to "höra av dig", "mailto:jon@jonnev.se"
-        %ul.list-inline.mb-0
-          %li.list-inline-item
-            2017
-            Jon Neverland -
-            %a{href: "https://jonnev.se"} jonnev.se
-          %li.list-inline-item
-            Ikoner -
-            %a{href: "https://useiconic.com/open"} Open Iconic
+        .sm-col-10.md-col-10.lg-col-8.mx-auto.px2.mb3
+          %p
+            Hej, kul att du har hittat hit!
+          %p
+            Jag byggde den här sidan för att enkelt kunna hitta dagens öppettider
+            för öppna förskolor i Malmö.
+            %br/
+            När en förskola publicerar avvikande öppettider eller annan information på sin hemsida så visas en notis.
+            %br/
+            Om du har några önskemål eller synpunkter, tveka inte att
+            = succeed '.' do
+              = link_to "höra av dig", "mailto:jon@jonnev.se"
+          %ul.list-inline.mb-0
+            %li.list-inline-item
+              2019
+              Jon Neverland -
+              %a{href: "https://jonnev.se"} jonnev.se
+            %li.list-inline-item
+              Ikoner -
+              %a{href: "https://useiconic.com/open"} Open Iconic
 
 
 
