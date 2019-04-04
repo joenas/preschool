@@ -35,7 +35,7 @@ module ApplicationHelper
     return 'default' unless preschool.is_open
     diff = (preschool.closes - @view.current_time.to_i).to_f/3600
     case diff
-    when (2.0)..(12.0)
+    when (2.0)..(24.0)
       'success'
     when (1.0)..(2.0)
       'info'
