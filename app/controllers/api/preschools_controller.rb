@@ -7,6 +7,6 @@ class Api::PreschoolsController < ApiController
       hours_today: view.hours_today,
       hours_tomorrow: view.hours_tomorrow
     }
-    render json: data
+    respond_with_resource data
   end
 end
