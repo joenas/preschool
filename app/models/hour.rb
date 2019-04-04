@@ -13,12 +13,16 @@ class Hour < ActiveRecord::Base
   default_scope { order(day_of_week: :asc, opens: :asc, closes: :asc) }
 
   scope :today, -> {
-    where("day_of_week = extract(dow from current_date)")
+    where("day_of_week = extract(dow from (now() #{timezone_cast}))")
   }
 
   scope :tomorrow, -> {
-    where("day_of_week = extract(dow from current_date)+1")
+    where("day_of_week = extract(dow from (now() #{timezone_cast}))+1")
   }
+
+  def self.timezone_cast
+    "AT TIME ZONE '#{Time.zone.name}'"
+  end
 
   # Goddamn this is annoying
   def open?
