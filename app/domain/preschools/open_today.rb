@@ -14,12 +14,16 @@ module Preschools
       @sorting == :api
     end
 
-    def position?
-      latitude && longitude
+    def use_position?
+      !api? && latitude && longitude
     end
 
     def current_time
       @current_time ||= Now.new
+    end
+
+    def hours
+      @hours ||= Hour.all.group_by(&:preschool_id)
     end
 
     def hours_today
@@ -118,11 +122,11 @@ module Preschools
     end
 
     def position_query_order_by
-      "#{position_query} ASC,"  if position? && !api?
+      "#{position_query} ASC,"  if use_position?
     end
 
     def position_query_select
-      "#{position_query} as distance," if position?
+      "#{position_query} as distance," if use_position?
     end
 
     def timezone_cast
