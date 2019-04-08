@@ -4,8 +4,7 @@ class Api::PreschoolsController < ApiController
     view = Preschools::OpenToday.new(params: params, sorting: :api)
     data = {
       preschools: view,
-      hours_today: view.hours_today,
-      hours_tomorrow: view.hours_tomorrow
+      hours: view.hours,
     }
     respond_with_resource data
   end

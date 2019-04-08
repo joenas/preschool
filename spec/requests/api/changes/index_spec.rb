@@ -18,9 +18,10 @@ describe "Fetching ", type: :request do
 
     Then{expect(response.status).to eq 200}
     And{expect(parsed_response["preschools"].first["id"]).to eq preschool_1.id}
+    And{expect(parsed_response["preschools"].first["distance"]).to be_nil}
     And{expect(parsed_response["preschools"].second["id"]).to eq preschool_2.id}
-    And{expect(parsed_response["hours_today"].length).to eq 2}
-    And{expect(parsed_response["hours_tomorrow"].length).to eq 1}
+    And{expect(parsed_response["hours"][preschool_1.id.to_s].length).to eq 2}
+    And{expect(parsed_response["hours"][preschool_2.id.to_s].length).to eq 1}
   end
 
   context "with a properly formatted request, no position" do
@@ -28,6 +29,7 @@ describe "Fetching ", type: :request do
 
     Then{expect(response.status).to eq 200}
     And{expect(parsed_response["preschools"].first["id"]).to eq preschool_1.id}
+    And{expect(parsed_response["preschools"].first["distance"]).to be_nil}
     And{expect(parsed_response["preschools"].second["id"]).to eq preschool_2.id}
   end
 
