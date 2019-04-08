@@ -14,7 +14,7 @@ module Preschools
       @sorting == :api
     end
 
-    def use_position?
+    def position?
       !api? && latitude && longitude
     end
 
@@ -122,11 +122,11 @@ module Preschools
     end
 
     def position_query_order_by
-      "#{position_query} ASC,"  if use_position?
+      "#{position_query} ASC,"  if position?
     end
 
     def position_query_select
-      "#{position_query} as distance," if use_position?
+      "#{position_query} as distance," if position?
     end
 
     def timezone_cast
