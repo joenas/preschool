@@ -3,18 +3,27 @@ module Preschools
 
     ENGLISH_MILE = 1609
 
-    def initialize(params: {}, scope: Preschool)
+    def initialize(params: {}, scope: Preschool, sorting: :default)
       @params = params
       @scope = scope
+      @sorting = sorting
       super with_todays_hours
     end
 
+    def api?
+      @sorting == :api
+    end
+
     def position?
-      latitude && longitude
+      !api? && latitude && longitude
     end
 
     def current_time
       @current_time ||= Now.new
+    end
+
+    def hours
+      @hours ||= Hour.all.group_by(&:preschool_id)
     end
 
     def hours_today
@@ -40,7 +49,7 @@ module Preschools
           hours.opens <= (now() #{timezone_cast})::time AND hours.closes >= (now() #{timezone_cast})::time AS is_open
         FROM hours
         WHERE true
-          AND hours.day_of_week = extract(dow from current_date)
+          AND hours.day_of_week = extract(dow from (now() #{timezone_cast}))
       ),
       active_site_changes AS (
         SELECT
@@ -64,7 +73,7 @@ module Preschools
           MAX(closes) < (now() #{timezone_cast})::time AS closed_for_day
         FROM hours
         WHERE true
-          AND hours.day_of_week = extract(dow from current_date)
+          AND hours.day_of_week = extract(dow from (now() #{timezone_cast}))
         GROUP BY preschool_id
       ),
       multiple_hours AS (
@@ -73,7 +82,7 @@ module Preschools
           MIN(opens) as opens_again
         FROM hours
         WHERE true
-          AND hours.day_of_week = extract(dow from current_date)
+          AND hours.day_of_week = extract(dow from (now() #{timezone_cast}))
           AND hours.opens > (now() #{timezone_cast})::time
         GROUP BY preschool_id
       )

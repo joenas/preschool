@@ -12,6 +12,10 @@ Rails.application.routes.draw do
     root to: 'preschools#index'
   end
 
+  namespace :api do
+    resources :preschools, only: [:index]
+  end
+
   get 'position/:latitude,:longitude', to: 'home#index', latitude: /-?\d+\.\d+/, longitude: /-?\d+\.\d+/
 
   root to: 'home#index'
