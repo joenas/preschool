@@ -34,5 +34,11 @@ describe Listeners::PostNewSiteChangeToSlack do
       Then{expect(stubbed_request).to_not have_been_requested}
     end
 
+    context "with no SLACK_URL" do
+      Given(:note){'some text'}
+      Given{ENV.delete("SLACK_URL")}
+      Then{expect(stubbed_request).to_not have_been_requested}
+    end
+
   end
 end

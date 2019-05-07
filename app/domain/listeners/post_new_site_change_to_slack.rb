@@ -7,6 +7,7 @@ module Listeners
     end
 
     def create_success(site_change, params)
+      return unless @client.host
       @client.post('', {
        "text": "Ny uppdatering:",
         "attachments": [

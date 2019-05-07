@@ -7,6 +7,7 @@ module Listeners
     end
 
     def create_success(site_change, params)
+      return unless @client.host
       room = ENV['MATRIX_ROOM']
       note = (site_change.note || '<i>Ny uppdatering</i>')
       url = site_change.preschool.url

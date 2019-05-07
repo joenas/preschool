@@ -8,6 +8,7 @@ describe Listeners::PostNewSiteChangeToPushover do
   Given(:params){{}}
 
   describe '#create_success' do
+
     Given(:expected_body) do
       {
         "token": ENV['PUSHOVER_API_TOKEN'],
@@ -33,6 +34,13 @@ describe Listeners::PostNewSiteChangeToPushover do
       Given(:note){nil}
       Given(:message){'<i>Ny uppdatering</i>'}
       Then{expect(stubbed_request).to have_been_requested}
+    end
+
+    context "with no PUSHOVER_API_URL" do
+      Given(:message){'<i>Ny uppdatering</i>'}
+      Given(:note){'some text'}
+      Given{ENV.delete("PUSHOVER_API_URL")}
+      Then{expect(stubbed_request).to_not have_been_requested}
     end
 
   end
