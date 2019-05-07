@@ -19,7 +19,7 @@ module Preschools
     end
 
     def current_time
-      @current_time ||= Now.new
+      DateTime.current
     end
 
     def hours
@@ -79,7 +79,7 @@ module Preschools
       multiple_hours AS (
         SELECT
           preschool_id,
-          MIN(opens) as opens_again
+          MIN((current_date + opens) #{timezone_cast}) as opens_again
         FROM hours
         WHERE true
           AND hours.day_of_week = extract(dow from (now() #{timezone_cast}))
@@ -89,7 +89,7 @@ module Preschools
       SELECT
       preschools.*,
         #{position_query_select}
-        data.closes,
+        (current_date + data.closes) #{timezone_cast} as closes,
         COALESCE(data.is_open, false) as is_open,
         COALESCE(todays_hours.closed_for_day, true) AS closed_for_day,
         multiple_hours.opens_again,

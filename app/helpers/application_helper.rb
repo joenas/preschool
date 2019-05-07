@@ -35,10 +35,8 @@ module ApplicationHelper
     return 'default' unless preschool.is_open
     diff = (preschool.closes - @view.current_time.to_i).to_f/3600
     case diff
-    when (2.0)..(24.0)
+    when (1.0)..(24.0)
       'success'
-    when (1.0)..(2.0)
-      'info'
     when (0.5)..(1.0)
       'warning'
     when (0.0)..(0.5)
@@ -57,10 +55,8 @@ module ApplicationHelper
     debug_time = Time.new(2017,01,27,last.hour,last.min,00)
     diff = (debug_time - debug_time_now).to_f/3600
     case diff
-    when (2.0)..(12.0)
+    when (1.0)..(12.0)
       'success'
-    when (1.0)..(2.0)
-      'info'
     when (0.5)..(1.0)
       'warning'
     when (0.0)..(0.5)

@@ -24,15 +24,24 @@ class Hour < ActiveRecord::Base
     "AT TIME ZONE '#{Time.zone.name}'"
   end
 
-  # Goddamn this is annoying
+  ### Logics
   def open?
-    (opens..closes).include?(Now.new) && today?
+    today? && (opens_at..closes_at).cover?(Time.current.strftime("%H:%M"))
   end
 
   def today?
     day_of_week == Time.now.wday
   end
 
+  def opens_at
+    opens.strftime("%H:%M")
+  end
+
+  def closes_at
+    closes.strftime("%H:%M")
+  end
+
+  ### Presentation
   def day_name
     I18n.t('date.day_names')[day_of_week]
   end
@@ -45,6 +54,8 @@ class Hour < ActiveRecord::Base
     I18n.l(closes, format: :short)
   end
 
+
+  ### Meta data
   def closes_json_ld
     I18n.l(closes, format: :json_ld)
   end
