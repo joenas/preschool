@@ -3,19 +3,10 @@ module Preschools
 
     ENGLISH_MILE = 1609
 
-    def initialize(params: {}, scope: Preschool, sorting: :default)
+    def initialize(params: {}, scope: Preschool)
       @params = params
       @scope = scope
-      @sorting = sorting
       super with_todays_hours
-    end
-
-    def api?
-      @sorting == :api
-    end
-
-    def position?
-      !api? && latitude && longitude
     end
 
     def current_time
@@ -88,7 +79,6 @@ module Preschools
       )
       SELECT
       preschools.*,
-        #{position_query_select}
         (current_date + data.closes) #{timezone_cast} as closes,
         COALESCE(data.is_open, false) as is_open,
         COALESCE(todays_hours.closed_for_day, true) AS closed_for_day,
@@ -105,28 +95,8 @@ module Preschools
       LEFT JOIN todays_hours ON todays_hours.preschool_id = preschools.id
       LEFT JOIN multiple_hours ON multiple_hours.preschool_id = preschools.id
       WHERE true
-      ORDER BY #{position_query_order_by} COALESCE(data.is_open, false) DESC, data.closes DESC, multiple_hours.opens_again ASC, preschools.name ASC
+      ORDER BY COALESCE(data.is_open, false) DESC, data.closes DESC, multiple_hours.opens_again ASC, preschools.name ASC
       EOF
-    end
-
-    def latitude
-      Float(@params['latitude'].presence) rescue nil
-    end
-
-    def longitude
-      Float(@params['longitude'].presence) rescue nil
-    end
-
-    def position_query
-      "((preschools.position <@> '(#{latitude},#{longitude})')*#{ENGLISH_MILE})::integer" if position?
-    end
-
-    def position_query_order_by
-      "#{position_query} ASC,"  if position?
-    end
-
-    def position_query_select
-      "#{position_query} as distance," if position?
     end
 
     def timezone_cast
