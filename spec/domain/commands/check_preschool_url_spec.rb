@@ -15,24 +15,31 @@ describe Commands::CheckPreschoolUrl do
 
       Given(:site_change){SiteChange.where(preschool_id: preschool_url.preschool_id).last}
       Given(:expected_data){{
-        "extra" => "<div id=\"extras_element\" class=\"sm-col sm-col-11 md-col-12 lg-col-12\">\n              <div class=\"flex items-start mt2\">\n                <span class=\"cite\">\n                  Onsdagen den 24 april stänger vi klockan 11.30.\n                  <br>Vi har stängt 6/5-8/5 <br>Fredagen den 17 maj har vi\n                  stängt hela dagen <br>Fredagen den 31 maj har vistängt hela\n                  dagen <br>Fredagen den 7 juni har vi stängt hela dagen\n                </span>\n              </div>\n            </div>",
+        "extra" => "<span id=\"extras_element\" class=\"bold\">\n                  Stängt\n                </span>",
         "hours" => "<div class=\"sm-col sm-col-12 md-col-4 lg-col-4\" id=\"hours\">\n                <span class=\"bold\">\n                  Stängt\n                </span>\n                <div class=\"flex-column mt1\">\n                  Morgondagens tider\n                  <li>\n                    <span>\n                      <time>09:00</time>\n                      -\n                      <time>11:00</time>\n                    </span>\n                    <small class=\"ml1 xs-hide\">Babycafe!</small>\n                  </li>\n                  <li>\n                    <span>\n                      <time>11:00</time>\n                      -\n                      <time>14:00</time>\n                    </span>\n                    <small class=\"ml1 xs-hide\"></small>\n                  </li>\n                </div>\n              </div>"
 
         }}
 
+      Given do
+        File.read('spec/fixtures/good_site_changes.txt').lines.each {|line| ServiceRegistry.classifier.train 'Goodsitechange', line}
+      end
+      Given{ServiceRegistry.classifier.train 'Badsitechange', "Kompassen"}
+
       When{subject.perform()}
 
       context "with no previous site change and note is predicted" do
+        # Given{ServiceRegistry.classifier.train 'Badsitechange', "random string"}
         Then{expect(site_change.data).to eq expected_data}
         And{expect(site_change.state).to eq "predicted"}
-        And{expect(site_change.note).to eq "Onsdagen den 24 april stänger vi klockan 11.30.\nVi har stängt 6/5-8/5 Fredagen den 17 maj har vi\nstängt hela dagen Fredagen den 31 maj har vistängt hela\ndagen Fredagen den 7 juni har vi stängt hela dagen"}
+        And{expect(site_change.note).to eq "Stängt"}
         And{expect(SiteChange.count).to eq 1}
         And{expect(pushover_request).to have_been_requested}
       end
 
       context "with no previous site change and note is not predicted" do
-        Given(:preschool_url){create :preschool_url, extras_element: ".footer"}
-        Then{expect(site_change.data["extra"]).to include("Hej, kul")}
+        Given(:preschool_url){create :preschool_url, extras_element: ".text-default"}
+
+        Then{expect(site_change.data["extra"]).to include("Barnens Hus")}
         And{expect(site_change.state).to eq "new"}
         And{expect(site_change.note).to be_nil}
         And{expect(SiteChange.count).to eq 1}
