@@ -12,10 +12,8 @@ module Clockwork
   end
 
   every(30.minutes, 'Parse preschool urls', if: lambda { |t| t.hour >= 7 && t.hour < 18 }) do
-    client = JsonClient.new(ENV['HUGINN_TRIGGER_PARSE_URL'])
     PreschoolUrl.find_each do |purl|
-      client.post('', purl.attributes.except('created_at', 'updated_at'))
-      sleep 60
+      CheckPreschoolUrlWorker.perform_async(purl.id)
     end
   end
 

@@ -9,6 +9,7 @@ module Listeners
     end
 
     def create_success(site_change, params)
+      return unless @client.host
       @client.post('', {
         "token": ENV['PUSHOVER_API_TOKEN'],
         "user": ENV['PUSHOVER_API_USER'],

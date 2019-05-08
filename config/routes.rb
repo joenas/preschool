@@ -18,5 +18,7 @@ Rails.application.routes.draw do
 
   get 'position/:latitude,:longitude', to: 'home#index', latitude: /-?\d+\.\d+/, longitude: /-?\d+\.\d+/
 
+  mount Sidekiq::Web => '/sidekiq'
+
   root to: 'home#index'
 end
