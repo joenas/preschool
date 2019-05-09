@@ -37,6 +37,12 @@ describe Listeners::PostNewSiteChangeToMatrix do
       Given(:html_message){message}
       Then{expect(stubbed_request).to have_been_requested}
     end
+
+    context "with no MATRIX_URL" do
+      Given{ENV.delete("MATRIX_URL")}
+      Given(:message){'<i>Ny uppdatering</i>'}
+      Then{expect(stubbed_request).to_not have_been_requested}
+    end
   end
 
   describe '#create_failure' do

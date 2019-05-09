@@ -7,9 +7,12 @@ class ServiceRegistry
 
   def self.classifier
     @classifier ||= begin
-      redis_backend = ClassifierReborn::BayesRedisBackend.new
-      ClassifierReborn::Bayes.new 'GoodSiteChange', 'BadSiteChange', backend: redis_backend, language: 'sv'
+      ClassifierReborn::Bayes.new 'GoodSiteChange', 'BadSiteChange', backend: classifier_backend, language: 'sv'
     end
+  end
+
+  def self.classifier_backend
+    Rails.env.test? ? ClassifierReborn::BayesMemoryBackend.new : ClassifierReborn::BayesRedisBackend.new
   end
 end
 
