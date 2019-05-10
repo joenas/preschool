@@ -54,7 +54,6 @@ class Hour < ActiveRecord::Base
     I18n.l(closes, format: :short)
   end
 
-
   ### Meta data
   def closes_json_ld
     I18n.l(closes, format: :json_ld)
