@@ -37,75 +37,90 @@ module Preschools
     private
 
     def with_todays_hours
+      ap with_todays_hours_query
       @scope.find_by_sql(with_todays_hours_query)
     end
 
     def with_todays_hours_query
       <<-EOF
-      WITH data AS (
+      WITH sort_data AS (
+        WITH inner_data AS (
+          WITH data AS (
+            SELECT
+              preschool_id,
+              hours.closes,
+              hours.opens <= (now() #{timezone_cast})::time AND hours.closes >= (now() #{timezone_cast})::time AS is_open
+            FROM hours
+            WHERE true
+              AND hours.day_of_week = extract(dow from (now() #{timezone_cast}))
+          ),
+          active_site_changes AS (
+            SELECT
+              site_changes.*,
+              rank() over (partition by site_changes.preschool_id order by updated_at DESC) AS rank
+            FROM site_changes
+            WHERE true
+              AND state = 'active'
+          ),
+          predicted_site_changes AS (
+            SELECT
+              site_changes.*,
+              rank() over (partition by site_changes.preschool_id order by updated_at DESC) AS rank
+            FROM site_changes
+            WHERE true
+              AND state = 'predicted'
+          ),
+          todays_hours AS (
+            SELECT
+              preschool_id,
+              MAX(closes) < (now() #{timezone_cast})::time AS closed_for_day
+            FROM hours
+            WHERE true
+              AND hours.day_of_week = extract(dow from (now() #{timezone_cast}))
+            GROUP BY preschool_id
+          ),
+          multiple_hours AS (
+            SELECT
+              preschool_id,
+              MIN((current_date + opens) #{timezone_cast}) as opens_again
+            FROM hours
+            WHERE true
+              AND hours.day_of_week = extract(dow from (now() #{timezone_cast}))
+              AND hours.opens > (now() #{timezone_cast})::time
+            GROUP BY preschool_id
+          )
+          SELECT
+            preschools.*,
+            #{position_query_select}
+            (current_date + data.closes) #{timezone_cast} as regular_closes,
+            COALESCE(data.is_open, false) as regular_is_open,
+            COALESCE(todays_hours.closed_for_day, true) AS regular_closed_for_day,
+            multiple_hours.opens_again as regular_opens_again,
+            active_site_changes.note AS active_change_note,
+            predicted_site_changes.note AS predicted_change_note,
+            (CASE WHEN active_site_changes.note IS NOT NULL OR predicted_site_changes.updated_at IS NOT NULL THEN TRUE ELSE FALSE END) as has_changes
+          FROM preschools
+          LEFT JOIN data ON data.preschool_id = preschools.id AND data.is_open
+          LEFT JOIN active_site_changes ON active_site_changes.preschool_id = preschools.id AND active_site_changes.rank = 1
+          LEFT JOIN predicted_site_changes ON predicted_site_changes.preschool_id = preschools.id AND predicted_site_changes.rank = 1
+          LEFT JOIN todays_hours ON todays_hours.preschool_id = preschools.id
+          LEFT JOIN multiple_hours ON multiple_hours.preschool_id = preschools.id
+          WHERE true
+        )
         SELECT
-          preschool_id,
-          hours.closes,
-          hours.opens <= (now() #{timezone_cast})::time AND hours.closes >= (now() #{timezone_cast})::time AS is_open
-        FROM hours
-        WHERE true
-          AND hours.day_of_week = extract(dow from (now() #{timezone_cast}))
-      ),
-      active_site_changes AS (
-        SELECT
-          site_changes.*,
-          rank() over (partition by site_changes.preschool_id order by updated_at DESC) AS rank
-        FROM site_changes
-        WHERE true
-          AND state = 'active'
-      ),
-      predicted_site_changes AS (
-        SELECT
-          site_changes.*,
-          rank() over (partition by site_changes.preschool_id order by updated_at DESC) AS rank
-        FROM site_changes
-        WHERE true
-          AND state = 'predicted'
-      ),
-      todays_hours AS (
-        SELECT
-          preschool_id,
-          MAX(closes) < (now() #{timezone_cast})::time AS closed_for_day
-        FROM hours
-        WHERE true
-          AND hours.day_of_week = extract(dow from (now() #{timezone_cast}))
-        GROUP BY preschool_id
-      ),
-      multiple_hours AS (
-        SELECT
-          preschool_id,
-          MIN((current_date + opens) #{timezone_cast}) as opens_again
-        FROM hours
-        WHERE true
-          AND hours.day_of_week = extract(dow from (now() #{timezone_cast}))
-          AND hours.opens > (now() #{timezone_cast})::time
-        GROUP BY preschool_id
+          inner_data.*,
+          temp_hours.id IS NOT NULL as has_temp_hours,
+          COALESCE(temp_hours.closes_at, regular_closes) as closes,
+          COALESCE(temp_hours.opens_at, regular_opens_again) as opens_again,
+          CASE WHEN temp_hours.closed_for_day THEN FALSE ELSE COALESCE((temp_hours.opens_at <= now() AND temp_hours.closes_at >= now()), regular_is_open, false) END as is_open,
+          COALESCE((temp_hours.closed_for_day OR (temp_hours.closes_at < now())), regular_closed_for_day, true) AS closed_for_day
+        FROM inner_data
+        LEFT JOIN temp_hours ON temp_hours.preschool_id = inner_data.id AND (current_date #{timezone_cast})::date = temp_hours.opens_at::date
       )
       SELECT
-      preschools.*,
-        #{position_query_select}
-        (current_date + data.closes) #{timezone_cast} as closes,
-        COALESCE(data.is_open, false) as is_open,
-        COALESCE(todays_hours.closed_for_day, true) AS closed_for_day,
-        multiple_hours.opens_again,
-        active_site_changes.note AS active_change_note,
-        active_site_changes.updated_at AS active_change_updated_at,
-        predicted_site_changes.note AS predicted_change_note,
-        predicted_site_changes.updated_at AS predicted_change_updated_at,
-        (CASE WHEN active_site_changes.note IS NOT NULL OR predicted_site_changes.updated_at IS NOT NULL THEN TRUE ELSE FALSE END) as has_changes
-      FROM preschools
-      LEFT JOIN data ON data.preschool_id = preschools.id AND data.is_open
-      LEFT JOIN active_site_changes ON active_site_changes.preschool_id = preschools.id AND active_site_changes.rank = 1
-      LEFT JOIN predicted_site_changes ON predicted_site_changes.preschool_id = preschools.id AND predicted_site_changes.rank = 1
-      LEFT JOIN todays_hours ON todays_hours.preschool_id = preschools.id
-      LEFT JOIN multiple_hours ON multiple_hours.preschool_id = preschools.id
-      WHERE true
-      ORDER BY #{position_query_order_by} COALESCE(data.is_open, false) DESC, data.closes DESC, multiple_hours.opens_again ASC, preschools.name ASC
+        *
+      FROM sort_data
+      ORDER BY #{position_query_order_by} COALESCE(is_open, false) DESC, closes DESC, opens_again ASC, name ASC
       EOF
     end
 
