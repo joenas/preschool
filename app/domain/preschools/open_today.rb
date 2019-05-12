@@ -37,8 +37,15 @@ module Preschools
     private
 
     def with_todays_hours
-      ap with_todays_hours_query
       @scope.find_by_sql(with_todays_hours_query)
+    end
+
+    def current_time_db
+      current_time.to_s(:db)
+    end
+
+    def current_date
+      Date.current
     end
 
     def with_todays_hours_query
@@ -49,10 +56,10 @@ module Preschools
             SELECT
               preschool_id,
               hours.closes,
-              hours.opens <= (now() #{timezone_cast})::time AND hours.closes >= (now() #{timezone_cast})::time AS is_open
+              hours.opens <= '#{current_time_db}'::time AND hours.closes >= '#{current_time_db}'::time AS is_open
             FROM hours
             WHERE true
-              AND hours.day_of_week = extract(dow from (now() #{timezone_cast}))
+              AND hours.day_of_week = extract(dow from '#{current_date}'::date)
           ),
           active_site_changes AS (
             SELECT
@@ -73,26 +80,26 @@ module Preschools
           todays_hours AS (
             SELECT
               preschool_id,
-              MAX(closes) < (now() #{timezone_cast})::time AS closed_for_day
+              MAX(closes) < '#{current_time_db}'::time AS closed_for_day
             FROM hours
             WHERE true
-              AND hours.day_of_week = extract(dow from (now() #{timezone_cast}))
+              AND hours.day_of_week = extract(dow from '#{current_date}'::date)
             GROUP BY preschool_id
           ),
           multiple_hours AS (
             SELECT
               preschool_id,
-              MIN((current_date + opens) #{timezone_cast}) as opens_again
+              MIN(('#{current_date}'::date + opens) #{timezone_cast}) as opens_again
             FROM hours
             WHERE true
-              AND hours.day_of_week = extract(dow from (now() #{timezone_cast}))
-              AND hours.opens > (now() #{timezone_cast})::time
+              AND hours.day_of_week = extract(dow from '#{current_date}'::date)
+              AND hours.opens > '#{current_time_db}'::time
             GROUP BY preschool_id
           )
           SELECT
             preschools.*,
             #{position_query_select}
-            (current_date + data.closes) #{timezone_cast} as regular_closes,
+            ('#{current_date}'::date + data.closes) #{timezone_cast} as regular_closes,
             COALESCE(data.is_open, false) as regular_is_open,
             COALESCE(todays_hours.closed_for_day, true) AS regular_closed_for_day,
             multiple_hours.opens_again as regular_opens_again,
@@ -112,10 +119,10 @@ module Preschools
           temp_hours.id IS NOT NULL as has_temp_hours,
           COALESCE(temp_hours.closes_at, regular_closes) as closes,
           COALESCE(temp_hours.opens_at, regular_opens_again) as opens_again,
-          CASE WHEN temp_hours.closed_for_day THEN FALSE ELSE COALESCE((temp_hours.opens_at <= now() AND temp_hours.closes_at >= now()), regular_is_open, false) END as is_open,
-          COALESCE((temp_hours.closed_for_day OR (temp_hours.closes_at < now())), regular_closed_for_day, true) AS closed_for_day
+          CASE WHEN temp_hours.closed_for_day THEN FALSE ELSE COALESCE((temp_hours.opens_at <= '#{current_time_db}' #{timezone_cast} AND temp_hours.closes_at >= '#{current_time_db}' #{timezone_cast}), regular_is_open, false) END as is_open,
+          COALESCE((temp_hours.closed_for_day OR (temp_hours.closes_at < '#{current_time_db}'::timestamp)), regular_closed_for_day, true) AS closed_for_day
         FROM inner_data
-        LEFT JOIN temp_hours ON temp_hours.preschool_id = inner_data.id AND (current_date #{timezone_cast})::date = temp_hours.opens_at::date
+        LEFT JOIN temp_hours ON temp_hours.preschool_id = inner_data.id AND '#{current_date}'::date = temp_hours.opens_at::date
       )
       SELECT
         *
