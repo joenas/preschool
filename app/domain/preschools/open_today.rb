@@ -61,22 +61,6 @@ module Preschools
             WHERE true
               AND hours.day_of_week = extract(dow from '#{current_date}'::date)
           ),
-          active_site_changes AS (
-            SELECT
-              site_changes.*,
-              rank() over (partition by site_changes.preschool_id order by updated_at DESC) AS rank
-            FROM site_changes
-            WHERE true
-              AND state = 'active'
-          ),
-          predicted_site_changes AS (
-            SELECT
-              site_changes.*,
-              rank() over (partition by site_changes.preschool_id order by updated_at DESC) AS rank
-            FROM site_changes
-            WHERE true
-              AND state = 'predicted'
-          ),
           todays_hours AS (
             SELECT
               preschool_id,
@@ -95,6 +79,22 @@ module Preschools
               AND hours.day_of_week = extract(dow from '#{current_date}'::date)
               AND hours.opens > '#{current_time_db}'::time
             GROUP BY preschool_id
+          ),
+          active_site_changes AS (
+            SELECT
+              site_changes.*,
+              rank() over (partition by site_changes.preschool_id order by updated_at DESC) AS rank
+            FROM site_changes
+            WHERE true
+              AND state = 'active'
+          ),
+          predicted_site_changes AS (
+            SELECT
+              site_changes.*,
+              rank() over (partition by site_changes.preschool_id order by updated_at DESC) AS rank
+            FROM site_changes
+            WHERE true
+              AND state = 'predicted'
           )
           SELECT
             preschools.*,
@@ -105,13 +105,13 @@ module Preschools
             multiple_hours.opens_again as regular_opens_again,
             active_site_changes.note AS active_change_note,
             predicted_site_changes.note AS predicted_change_note,
-            (CASE WHEN active_site_changes.note IS NOT NULL OR predicted_site_changes.updated_at IS NOT NULL THEN TRUE ELSE FALSE END) as has_changes
+            (active_site_changes.note IS NOT NULL OR predicted_site_changes.note IS NOT NULL) as has_changes
           FROM preschools
           LEFT JOIN data ON data.preschool_id = preschools.id AND data.is_open
-          LEFT JOIN active_site_changes ON active_site_changes.preschool_id = preschools.id AND active_site_changes.rank = 1
-          LEFT JOIN predicted_site_changes ON predicted_site_changes.preschool_id = preschools.id AND predicted_site_changes.rank = 1
           LEFT JOIN todays_hours ON todays_hours.preschool_id = preschools.id
           LEFT JOIN multiple_hours ON multiple_hours.preschool_id = preschools.id
+          LEFT JOIN active_site_changes ON active_site_changes.preschool_id = preschools.id AND active_site_changes.rank = 1
+          LEFT JOIN predicted_site_changes ON predicted_site_changes.preschool_id = preschools.id AND predicted_site_changes.rank = 1
           WHERE true
         )
         SELECT

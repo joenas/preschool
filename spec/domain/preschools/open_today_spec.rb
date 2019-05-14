@@ -15,6 +15,8 @@ describe Preschools::OpenToday do
             opens: "08:00",
             closes: "14:00"
   }
+  Given{create :site_change, preschool: open_preschool, state: :predicted, note: "prediction" }
+
 
   Given(:closed_preschool){create :preschool, name: "B"}
   Given{
@@ -24,6 +26,9 @@ describe Preschools::OpenToday do
             opens: "08:00",
             closes: "11:00"
   }
+
+  Given{create :site_change, preschool: closed_preschool, state: :active, note: "bye", updated_at: 2.hours.ago }
+  Given{create :site_change, preschool: closed_preschool, state: :active, note: "ohhai", updated_at: 4.hours.ago }
 
   Given(:multiple_preschool){create :preschool, name: "C"}
   Given{
@@ -87,8 +92,6 @@ describe Preschools::OpenToday do
           closed_for_day: true
   }
 
-  # TODO spec changes, with ranking etc
-
   describe "preschools" do
     When{}
     Then{
@@ -101,6 +104,9 @@ describe Preschools::OpenToday do
     And{expect(subject.first.name).to eq "A"}
     And{expect(subject.first).to be_is_open}
     And{expect(subject.first).to_not be_closed_for_day}
+    And{expect(subject.first).to have_changes}
+    And{expect(subject.first.predicted_change_note).to eq "prediction"}
+    And{expect(subject.first.active_change_note).to be_nil}
 
     # Multiple, opens again
     And{expect(subject.second.name).to eq "C"}
@@ -109,12 +115,16 @@ describe Preschools::OpenToday do
     And{expect(subject.second).to_not have_temp_hours}
     And{expect(subject.second.opens_again).to eq 1.hour.from_now}
     And{expect(subject.second.regular_opens_again).to eq 1.hour.from_now}
+    And{expect(subject.second).to_not have_changes}
 
     # Closed, regular
     And{expect(subject.third.name).to eq "B"}
     And{expect(subject.third).to_not be_is_open}
     And{expect(subject.third).to be_closed_for_day}
     And{expect(subject.third).to be_regular_closed_for_day}
+    And{expect(subject.third).to have_changes}
+    And{expect(subject.third.active_change_note).to eq "bye"}
+    And{expect(subject.third.predicted_change_note).to be_nil}
 
     # Opens later, temp
     And{expect(subject.fourth.name).to eq "E"}
