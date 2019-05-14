@@ -26,6 +26,7 @@ gem 'jquery-rails'
 gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.1'
 gem 'best_in_place', '~> 3.0.1'
 gem 'tether-rails'
+gem 'bootstrap4-datetime-picker-rails'
 
 # App configuration
 gem 'dotenv-rails', '~> 2.1', '>= 2.1.2'
