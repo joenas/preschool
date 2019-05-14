@@ -44,6 +44,11 @@ module Preschools
       current_time.to_s(:db)
     end
 
+    def current_time_utc_db
+      current_time.utc.to_s(:db)
+    end
+
+
     def current_date
       Date.current
     end
@@ -100,8 +105,8 @@ module Preschools
             preschools.*,
             #{position_query_select}
             ('#{current_date}'::date + data.closes) #{timezone_cast} as regular_closes,
-            COALESCE(data.is_open, false) as regular_is_open,
-            COALESCE(todays_hours.closed_for_day, true) AS regular_closed_for_day,
+            data.is_open as regular_is_open,
+            todays_hours.closed_for_day AS regular_closed_for_day,
             multiple_hours.opens_again as regular_opens_again,
             active_site_changes.note AS active_change_note,
             predicted_site_changes.note AS predicted_change_note,
@@ -119,8 +124,8 @@ module Preschools
           temp_hours.id IS NOT NULL as has_temp_hours,
           COALESCE(temp_hours.closes_at, regular_closes) as closes,
           COALESCE(temp_hours.opens_at, regular_opens_again) as opens_again,
-          CASE WHEN temp_hours.closed_for_day THEN FALSE ELSE COALESCE((temp_hours.opens_at <= '#{current_time_db}' #{timezone_cast} AND temp_hours.closes_at >= '#{current_time_db}' #{timezone_cast}), regular_is_open, false) END as is_open,
-          COALESCE((temp_hours.closed_for_day OR (temp_hours.closes_at < '#{current_time_db}'::timestamp)), regular_closed_for_day, true) AS closed_for_day
+          CASE WHEN temp_hours.closed_for_day THEN FALSE ELSE COALESCE((temp_hours.opens_at <= '#{current_time_utc_db}' AND temp_hours.closes_at >= '#{current_time_utc_db}'), regular_is_open, false) END as is_open,
+          COALESCE((temp_hours.closed_for_day OR (temp_hours.closes_at < '#{current_time_utc_db}')), regular_closed_for_day, true) AS closed_for_day
         FROM inner_data
         LEFT JOIN temp_hours ON temp_hours.preschool_id = inner_data.id AND '#{current_date}'::date = temp_hours.opens_at::date
       )
