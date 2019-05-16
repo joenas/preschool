@@ -112,7 +112,7 @@ describe Preschools::OpenToday do
     Then{
       # ap temp_opens_later_preschool.hours;
       # ap temp_opens_later_preschool.temp_hours;
-      #ap subject.to_a#.find{|a| a.name == "G"}#.fourth;
+      # ap subject.to_a
       true
     }
     # Simple

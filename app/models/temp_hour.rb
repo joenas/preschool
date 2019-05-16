@@ -14,13 +14,9 @@ class TempHour < ActiveRecord::Base
     "AT TIME ZONE '#{Time.zone.name}'"
   end
 
-  def day_of_week
-    opens_at.wday
-  end
-
   ### Logics
   def today?
-    day_of_week == Time.now.wday
+    opens_at.wday == Time.now.wday
   end
 
   ### Presentation

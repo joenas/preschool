@@ -22,16 +22,17 @@ module Preschools
       DateTime.current
     end
 
+    # TODO: specs
     def hours
-      @hours ||= Hour.all.group_by(&:preschool_id)
+      @hours ||= Hour.find_by_sql(all_hours_query)
     end
 
     def hours_today
-      @hours_today ||= Hour.today.group_by(&:preschool_id)
+      @hours_today ||= hours.select{|h| h.opens_at.to_date == current_date}.group_by(&:preschool_id)
     end
 
     def hours_tomorrow
-      @hours_tomorrow ||= Hour.tomorrow.group_by(&:preschool_id)
+      @hours_tomorrow ||= hours.select{|h| h.opens_at.to_date == current_date+1.day}.group_by(&:preschool_id)
     end
 
     private
@@ -47,7 +48,6 @@ module Preschools
     def current_time_utc_db
       current_time.utc.to_s(:db)
     end
-
 
     def current_date
       Date.current
@@ -132,7 +132,58 @@ module Preschools
       SELECT
         *
       FROM sort_data
-      ORDER BY #{position_query_order_by} COALESCE(is_open, false) DESC, closes DESC, opens_again ASC, name ASC
+      ORDER BY #{position_query_order_by} COALESCE(is_open, false) DESC, closes DESC NULLS FIRST, opens_again ASC NULLS LAST, name ASC
+      EOF
+    end
+
+    def all_hours_query
+      <<-EOF
+      WITH sort_data AS (
+        WITH dates AS (
+            SELECT
+                --generate_series('#{current_date}'::date - (extract(dow FROM '#{current_date}'::date) || ' day')::interval, ('#{current_date}'::date + INTERVAL '7 days'), INTERVAL '1 day') AS date
+                generate_series('#{current_date}'::date, ('#{current_date}'::date + INTERVAL '7 days'), INTERVAL '1 day') AS date
+        )
+        SELECT
+            extract(epoch from opens_at) AS id,
+            preschool_id,
+            extract(dow FROM opens_at) AS day_of_week,
+            (opens_at AT TIME ZONE 'UTC' #{timezone_cast}) AS opens_at,
+            (closes_at AT TIME ZONE 'UTC' #{timezone_cast}) AS closes_at,
+            closed_for_day,
+            '' AS note
+        FROM
+            temp_hours,
+            dates
+        WHERE
+            TRUE
+            AND temp_hours.opens_at::date = dates.date
+
+        UNION
+        SELECT
+            extract(epoch from dates.date + opens) AS id,
+            preschool_id,
+            day_of_week,
+            dates.date + opens AS opens_at,
+            dates.date + closes AS closes_at,
+            FALSE AS closed_for_day,
+            note
+        FROM
+            hours,
+            dates
+        WHERE
+            TRUE
+            AND hours.day_of_week = extract(dow FROM dates.date)
+            AND preschool_id NOT IN (
+                SELECT
+                    preschool_id
+                FROM
+                    temp_hours
+                WHERE
+                    dates.date = temp_hours.opens_at::date)
+      )
+      SELECT * FROM sort_data
+      ORDER BY preschool_id, opens_at ASC, closes_at ASC
       EOF
     end
 
