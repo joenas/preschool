@@ -1,4 +1,4 @@
-- if hours.none?(&:closed_for_day)
+- if hours.present?
   = render partial: 'home/index/hour', collection: hours
 - else
   %span.block.bold

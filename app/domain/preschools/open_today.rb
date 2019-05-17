@@ -28,11 +28,11 @@ module Preschools
     end
 
     def hours_today
-      @hours_today ||= hours.select{|h| h.opens_at.to_date == current_date}.group_by(&:preschool_id)
+      @hours_today ||= hours.select{|h| !h.closed_for_day && h.opens_at.to_date == current_date}.group_by(&:preschool_id)
     end
 
     def hours_tomorrow
-      @hours_tomorrow ||= hours.select{|h| h.opens_at.to_date == current_date+1.day}.group_by(&:preschool_id)
+      @hours_tomorrow ||= hours.select{|h| !h.closed_for_day && h.opens_at.to_date == current_date+1.day}.group_by(&:preschool_id)
     end
 
     private
