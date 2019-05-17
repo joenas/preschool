@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     end
     resources :preschools, only: [:index, :show] do
       resources :hours, only: [:create, :update, :destroy]
+      resources :temp_hours, only: [:create, :destroy]
     end
     root to: 'preschools#index'
   end

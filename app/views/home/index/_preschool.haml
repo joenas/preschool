@@ -17,7 +17,7 @@
               Stängt
             .flex-column.mt1
               Morgondagens tider
-              = render partial: 'home/index/hour', collection: @view.hours_tomorrow[preschool.id]
+              = render partial: 'home/index/hours', locals: {hours: @view.hours_tomorrow[preschool.id]}
 
           - else
             - if preschool.is_open
@@ -30,7 +30,7 @@
                 = distance_of_time_in_words(preschool.opens_again, @view.current_time)
             .flex-column.mt1
               Öppettider
-              = render partial: 'home/index/hour', collection: @view.hours_today[preschool.id]
+              = render partial: 'home/index/hours', locals: {hours: @view.hours_today[preschool.id]}
 
       - if preschool.has_changes
         %div.sm-col.sm-col-11.md-col-12.lg-col-12
