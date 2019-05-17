@@ -23,6 +23,10 @@
           %br/
           = link_to "Karta", "https://www.google.com/maps/place/#{@view.address_params}"
 
+    .card.mb-3
+      %h5.card-header
+        Öppettider
+
       %table.table.table-sm
         %col.td-col-sm
         %col.td-col-xl
@@ -51,6 +55,44 @@
                 = link_to admin_preschool_hour_path(@view, hour), method: :delete, data: {confirm: 'Äru säker?'} do
                   = fa_icon :trash
 
+    .card.mb-3
+      %h5.card-header
+        Avvikande öppettider
+
+      %table.table.table-sm
+        %col.td-col-md
+        %col.td-col-sm
+        %col.td-col-xl
+        %col.td-col-sm
+        %tbody
+          %tr.m-0
+            %td{colspan: 6}
+              = simple_form_for [:admin, @view, TempHour.new()], defaults: {label: false}, html: {class: 'form-inline'} do |form|
+                = form.input :closed_for_day, as: :boolean, label: "Stängd hela dagen"
+                #datetimepicker-opens.datetimepicker.input-group.date{"data-target-input" => "nearest"}
+                  = form.input_field :opens_at, as: :string, class: "form-control form-control-sm ml-2", data: {target: "#datetimepicker-opens"}
+                  .input-group-append{"data-target" => "#datetimepicker-opens", "data-toggle" => "datetimepicker"}
+                    .input-group-text
+                      %i.fa.fa-calendar
+                #datetimepicker-closes.datetimepicker.input-group.date{"data-target-input" => "nearest"}
+                  = form.input_field :closes_at, as: :string, class: "form-control form-control-sm ml-2", data: {target: "#datetimepicker-closes"}
+                  .input-group-append{"data-target" => "#datetimepicker-closes", "data-toggle" => "datetimepicker"}
+                    .input-group-text
+                      %i.fa.fa-calendar
+                = form.submit 'Spara', class: 'btn btn-sm btn-success ml-2'
+          - @view.temp_hours.this_year.each do |hour|
+            %tr.m-0{class: ('table-info' if hour.today?)}
+              %td.pl-3.pr-3
+                = hour.day_and_date
+              %td{class: hour.closed_for_day ? "strike text-danger" : ""}
+                = hour.opens_at_short
+              %td{class: hour.closed_for_day ? "strike text-danger" : ""}
+                = hour.closes_at_short
+              %td
+                = link_to admin_preschool_temp_hour_path(@view, hour), method: :delete, data: {confirm: 'Äru säker?'} do
+                  = fa_icon :trash
+
+  .col-md-6
     .card.mb-3.hidden-sm-down
       %h5.card-header
         URLer
@@ -68,9 +110,6 @@
               %li
                 %strong Hours
                 %code= url.hours_element
-
-
-  .col-md-6
     .card.mb-3
       %h5.card-header
         Förändringar

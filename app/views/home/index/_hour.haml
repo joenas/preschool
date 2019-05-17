@@ -1,6 +1,6 @@
 %li
   %span{class: ('text-success' if hour.open?)}
-    %time= hour.opens_short
+    %time= hour.opens_at_short
     \-
-    %time= hour.closes_short
+    %time= hour.closes_at_short
   %small.ml1.xs-hide= hour.note

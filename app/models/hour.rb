@@ -33,14 +33,6 @@ class Hour < ActiveRecord::Base
     day_of_week == Time.now.wday
   end
 
-  def opens_at
-    opens.strftime("%H:%M")
-  end
-
-  def closes_at
-    closes.strftime("%H:%M")
-  end
-
   ### Presentation
   def day_name
     I18n.t('date.day_names')[day_of_week]
@@ -54,6 +46,14 @@ class Hour < ActiveRecord::Base
     I18n.l(closes, format: :short)
   end
 
+  # From OpenToday query
+  def opens_at_short
+    I18n.l(opens_at, format: :short)
+  end
+
+  def closes_at_short
+    I18n.l(closes_at, format: :short)
+  end
 
   ### Meta data
   def closes_json_ld
