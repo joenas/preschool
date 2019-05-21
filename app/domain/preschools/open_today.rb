@@ -132,7 +132,7 @@ module Preschools
       SELECT
         *
       FROM sort_data
-      ORDER BY #{position_query_order_by} COALESCE(is_open, false) DESC, closes DESC NULLS FIRST, opens_again ASC NULLS LAST, name ASC
+      ORDER BY #{position_query_order_by} closed_for_day ASC, COALESCE(is_open, false) DESC, closes DESC NULLS FIRST, opens_again ASC NULLS LAST, name ASC
       EOF
     end
 
