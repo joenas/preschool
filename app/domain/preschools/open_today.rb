@@ -196,15 +196,15 @@ module Preschools
     end
 
     def position_query
-      "((preschools.position <@> '(#{latitude},#{longitude})')*#{ENGLISH_MILE})::integer" if position?
+      "((%s.position <@> '(#{latitude},#{longitude})')*#{ENGLISH_MILE})::integer" if position?
     end
 
     def position_query_order_by
-      "#{position_query} ASC,"  if position?
+      "#{position_query} ASC," % "sort_data" if position?
     end
 
     def position_query_select
-      "#{position_query} as distance," if position?
+      "#{position_query} as distance," % "preschools "if position?
     end
 
     def timezone_cast
