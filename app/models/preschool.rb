@@ -4,6 +4,7 @@ class Preschool < ActiveRecord::Base
   attribute :position, :legacy_point
 
   has_many :hours
+  has_many :temp_hours
   has_many :site_changes
   has_many :urls, class_name: 'PreschoolUrl'
 

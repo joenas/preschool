@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe Preschool do
   it{is_expected.to have_many :hours}
+  it{is_expected.to have_many :temp_hours}
   it{is_expected.to have_many :site_changes}
   it{is_expected.to have_many :urls}
 

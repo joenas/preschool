@@ -38,6 +38,7 @@ sv:
       json_ld: "%H:%M:%S"
       long: "%B %d, %Y %H:%M"
       short_date: "%Y-%m-%d"
+      temp_hour_date: "%A %d %B, %Y"
     am: "am"
     pm: "pm"
 

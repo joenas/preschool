@@ -36,6 +36,7 @@ ActiveRecord::Migration.maintain_test_schema!
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include Rails.application.routes.url_helpers
+  config.include ActiveSupport::Testing::TimeHelpers
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
@@ -47,6 +48,12 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
   config.fail_fast = true
+
+  config.before :each do
+    ENV["PUSHOVER_API_URL"] = "http://pushover.example.com"
+    ENV["MATRIX_URL"] = "https://matrix.org"
+    ENV["SLACK_URL"] = "https://slack.example.com"
+  end
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
