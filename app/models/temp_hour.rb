@@ -16,7 +16,7 @@ class TempHour < ActiveRecord::Base
 
   ### Logics
   def today?
-    opens_at.wday == Time.now.wday
+    opens_at.to_date == Date.current
   end
 
   ### Presentation

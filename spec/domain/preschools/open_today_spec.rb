@@ -139,22 +139,22 @@ describe Preschools::OpenToday do
     And{expect(subject.third).to_not have_changes}
 
     # Closed, regular
-    And{expect(subject.fourth.name).to eq "B"}
-    And{expect(subject.fourth).to_not be_is_open}
-    And{expect(subject.fourth).to be_closed_for_day}
-    And{expect(subject.fourth).to be_regular_closed_for_day}
-    And{expect(subject.fourth).to have_changes}
-    And{expect(subject.fourth.active_change_note).to eq "bye"}
-    And{expect(subject.fourth.predicted_change_note).to be_nil}
+    And{expect(subject.fifth.name).to eq "B"}
+    And{expect(subject.fifth).to_not be_is_open}
+    And{expect(subject.fifth).to be_closed_for_day}
+    And{expect(subject.fifth).to be_regular_closed_for_day}
+    And{expect(subject.fifth).to have_changes}
+    And{expect(subject.fifth.active_change_note).to eq "bye"}
+    And{expect(subject.fifth.predicted_change_note).to be_nil}
 
     # Opens later, temp
-    And{expect(subject.fifth.name).to eq "E"}
-    And{expect(subject.fifth).to_not be_is_open}
-    And{expect(subject.fifth).to be_regular_is_open}
-    And{expect(subject.fifth).to_not be_closed_for_day}
-    And{expect(subject.fifth).to_not be_regular_closed_for_day}
-    And{expect(subject.fifth.opens_again).to eq 2.hour.from_now}
-    And{expect(subject.fifth.regular_opens_again).to be_nil}
+    And{expect(subject.fourth.name).to eq "E"}
+    And{expect(subject.fourth).to_not be_is_open}
+    And{expect(subject.fourth).to be_regular_is_open}
+    And{expect(subject.fourth).to_not be_closed_for_day}
+    And{expect(subject.fourth).to_not be_regular_closed_for_day}
+    And{expect(subject.fourth.opens_again).to eq 2.hour.from_now}
+    And{expect(subject.fourth.regular_opens_again).to be_nil}
 
     # Closed, temp
     And{expect(subject[5].name).to eq "D"}
