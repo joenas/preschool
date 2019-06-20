@@ -7,6 +7,7 @@ module Commands
       @resource = PreschoolUrl.find(preschool_url_id)
     end
 
+    # TODO: raise if empty data?
     def perform
       resp = HtmlClient.new(@resource.url).get
       doc = Nokogiri::HTML(resp.body)
