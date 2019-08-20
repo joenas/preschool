@@ -9,6 +9,7 @@ class HtmlClient < SimpleDelegator
     Faraday.new @url do |connection|
       yield connection if block_given?
       connection.use Faraday::Response::RaiseError
+      connection.use FaradayMiddleware::FollowRedirects
       connection.adapter Faraday.default_adapter
     end
   end
