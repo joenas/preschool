@@ -41,7 +41,7 @@ gem 'faraday', '~> 0.11.0'
 gem 'faraday_middleware', '~> 0.11.0.1'
 
 # Forms
-gem 'simple_form', '~> 4.1'
+gem 'simple_form', '~> 5.0'
 
 # NLP
 #gem 'classifier-reborn', '~> 2.1'
