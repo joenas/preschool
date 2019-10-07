@@ -2,22 +2,4 @@
   %h1.mt2.mb2.text-center
     Öppna Förskolor Malmö
 
-  %nav.nav
-    %ul.list-inline.mb-0
-      %li.list-inline-item
-        Sortering:
-
-      %li.list-inline-item
-        = link_to_if_else_span @view.position?, href: root_path, class: 'nav-link' do
-          = icon :clock
-          %span Öppettider
-      %li.list-inline-item
-        = link_to_if_else_span !@view.position?, href: '#', id: 'toggle_position', class: 'nav-link' do
-          = icon :"map-marker"
-          %span Avstånd
-
-  #alert.alert.alert-warning{role: :alert, style: "display: none;"}
-    Det gick inte att hämta din position.
-    Prova igen!
-
 = render partial: 'home/index/preschool', collection: @view
