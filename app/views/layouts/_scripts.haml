@@ -15,27 +15,3 @@
     fathom('trackPageview');
     </script>
     <!-- / Fathom -->
-:plain
-  <!-- Get geolocation -->
-  <script>
-  (function() {
-    window.onload = function() {
-      var o,
-        n,
-        t,
-        e;
-      return "geolocation" in navigator ? (n = {
-        timeout: 2500,
-        maximumAge: 0
-      }, t = function(o) {
-        var n;
-        return n = o.coords, console.log(n.latitude, n.longitude), window.location = "/position/" + n.latitude + "," + n.longitude
-      }, o = function() {
-        return console.warn("Couldnt get position"), document.getElementById("alert").style.display = "block"
-      }, (e = document.getElementById("toggle_position")) ? e.onclick = function() {
-        return navigator.geolocation.getCurrentPosition(t, o, n)
-      } : void 0) : (console.log("no geolocation"), document.getElementById("alert").style.display = "none")
-    }
-  }).call(this);
-  </script>
-
