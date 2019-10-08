@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     resources :preschools, only: [:index]
   end
 
-  get 'position/:latitude,:longitude', to: 'home#index', latitude: /-?\d+\.\d+/, longitude: /-?\d+\.\d+/
+  get 'position/:latitude,:longitude', to: 'home#position', latitude: /-?\d+\.\d+/, longitude: /-?\d+\.\d+/
 
   mount Sidekiq::Web => '/sidekiq'
 

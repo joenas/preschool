@@ -10,9 +10,6 @@
           = preschool.street_name
           = link_to "https://www.google.com/maps/place/#{preschool.address_params}" do
             = icon :"map-marker"
-          - if @view.position?
-            →
-            %span.bold= number_to_human(preschool.distance, units: :distance)
 
         %div.sm-col.sm-col-12.md-col-4.lg-col-4
           - if preschool.closed_for_day
