@@ -1,0 +1,38 @@
+.row
+  .col-md-6
+    .card.mb-3
+      %h5.card-header
+        Info
+      .card-body
+        - if @view.note
+          %blockquote.blockquote
+            %small= @view.note
+
+        %p.card-text
+          = @view.street_name
+          \,
+          = @view.postal_code
+          = @view.city
+          %br/
+          = link_to "Hemsida", @view.url
+          %br/
+          = link_to "Karta", "https://www.google.com/maps/place/#{@view.address_params}"
+
+  .col-md-6
+    .card.mb-3
+      %h5.card-header
+        URLer
+      %ul.list-group.list-group-flush
+        - @view.urls.each do |url|
+          %li.list-group-item
+            %ul.list-unstyled
+              %li
+                %a{href: url.url}
+                  %samp
+                    = url.url.truncate(50)
+              %li
+                %strong Extra
+                %code= url.extras_element
+              %li
+                %strong Hours
+                %code= url.hours_element

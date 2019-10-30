@@ -4,6 +4,7 @@ class Admin::PreschoolsController < AdminController
   def index; end
 
   def show
+    @tab = params.fetch(:tab, :hours).to_sym
     @view = Preschool.find(params[:id])
   end
 
