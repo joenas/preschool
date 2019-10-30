@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_09_201108) do
+ActiveRecord::Schema.define(version: 2019_10_30_223452) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "cube"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 2019_05_09_201108) do
     t.string "extras_element"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "error_on_check", default: false, null: false
     t.index ["preschool_id"], name: "index_preschool_urls_on_preschool_id"
   end
 

@@ -15,7 +15,7 @@ class Admin::UrlsController < AdminController
   private
 
   def update_params
-    permitted = params.permit(:id, :preschool_id, preschool_url: [:url, :hours_element, :extras_element])
+    permitted = params.permit(:id, :preschool_id, preschool_url: [:url, :hours_element, :extras_element, :error_on_check])
     permitted[:preschool_url].merge(id: params[:id])
   end
 

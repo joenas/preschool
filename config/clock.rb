@@ -12,10 +12,17 @@ module Clockwork
   end
 
   every(30.minutes, 'Parse preschool urls', if: lambda { |t| t.hour >= 7 && t.hour < 18 }) do
-    PreschoolUrl.find_each do |purl|
+    PreschoolUrl.where(error_on_check: false).each do |purl|
       CheckPreschoolUrlWorker.perform_async(purl.id)
     end
   end
+
+  # TODO:
+  # every(1.day, 'Check for failed urls', at: '18:00') do
+  #   if PreschoolUrl.where(error_on_check: true).any?)
+
+  #   end
+  # end
 
   every(1.day, 'Remove old SiteChanges & TempHours', at: '06:00') do
     SiteChange.where("updated_at::date < ?", 2.week.ago).where.not(state: :done).find_each do |site_change|

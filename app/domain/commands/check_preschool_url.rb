@@ -7,15 +7,19 @@ module Commands
       @resource = PreschoolUrl.find(preschool_url_id)
     end
 
-    # TODO: raise if empty data?
     def perform
-      resp = HtmlClient.new(@resource.url).get
-      doc = Nokogiri::HTML(resp.body)
-      hours = doc.css(hours_element)
-      extras = doc.css(extras_element)
-      params = {preschool_id: preschool_id, data: {hours: hours.to_s, extra: extras.to_s}}
-      existing = SiteChange.where(params).order(id: :desc).first
-      create_site_change(params) unless existing
+      begin
+        resp = HtmlClient.new(@resource.url).get
+        doc = Nokogiri::HTML(resp.body)
+        hours = doc.css(hours_element)
+        extras = doc.css(extras_element)
+        params = {preschool_id: preschool_id, data: {hours: hours.to_s, extra: extras.to_s}}
+        existing = SiteChange.where(params).order(id: :desc).first
+        create_site_change(params) unless existing
+      rescue Faraday::ClientError => error
+        @resource.update error_on_check: true
+        raise error
+      end
     end
 
     def create_success(*)

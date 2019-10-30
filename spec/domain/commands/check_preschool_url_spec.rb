@@ -57,6 +57,7 @@ describe Commands::CheckPreschoolUrl do
       Given!(:stubbed_request){stub_request(:get, preschool_url.url).to_return(status: 500)}
       When(:result){subject.perform}
       Then{expect(result).to have_failed}
+      And{expect(preschool_url.reload.error_on_check).to be_truthy}
     end
   end
 end

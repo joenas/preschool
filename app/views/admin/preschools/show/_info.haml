@@ -29,9 +29,13 @@
           %li.list-group-item
             %ul.list-unstyled
               %li
-                = best_in_place url, :url, as: :input, url: admin_preschool_url_path(@view, url), value: url.url, display_as: :url_short
                 %a{href: url.url}
                   = fa_icon :"external-link"
+              %li
+                %strong Fungerar
+                = best_in_place url, :error_on_check, as: :checkbox, collection: {true: "Nej ❌", false: "Jo 👍"}, url: admin_preschool_url_path(@view, url), value: (url.error_on_check ? "1" : "0")
+              %li
+                = best_in_place url, :url, as: :input, url: admin_preschool_url_path(@view, url), value: url.url, display_as: :url_short
               %li
                 %strong Extra
                 %code

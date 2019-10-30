@@ -10,5 +10,4 @@ class PreschoolUrl < ActiveRecord::Base
   def url_short
     url.split("/").last(2).join("/")
   end
-
 end
