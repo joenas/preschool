@@ -1,7 +1,7 @@
 .row
   .col-md-6
     .card.mb-3
-      %h5.card-header
+      %h6.card-header
         Info
       .card-body
         - if @view.note
@@ -22,7 +22,7 @@
 
   .col-md-6
     .card.mb-3
-      %h5.card-header
+      %h6.card-header
         URLer
       %ul.list-group.list-group-flush
         - @view.urls.order(id: :asc).each do |url|
