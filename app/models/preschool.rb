@@ -18,6 +18,10 @@ class Preschool < ActiveRecord::Base
     URI.escape(attributes.slice('street_name', 'postal_code', 'city').values.join(', ') << ",Sweden")
   end
 
+  def url_short
+    url.split("/").last(2).join("/")
+  end
+
   def active_site_change
     site_changes.where(state: :active).first
   end

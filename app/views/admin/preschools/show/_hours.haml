@@ -23,11 +23,10 @@
               %th.pl-3.pr-3
                 = hour.day_name
               %td
-                = best_in_place hour, :opens, as: :input, url: admin_preschool_hour_path(@view, hour), value: hour.opens_short, display_as: :opens_short, html_attrs: {'length' => 5, 'maxlength'=>  5}
+                = best_in_place hour, :opens, as: :input, url: admin_preschool_hour_path(@view, hour), value: hour.opens_short, display_as: :opens_short, html_attrs: {'length' => 5, 'maxlength'=>  5}, inner_class: "hour"
                 \-
-                = best_in_place hour, :closes, as: :input, url: admin_preschool_hour_path(@view, hour), value: hour.closes_short, display_as: :closes_short, html_attrs: {length: 5, maxlength: 5}
+                = best_in_place hour, :closes, as: :input, url: admin_preschool_hour_path(@view, hour), value: hour.closes_short, display_as: :closes_short, html_attrs: {length: 5, maxlength: 5}, inner_class: "hour"
                 %small.pl-1
-                  //= hour.note
                   = best_in_place hour, :note, as: :input, url: admin_preschool_hour_path(@view, hour), value: hour.note, place_holder: '...'
               %td
                 = link_to admin_preschool_hour_path(@view, hour), method: :delete, data: {confirm: 'Äru säker?'} do

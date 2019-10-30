@@ -6,9 +6,10 @@ Rails.application.routes.draw do
         put :publish
       end
     end
-    resources :preschools, only: [:index, :show] do
+    resources :preschools, only: [:index, :show, :update] do
       resources :hours, only: [:create, :update, :destroy]
       resources :temp_hours, only: [:create, :destroy]
+      resources :urls, only: [:update]
     end
     root to: 'preschools#index'
   end

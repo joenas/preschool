@@ -14,7 +14,9 @@
           = @view.postal_code
           = @view.city
           %br/
-          = link_to "Hemsida", @view.url
+          = best_in_place @view, :url, as: :input, url: admin_preschool_path(@view), value: @view.url, display_as: :url_short
+          = link_to @view.url do
+            = fa_icon :"external-link"
           %br/
           = link_to "Karta", "https://www.google.com/maps/place/#{@view.address_params}"
 
@@ -23,16 +25,18 @@
       %h5.card-header
         URLer
       %ul.list-group.list-group-flush
-        - @view.urls.each do |url|
+        - @view.urls.order(id: :asc).each do |url|
           %li.list-group-item
             %ul.list-unstyled
               %li
+                = best_in_place url, :url, as: :input, url: admin_preschool_url_path(@view, url), value: url.url, display_as: :url_short
                 %a{href: url.url}
-                  %samp
-                    = url.url.truncate(50)
+                  = fa_icon :"external-link"
               %li
                 %strong Extra
-                %code= url.extras_element
+                %code
+                  = best_in_place url, :extras_element, as: :input, url: admin_preschool_url_path(@view, url), value: url.extras_element
               %li
                 %strong Hours
-                %code= url.hours_element
+                %code
+                  = best_in_place url, :hours_element, as: :input, url: admin_preschool_url_path(@view, url), value: url.hours_element
