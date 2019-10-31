@@ -2,22 +2,22 @@
 .row
   .col-md-6
     .card.mb-3
-      %h6.card-header
-        Öppettider
+      .card-body.pb-1
+        %h6.card-title.mb-0
+          Öppettider
+
+      .p-3
+        = simple_form_for [:admin, @view, Hour.new()], defaults: {label: false}, html: {class: 'form-inline'} do |form|
+          = form.input_field :day_of_week, as: :select, collection: (1..5).map {|i| [I18n.t('date.day_names')[i], i]}, class: 'form-control form-control-sm mr-2', include_blank: 'Veckodag'
+          = form.input_field :opens, class: 'form-control form-control-sm mr-2', placeholder: '08:00', as: :string
+          = form.input_field :closes, class: 'form-control form-control-sm mr-2', placeholder: '15:00', as: :string
+          = form.input_field :note, class: 'form-control form-control-sm mr-2', placeholder: 'Notis'
+          = form.submit 'Spara', class: 'btn btn-sm btn-success'
 
       %table.table.table-sm
         %col.td-col-sm
         %col.td-col-xl
-
         %tbody
-          %tr.m-0
-            %td{colspan: 3}
-              = simple_form_for [:admin, @view, Hour.new()], defaults: {label: false}, html: {class: 'form-inline'} do |form|
-                = form.input_field :day_of_week, as: :select, collection: (1..5).map {|i| [I18n.t('date.day_names')[i], i]}, class: 'form-control form-control-sm mr-2', include_blank: 'Veckodag'
-                = form.input_field :opens, class: 'form-control form-control-sm mr-2', placeholder: '08:00', as: :string
-                = form.input_field :closes, class: 'form-control form-control-sm mr-2', placeholder: '15:00', as: :string
-                = form.input_field :note, class: 'form-control form-control-sm mr-2', placeholder: 'Notis'
-                = form.submit 'Spara', class: 'btn btn-sm btn-success'
           - @view.hours.each do |hour|
             %tr.m-0{class: ('table-info' if hour.today?)}
               %th.pl-3.pr-3
@@ -29,12 +29,35 @@
                 %small.pl-1
                   = best_in_place hour, :note, as: :input, url: admin_preschool_hour_path(@view, hour), value: hour.note, place_holder: '...'
               %td
-                = link_to admin_preschool_hour_path(@view, hour), method: :delete, data: {confirm: 'Äru säker?'} do
+                = link_to admin_preschool_hour_path(@view, hour), class: "icon", method: :delete, data: {confirm: 'Äru säker?'} do
                   = fa_icon :trash
 
     .card.mb-3
-      %h6.card-header
-        Avvikande öppettider
+      .card-body.pb-1
+        %h6.card-title.mb-0
+          Avvikande öppettider
+
+      .p-3
+        = simple_form_for [:admin, @view, TempHour.new()], defaults: {label: false}, html: {class: 'form'} do |form|
+          .form-row
+            .form-group.col-6.col-md-5
+              #datetimepicker-opens.datetimepicker.input-group.date{"data-target-input" => "nearest"}
+                = form.input_field :opens_at, as: :string, class: "form-control form-control-sm", data: {target: "#datetimepicker-opens"}
+                .input-group-append{"data-target" => "#datetimepicker-opens", "data-toggle" => "datetimepicker"}
+                  .input-group-text
+                    %i.fa.fa-calendar
+
+            .form-group.col-6.col-md-5
+              #datetimepicker-closes.datetimepicker.input-group.date{"data-target-input" => "nearest"}
+                = form.input_field :closes_at, as: :string, class: "form-control form-control-sm", data: {target: "#datetimepicker-closes"}
+                .input-group-append{"data-target" => "#datetimepicker-closes", "data-toggle" => "datetimepicker"}
+                  .input-group-text
+                    %i.fa.fa-calendar
+
+          .form-row
+            = form.input :closed_for_day, as: :boolean, label: "Stängd hela dagen", input_html: {class: "mr-2"}, wrapper_html: {class: "col-7 col-md-5"}
+            .form-group.col-5.text-right
+              = form.submit 'Spara', class: 'btn btn-sm btn-success'
 
       %table.table.table-sm
         %col.td-col-md
@@ -42,21 +65,6 @@
         %col.td-col-xl
         %col.td-col-sm
         %tbody
-          %tr.m-0
-            %td{colspan: 6}
-              = simple_form_for [:admin, @view, TempHour.new()], defaults: {label: false}, html: {class: 'form-inline'} do |form|
-                = form.input :closed_for_day, as: :boolean, label: "Stängd hela dagen"
-                #datetimepicker-opens.datetimepicker.input-group.date{"data-target-input" => "nearest"}
-                  = form.input_field :opens_at, as: :string, class: "form-control form-control-sm ml-2", data: {target: "#datetimepicker-opens"}
-                  .input-group-append{"data-target" => "#datetimepicker-opens", "data-toggle" => "datetimepicker"}
-                    .input-group-text
-                      %i.fa.fa-calendar
-                #datetimepicker-closes.datetimepicker.input-group.date{"data-target-input" => "nearest"}
-                  = form.input_field :closes_at, as: :string, class: "form-control form-control-sm ml-2", data: {target: "#datetimepicker-closes"}
-                  .input-group-append{"data-target" => "#datetimepicker-closes", "data-toggle" => "datetimepicker"}
-                    .input-group-text
-                      %i.fa.fa-calendar
-                = form.submit 'Spara', class: 'btn btn-sm btn-success ml-2'
           - @view.temp_hours.this_year.each do |hour|
             %tr.m-0{class: ('table-info' if hour.today?)}
               %td.pl-3.pr-3
@@ -66,14 +74,14 @@
               %td{class: hour.closed_for_day ? "strike text-danger" : ""}
                 = hour.closes_at_short
               %td
-                = link_to admin_preschool_temp_hour_path(@view, hour), method: :delete, data: {confirm: 'Äru säker?'} do
+                = link_to admin_preschool_temp_hour_path(@view, hour), class: "icon", method: :delete, data: {confirm: 'Äru säker?'} do
                   = fa_icon :trash
 
   .col-md-6
     .card.mb-3
-      %h6.card-header
-        Förändringar
+      .card-body.pb-1
+        %h6.card-title.mb-0
+          Notiser
       #site_changes
         %ul.list-group.list-group-flush
           = render partial: 'admin/preschools/show/site_change', collection: @view.site_changes.not_done.order("state = 'active' DESC, state ='new' DESC, created_at DESC")
-
