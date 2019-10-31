@@ -1,7 +1,18 @@
+$black: #141416
+$lightBlack: #7f7f80
+$blue: #0ca6db
+$green: #14b053
+$gray: #e0e0e0
+$lightGrey: #E8E8E8
+$gray-800: $lightBlack
+$orange: #ff6d00
+$red: #ed1b26
+$yellow: #fdd12d
+$white: #ffffff
+
 @import 'bootstrap'
 @import 'font-awesome'
 @import "tempusdominus-bootstrap-4"
-
 
 // Modified from https://startbootstrap.com/template-overviews/simple-sidebar/
 body
@@ -51,6 +62,9 @@ body
   list-style: none
   padding-top: 60px
 
+li.nav-item a
+  color: $black
+
 @media (min-width: 768px)
   #wrapper
     padding-left: 250px
@@ -73,6 +87,13 @@ body
 
 .sidebar-nav .nav-link
   border-radius: 0
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: space-between
+  &.active, &:hover
+    background-color: $lightBlack
+    color: $white
 
 .badge-new
   @extend .badge-info
@@ -107,7 +128,7 @@ body
     @extend .alert-danger
 
 .form_in_place
-  input
+  input.hour
     max-width: 4em
 form#new_hour
   input#hour_opens, input#hour_closes
@@ -115,3 +136,6 @@ form#new_hour
 
 .strike
   text-decoration: line-through
+
+a i
+  color: $black

@@ -1,0 +1,46 @@
+.row
+  .col-md-6
+    .card.mb-3
+      %h6.card-header
+        Info
+      .card-body
+        - if @view.note
+          %blockquote.blockquote
+            %small= @view.note
+
+        %p.card-text
+          = @view.street_name
+          \,
+          = @view.postal_code
+          = @view.city
+          %br/
+          = best_in_place @view, :url, as: :input, url: admin_preschool_path(@view), value: @view.url, display_as: :url_short
+          = link_to @view.url do
+            = fa_icon :"external-link"
+          %br/
+          = link_to "Karta", "https://www.google.com/maps/place/#{@view.address_params}"
+
+  .col-md-6
+    .card.mb-3
+      %h6.card-header
+        URLer
+      %ul.list-group.list-group-flush
+        - @view.urls.order(id: :asc).each do |url|
+          %li.list-group-item
+            %ul.list-unstyled
+              %li
+                %a{href: url.url}
+                  = fa_icon :"external-link"
+              %li
+                %strong Fungerar
+                = best_in_place url, :error_on_check, as: :checkbox, collection: {true: "Nej ❌", false: "Jo 👍"}, url: admin_preschool_url_path(@view, url), value: (url.error_on_check ? "1" : "0")
+              %li
+                = best_in_place url, :url, as: :input, url: admin_preschool_url_path(@view, url), value: url.url, display_as: :url_short
+              %li
+                %strong Extra
+                %code
+                  = best_in_place url, :extras_element, as: :input, url: admin_preschool_url_path(@view, url), value: url.extras_element
+              %li
+                %strong Hours
+                %code
+                  = best_in_place url, :hours_element, as: :input, url: admin_preschool_url_path(@view, url), value: url.hours_element

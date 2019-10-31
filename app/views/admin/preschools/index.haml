@@ -1,1 +1,18 @@
-%h1 Some stuff
+.row
+  .col-md-4
+    %h4.mt-3 Uppdateringar
+
+    %ul.list-group
+      - SiteChange.not_done.grouped_by_state.count.each do |state, count|
+        %li.list-group-item.d-flex.justify-content-between.align-items-center
+          = state
+          %span.badge.badge-pill{class: "badge-#{state}"}
+            = count
+  .col-md-4
+    %h4.mt-3 URL:er ❌
+
+    %ul.list-group
+      - PreschoolUrl.where(error_on_check: true).each do |url|
+        %li.list-group-item.d-flex.justify-content-between.align-items-center
+          = link_to admin_preschool_path(url.preschool_id, tab: :info) do
+            = url.preschool.name
