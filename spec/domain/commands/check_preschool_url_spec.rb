@@ -12,6 +12,7 @@ describe Commands::CheckPreschoolUrl do
       Given(:fixture){File.open(Rails.root.join("spec/fixtures/homepage.html"))}
       Given!(:stubbed_request){stub_request(:get, preschool_url.url).to_return(body: fixture)}
       Given!(:pushover_request){stub_request(:any, ENV['PUSHOVER_API_URL'])}
+      Given!(:slack_request){stub_request(:any, ENV['SLACK_URL'])}
 
       Given(:site_change){SiteChange.where(preschool_id: preschool_url.preschool_id).last}
       Given(:expected_data){{

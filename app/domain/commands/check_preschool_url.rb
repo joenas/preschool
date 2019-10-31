@@ -40,7 +40,7 @@ module Commands
     end
 
     def listeners
-      [self, Listeners::PostNewSiteChangeToPushover.new]
+      [self, Listeners::PostNewSiteChangeToPushover.new, Listeners::PostNewSiteChangeToSlack.new]
     end
   end
 end
