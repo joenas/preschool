@@ -35,6 +35,7 @@ describe Commands::CheckPreschoolUrl do
         And{expect(site_change.note).to eq "Stängt"}
         And{expect(SiteChange.count).to eq 1}
         And{expect(pushover_request).to have_been_requested}
+        And{expect(slack_request).to have_been_requested}
       end
 
       context "with no previous site change and note is not predicted" do
@@ -45,12 +46,14 @@ describe Commands::CheckPreschoolUrl do
         And{expect(site_change.note).to be_nil}
         And{expect(SiteChange.count).to eq 1}
         And{expect(pushover_request).to have_been_requested}
+        And{expect(slack_request).to have_been_requested}
       end
 
       context "with previous site change AKA nothing new" do
         Given{create :site_change, preschool_id: preschool_url.preschool_id, data: expected_data}
         Then{expect(SiteChange.count).to eq 1}
         And{expect(pushover_request).to_not have_been_requested}
+        And{expect(slack_request).to_not have_been_requested}
       end
     end
 
