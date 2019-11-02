@@ -75,7 +75,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'database_cleaner', '~> 1.5.3'
+  gem 'database_cleaner', '~> 1.7.0'
   gem 'rspec-rails', '~> 3.5', '>= 3.5.2'
   gem 'rspec-collection_matchers', '~> 1.1.2' # may be removed with a few spec fixes
   gem 'rspec-given', '~> 3.8'
@@ -83,4 +83,3 @@ group :test do
   gem 'shoulda-matchers', '~> 3.1.1'
   gem 'webmock', '~> 3.0', '>= 3.0.1'
 end
-

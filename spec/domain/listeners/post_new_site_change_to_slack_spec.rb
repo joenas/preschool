@@ -31,7 +31,7 @@ describe Listeners::PostNewSiteChangeToSlack do
 
     context "without a note" do
       Given(:note){nil}
-      Then{expect(stubbed_request).to_not have_been_requested}
+      Then{expect(stubbed_request).to have_been_requested}
     end
 
     context "with no SLACK_URL" do

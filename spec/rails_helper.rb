@@ -8,6 +8,11 @@ require 'rspec/rails'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'webmock/rspec'
+require 'database_cleaner'
+
+DatabaseCleaner.strategy = :truncation
+
+# then, whenever you need to clean the DB
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -53,6 +58,11 @@ RSpec.configure do |config|
     ENV["PUSHOVER_API_URL"] = "http://pushover.example.com"
     ENV["MATRIX_URL"] = "https://matrix.org"
     ENV["SLACK_URL"] = "https://slack.example.com"
+    DatabaseCleaner.start
+  end
+
+  config.after :each do
+    DatabaseCleaner.clean
   end
 
   # RSpec Rails can automatically mix in different behaviours to your tests
@@ -82,4 +92,3 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
-
