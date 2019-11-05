@@ -19,8 +19,9 @@ describe "Fetching ", type: :request do
     Given(:preschool_2_hours){parsed_response["hours"][preschool_2.id.to_s]}
 
     Then{
-      pending("There s a bug here on Saturdays?")
-      expect(response.status).to eq 200
+      Date.today.wday == 5 ?
+        pending("There s a bug here on Saturdays?") :
+        expect(response.status).to(eq(200))
     }
     And{expect(parsed_response["preschools"].first["id"]).to eq preschool_1.id}
     And{expect(parsed_response["preschools"].first["distance"]).to be_nil}

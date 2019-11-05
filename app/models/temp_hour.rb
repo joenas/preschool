@@ -6,7 +6,7 @@ class TempHour < ActiveRecord::Base
   validates_presence_of :opens_at
   validates_presence_of :closes_at
 
-  default_scope { order(opens_at: :desc, closes_at: :desc) }
+  default_scope { order(opens_at: :asc, closes_at: :asc) }
 
   scope :this_year, -> {where("extract(year from (opens_at #{timezone_cast})) = extract(year from (now() #{timezone_cast}))")}
 
