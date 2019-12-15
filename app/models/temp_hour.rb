@@ -8,7 +8,7 @@ class TempHour < ActiveRecord::Base
 
   default_scope { order(opens_at: :asc, closes_at: :asc) }
 
-  scope :this_year, -> {where("extract(year from (opens_at #{timezone_cast})) = extract(year from (now() #{timezone_cast}))")}
+  scope :current, -> {where("opens_at::date >= current_date")}
 
   def self.timezone_cast
     "AT TIME ZONE '#{Time.zone.name}'"

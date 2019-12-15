@@ -8,7 +8,7 @@ require './config/environment'
 module Clockwork
 
   error_handler do |error|
-    Rollbar.error(error)
+    Raven.capture_exception(error)
   end
 
   every(30.minutes, 'Parse preschool urls', if: lambda { |t| t.hour >= 7 && t.hour < 18 }) do
