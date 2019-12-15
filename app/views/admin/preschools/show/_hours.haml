@@ -65,7 +65,7 @@
         %col.td-col-xl
         %col.td-col-sm
         %tbody
-          - @view.temp_hours.this_year.each do |hour|
+          - @view.temp_hours.current.each do |hour|
             %tr.m-0{class: ('table-info' if hour.today?)}
               %td.pl-3.pr-3
                 = hour.day_and_date
