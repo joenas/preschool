@@ -21,8 +21,8 @@ describe "Creating temp_hours", type: :request do
   context "with a properly formatted request" do
     Then{expect(response.status).to eq 302}
     And{expect(temp_hour.preschool).to eq preschool}
-    And{expect(temp_hour.opens_at).to eq opens_at.to_time.to_s}
-    And{expect(temp_hour.closes_at).to eq closes_at.to_time.to_s}
+    And{expect(temp_hour.opens_at.to_s).to eq opens_at.to_time.to_s}
+    And{expect(temp_hour.closes_at.to_s).to eq closes_at.to_time.to_s}
     And{expect(temp_hour.closed_for_day).to be_falsey}
   end
 
@@ -30,8 +30,8 @@ describe "Creating temp_hours", type: :request do
     Given(:closed_for_day){"1"}
     Then{expect(response.status).to eq 302}
     And{expect(temp_hour.preschool).to eq preschool}
-    And{expect(temp_hour.opens_at).to eq opens_at.to_time.to_s}
-    And{expect(temp_hour.closes_at).to eq closes_at.to_time.to_s}
+    And{expect(temp_hour.opens_at.to_s).to eq opens_at.to_time.to_s}
+    And{expect(temp_hour.closes_at.to_s).to eq closes_at.to_time.to_s}
     And{expect(temp_hour.closed_for_day).to be_truthy}
   end
 
