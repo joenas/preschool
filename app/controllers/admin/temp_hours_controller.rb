@@ -1,11 +1,11 @@
 class Admin::TempHoursController < AdminController
 
   def create
-    Resources::Create.new(klass: TempHour, params: create_params, listeners: [self]).perform
+    Resources::CreateTempHours.new(params: create_params, listeners: [self]).perform
   end
 
   def create_success(resource, _params)
-    redirect_to admin_preschool_path(resource.preschool)
+    redirect_to admin_preschool_path(resource)
   end
 
   def create_failure(resource, _params)
