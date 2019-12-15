@@ -17,14 +17,30 @@ sv:
       default: "%Y-%m-%d"
       short: "%b %d"
       long: "%B %d, %Y"
-      with_day: '%A %d %B %Y'
+      with_day: "%A %d %B %Y"
 
     day_names: [Söndag, Måndag, Tisdag, Onsdag, Torsdag, Fredag, Lördag]
     abbr_day_names: [Sön, Mån, Tis, Ons, Tor, Fre, Lör]
 
     # Don't forget the nil at the beginning; there's no such thing as a 0th month
-    month_names: [~, Januari, Februari, Mars, April, Maj, Juni, Juli, Augusti, September, Oktober, November, December]
-    abbr_month_names: [~, Jan, Feb, Mar, Apr, Maj, Jun, Jul, Aug, Sep, Okt, Nov, Dec]
+    month_names:
+      [
+        ~,
+        Januari,
+        Februari,
+        Mars,
+        April,
+        Maj,
+        Juni,
+        Juli,
+        Augusti,
+        September,
+        Oktober,
+        November,
+        December,
+      ]
+    abbr_month_names:
+      [~, Jan, Feb, Mar, Apr, Maj, Jun, Jul, Aug, Sep, Okt, Nov, Dec]
     # Used in date_select and datetime_select.
     order:
       - year
@@ -42,7 +58,7 @@ sv:
     am: "am"
     pm: "pm"
 
-# Used in array.to_sentence.
+  # Used in array.to_sentence.
   support:
     array:
       words_connector: ", "
@@ -114,7 +130,7 @@ sv:
         format: "%n %u"
         units:
           byte:
-            one:   "Byte"
+            one: "Byte"
             other: "Bytes"
           kb: "KB"
           mb: "MB"
