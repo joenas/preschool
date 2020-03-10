@@ -16,5 +16,5 @@ jobs:
         env:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
           PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
-          HOST: oppenforskola.se
+          HOST: ${{ secrets.DOKKU_HOST }}
           PROJECT: preschool
