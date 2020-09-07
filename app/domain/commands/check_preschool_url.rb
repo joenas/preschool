@@ -11,9 +11,10 @@ module Commands
       begin
         resp = HtmlClient.new(@resource.url).get
         doc = Nokogiri::HTML(resp.body)
-        hours = doc.css(hours_element)
-        extras = doc.css(extras_element)
-        params = {preschool_id: preschool_id, data: {hours: hours.to_s, extra: extras.to_s}}
+        # TODO: specs for this
+        hours = doc.css(hours_element).to_s.encode("UTF-8", invalid: :replace, replace: "")
+        extras = doc.css(extras_element).to_s.encode("UTF-8", invalid: :replace, replace: "")
+        params = {preschool_id: preschool_id, data: {hours: hours, extra: extras}}
         existing = SiteChange.where(params).order(id: :desc).first
         create_site_change(params) unless existing
       rescue Faraday::ClientError => error
