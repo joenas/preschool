@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-ruby '2.6.2'
+ruby '2.6.6'
 gem 'rails', '5.2.4.6'
 gem 'rails_12factor', group: :production
 gem 'puma', '~> 4.3', '>= 3.6.2'
@@ -20,7 +20,7 @@ gem 'bootstrap', '~> 4.1', '>= 4.1.3'
 gem 'sassc-rails', '~> 2.1'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2', '>= 4.2.1'
-gem 'mini_racer', '~> 0.2.0'
+gem 'mini_racer', '~> 0.4.0'
 gem 'jquery-rails'
 #gem 'turbolinks'
 gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.1'
