@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 ruby '2.6.6'
 gem 'rails', '5.2.4.6'
 gem 'rails_12factor', group: :production
-gem 'puma', '~> 4.3', '>= 3.6.2'
+gem 'puma', '~> 4.3'
 gem 'rack-cache', '~> 1.7'
 
 # Database
