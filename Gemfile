@@ -33,7 +33,7 @@ gem 'dotenv-rails', '~> 2.1', '>= 2.1.2'
 
 # Background jobs
 gem 'sinatra'
-gem 'sidekiq', '~> 5.0', '>= 5.0.4'
+gem 'sidekiq', '~> 5.2'
 gem 'clockwork', '~> 2.0'
 
 # Http
